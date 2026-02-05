@@ -6,12 +6,6 @@ import streamlit as st
 
 main_page = st.Page("main.py", title="Main Page", icon="🎈")
 
-
-
-
-
-
-
 # Define the pages
 main_page = st.Page(r"main.py", title="Main Page", icon="🎈")
 page_1 = st.Page(r"Suraksha_Lens.py", title="Discover Suraksha Lens with us", icon="❄️")
@@ -24,4 +18,5 @@ pg = st.navigation([main_page,page_1,page_2,page_3])
 
 # Run the selected page
 pg.run()
+
 
