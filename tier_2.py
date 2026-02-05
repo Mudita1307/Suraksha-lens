@@ -5,7 +5,7 @@ import plotly.express as px
 # -----------------------
 # Load data
 # -----------------------
-df = pd.read_csv(r"Tier2_clean.csv")
+df = pd.read_csv("Tier2_clean.csv")
 
 st.title("District Trend Dashboard")
 
@@ -68,4 +68,5 @@ fig = px.line(
 )
 
 st.plotly_chart(fig, use_container_width=True)
+
 
