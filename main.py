@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+import streamlit as st
 
 
 
@@ -26,5 +26,6 @@ pg = st.navigation([main_page,page_1,page_2,page_3])
 pg.run()
 
 # exec(code, module.__dict__)
+
 
 # exec(main.py)
