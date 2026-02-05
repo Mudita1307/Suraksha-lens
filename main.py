@@ -25,7 +25,3 @@ pg = st.navigation([main_page,page_1,page_2,page_3])
 # Run the selected page
 pg.run()
 
-# exec(code, module.__dict__)
-
-
-# exec(main.py)
