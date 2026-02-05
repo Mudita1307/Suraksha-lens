@@ -10,7 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-Tier3_clean=pd.read_csv("E:\suraksha_lens\cleaned_data\Tier3_clean.csv")
+Tier3_clean=pd.read_csv("Tier3_clean.csv")
 
 
 states = st.sidebar.multiselect(
@@ -65,6 +65,7 @@ for metric in selected_metrics:
     # -----------------------
 st.subheader("Summary Statistics")
 # st.dataframe(filtered_df[selected_metrics].describe())
+
 
 
 
