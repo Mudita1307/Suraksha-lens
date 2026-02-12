@@ -14,9 +14,10 @@ page_3 = st.Page(r"tier_3.py", title="Tier 3", icon="❄️")
 
 
 # Set up navigation
-pg = st.navigation([main_page,page_1,page_2,page_3])
+pg = st.navigation([page_1,page_2,page_3])
 
 # Run the selected page
 pg.run()
+
 
 
