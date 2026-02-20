@@ -5,7 +5,7 @@ import streamlit as st
 # -----------------------
 # Load data
 # -----------------------
-df = pd.read_csv(r"Tier1_clean.csv")
+df = pd.read_csv("Tier1_clean.csv")
 
 st.title("District Trend Dashboard")
 
@@ -63,4 +63,5 @@ fig = px.line(
 )
 
 st.plotly_chart(fig, use_container_width=True)
+
 
