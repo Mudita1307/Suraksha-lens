@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 
-Tier3_clean=pd.read_csv("E:\suraksha_lens\cleaned_data\Tier4_clean.csv")
+Tier3_clean=pd.read_csv("Tier4_clean.csv")
 
 
 states = st.sidebar.multiselect(
@@ -64,6 +64,7 @@ for metric in selected_metrics:
     # -----------------------
 st.subheader("Summary Statistics")
 # st.dataframe(filtered_df[selected_metrics].describe())
+
 
 
 
