@@ -11,7 +11,7 @@ df.columns = df.columns.str.strip()  # Remove extra spaces
 # -----------------------
 # Page title and subtitle
 # -----------------------
-st.header("Rainfall-Driven Climate Hazard Index (1981–2025)")
+st.header("Tier-1 : Rainfall-Driven Climate Hazard Index (1981–2025)")
 st.subheader("Measuring Rainfall Instability and Extreme Climate Signals Across States and Districts")
 st.write(
     "Tier-1 evaluates rainfall-related climate stress by comparing current rainfall patterns to long-term historical norms"
@@ -146,3 +146,4 @@ else:
 
     st.plotly_chart(fig, use_container_width=True)
     st.write(metric["chart_desc"])
+
