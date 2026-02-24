@@ -5,7 +5,7 @@ import plotly.express as px
 # -----------------------
 # Load data
 # -----------------------
-df = pd.read_csv(r"Tier1_clean.csv", encoding="latin1")
+df = pd.read_csv("Tier1_clean.csv", encoding="latin1")
 df.columns = df.columns.str.strip()  # Remove extra spaces
 
 # -----------------------
@@ -117,7 +117,7 @@ indicators = {
 metric_name = st.sidebar.selectbox(
     "Select Indicator",
     options=list(indicators.keys()),
-    index=list(indicators.keys()).index("Hazard Score"")
+    index=list(indicators.keys()).index("Hazard Score")
 )
 
 metric = indicators[metric_name]
@@ -146,5 +146,3 @@ else:
 
     st.plotly_chart(fig, use_container_width=True)
     st.write(metric["chart_desc"])
-
-
