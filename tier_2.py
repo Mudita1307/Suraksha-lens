@@ -7,8 +7,18 @@ import plotly.express as px
 # -----------------------
 df = pd.read_csv("Tier2_clean.csv")
 
-st.title("District Trend Dashboard")
+st.header("Tier-2: Socio-Economic Exposure Index (1981–2025)"
 
+ st.subheader("Understanding Who Is Most Exposed to Rainfall-Related Climate Hazards")
+
+
+
+
+
+st.write("""
+    Tier-2 measures how socially and economically exposed each state or district is to rainfall-related climate hazards. 
+    It combines population size, demographic structure and livelihood vulnerability to identify where climate shocks would have the greatest human impact.
+    """)
 # -----------------------
 # Sidebar filters
 # -----------------------
@@ -68,5 +78,6 @@ fig = px.line(
 )
 
 st.plotly_chart(fig, use_container_width=True)
+
 
 
