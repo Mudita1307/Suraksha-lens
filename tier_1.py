@@ -117,7 +117,7 @@ indicators = {
 metric_name = st.sidebar.selectbox(
     "Select Indicator",
     options=list(indicators.keys()),
-    index=list(indicators.keys()).index("Total Rainfall")
+    index=list(indicators.keys()).index("Hazard Score"")
 )
 
 metric = indicators[metric_name]
@@ -146,4 +146,5 @@ else:
 
     st.plotly_chart(fig, use_container_width=True)
     st.write(metric["chart_desc"])
+
 
