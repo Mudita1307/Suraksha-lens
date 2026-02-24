@@ -7,7 +7,7 @@ import plotly.express as px
 # -----------------------
 df = pd.read_csv("Tier2_clean.csv")
 
-st.header("Tier-2: Socio-Economic Exposure Index (1981–2025)")
+st.header("Tier-2: Socio-Economic Exposure Index 1981–2025")
 
  st.subheader("Understanding Who Is Most Exposed to Rainfall-Related Climate Hazards")
 
@@ -70,6 +70,7 @@ fig = px.line(
 )
 
 st.plotly_chart(fig, use_container_width=True)
+
 
 
 
