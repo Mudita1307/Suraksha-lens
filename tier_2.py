@@ -7,15 +7,14 @@ import plotly.express as px
 # -----------------------
 df = pd.read_csv("Tier2_clean.csv")
 
-st.header("Tier-2: Socio-Economic Exposure Index 1981–2025")
-
- st.subheader("Understanding Who Is Most Exposed to Rainfall-Related Climate Hazards")
+st.header("Tier-2: Socio-Economic Exposure Index (1981–2025)")
+st.subheader("Understanding Who Is Most Exposed to Rainfall-Related Climate Hazards")
 
 # -----------------------
 # Sidebar filters
 # -----------------------
 
-# State
+# State filter
 states = st.sidebar.multiselect(
     "Select State(s)",
     sorted(df["state"].unique())
@@ -26,7 +25,7 @@ filtered_df = df.copy()
 if states:
     filtered_df = filtered_df[filtered_df["state"].isin(states)]
 
-# District (depends on state)
+# District filter (depends on state)
 districts = st.sidebar.multiselect(
     "Select District(s)",
     sorted(filtered_df["district"].unique())
@@ -35,7 +34,7 @@ districts = st.sidebar.multiselect(
 if districts:
     filtered_df = filtered_df[filtered_df["district"].isin(districts)]
 
-# Metric
+# Metric selection
 metrics = [
     "population",
     "children_pct",
@@ -70,10 +69,3 @@ fig = px.line(
 )
 
 st.plotly_chart(fig, use_container_width=True)
-
-
-
-
-
-
-
