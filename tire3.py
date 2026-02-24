@@ -14,8 +14,8 @@ df.columns = df.columns.str.strip()  # Remove extra spaces
 st.header("Tier-3: Institutional & Exploitation Vulnerability Index (2017–2023)")
 st.subheader(" Understanding Where Protection Systems Show Signs of Strain During Climate and Economic Shocks")
 st.write(
-    "Tier-3 assesses the vulnerability of state-level protection environments."
-    "It analyses trends in reported exploitation-related crimes to identify where institutional strain may increase vulnerability during climate or economic shocks."
+    "Tier-3 assesses the vulnerability of state-level protection environments.",
+    "It analyses trends in reported exploitation-related crimes to identify where institutional strain may increase vulnerability during climate or economic shocks.",
      " Changes in reported cases are interpreted as signals of system stress, reflecting shifts in incidence, reporting practices, enforcement capacity, or public awareness."
 )
 
@@ -106,3 +106,4 @@ else:
 
     st.plotly_chart(fig, use_container_width=True)
     st.write(metric["chart_desc"])
+
