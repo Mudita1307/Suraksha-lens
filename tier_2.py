@@ -8,6 +8,9 @@ import plotly.express as px
 df = pd.read_csv("Tier2_clean3.csv", encoding="latin1")
 df.columns = df.columns.str.strip()
 
+# If state and district columns are swapped in the CSV
+df["state"], df["district"] = df["district"], df["state"]
+
 # -----------------------
 # Page title
 # -----------------------
@@ -26,16 +29,20 @@ st.write(
 st.sidebar.title("Filters")
 
 # State filter
-states = st.sidebar.multiselect("Select State(s)", sorted(df["state"].unique()))
+states = st.sidebar.multiselect(
+    "Select State(s)",
+    sorted(df["state"].dropna().unique())
+)
 
 filtered_df = df.copy()
 
 if states:
     filtered_df = filtered_df[filtered_df["state"].isin(states)]
 
-# District filter
+# District filter (based on selected states)
 districts = st.sidebar.multiselect(
-    "Select District(s)", sorted(filtered_df["district"].unique())
+    "Select District(s)",
+    sorted(filtered_df["district"].dropna().unique())
 )
 
 if districts:
