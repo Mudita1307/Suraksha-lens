@@ -6,13 +6,14 @@ import plotly.express as px
 # Load data
 # -----------------------
 df = pd.read_csv("Tier2_clean3.csv", encoding="latin1")
-df.columns = df.columns.str.strip()  # Remove extra spaces
+df.columns = df.columns.str.strip()
 
 # -----------------------
-# Page title and subtitle
+# Page title
 # -----------------------
 st.header("Tier-2: Socio-Economic Exposure Index (1981–2025)")
 st.subheader("Understanding Who Is Most Exposed to Rainfall-Related Climate Hazards")
+
 st.write(
     "Tier-2 measures how socially and economically exposed each state or district is "
     "to rainfall-related climate hazards. It combines population size, demographic structure "
@@ -24,19 +25,24 @@ st.write(
 # -----------------------
 st.sidebar.title("Filters")
 
-# State
+# State filter
 states = st.sidebar.multiselect("Select State(s)", sorted(df["state"].unique()))
+
 filtered_df = df.copy()
+
 if states:
     filtered_df = filtered_df[filtered_df["state"].isin(states)]
 
-# District
-districts = st.sidebar.multiselect("Select District(s)", sorted(filtered_df["district"].unique()))
+# District filter
+districts = st.sidebar.multiselect(
+    "Select District(s)", sorted(filtered_df["district"].unique())
+)
+
 if districts:
     filtered_df = filtered_df[filtered_df["district"].isin(districts)]
 
 # -----------------------
-# Metric mapping
+# Indicator dictionary
 # -----------------------
 indicators = {
 
@@ -45,29 +51,34 @@ indicators = {
         "chart_title": "Trend of Population Density",
         "chart_desc": "Population density indicates the concentration of people per square kilometre. Higher density implies greater exposure intensity during rainfall-related climate shocks."
     },
-  
-    
+
 }
 
-# Default = Exposure Score
+# -----------------------
+# Indicator selection
+# -----------------------
 metric_name = st.sidebar.selectbox(
     "Select Indicator",
     options=list(indicators.keys()),
-    index=list(indicators.keys()).index("Total Population")
+    index=0
 )
 
 metric = indicators[metric_name]
 
 # -----------------------
-# Line chart
+# Chart
 # -----------------------
 st.subheader(metric["chart_title"])
 
 if metric["column"] not in filtered_df.columns:
+
     st.error(f"Column '{metric['column']}' not found in data!")
+
 else:
+
     trend_df = (
-        filtered_df.groupby(["year", "district"])[metric["column"]]
+        filtered_df
+        .groupby(["year", "district"])[metric["column"]]
         .mean()
         .reset_index()
     )
@@ -81,10 +92,5 @@ else:
     )
 
     st.plotly_chart(fig, use_container_width=True)
+
     st.write(metric["chart_desc"])
-
-
-
-
-
-
