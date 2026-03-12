@@ -41,7 +41,7 @@ if districts:
 indicators = {
 
     "Population Density": {
-        "column": "pop_density"",
+        "column": "pop_density",
         "chart_title": "Trend of Population Density",
         "chart_desc": "Population density indicates the concentration of people per square kilometre. Higher density implies greater exposure intensity during rainfall-related climate shocks."
     },
@@ -82,6 +82,7 @@ else:
 
     st.plotly_chart(fig, use_container_width=True)
     st.write(metric["chart_desc"])
+
 
 
 
