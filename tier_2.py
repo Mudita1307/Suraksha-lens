@@ -46,7 +46,7 @@ indicators = {
     },
 
     "Total Population": {
-        "column": "Total Population",
+        "column": "pop_density",
         "chart_title": "Trend of Total Population",
         "chart_desc": "Total population reflects the scale of potential human impact. Districts with larger populations may experience greater absolute impact during climate hazards."
     },
@@ -111,5 +111,6 @@ else:
 
     st.plotly_chart(fig, use_container_width=True)
     st.write(metric["chart_desc"])
+
 
 
