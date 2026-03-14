@@ -26,20 +26,30 @@ st.write(
 # -----------------------
 # Sidebar filters
 # -----------------------
-st.sidebar.title("Filters")
-
-# State filter
-states = st.sidebar.multiselect(
-    "Select State(s)",
-    sorted(df["state"].dropna().unique())
+countries = st.sidebar.multiselect(
+    "Select Country",
+    sorted(df["country"].dropna().unique())
 )
 
 filtered_df = df.copy()
 
+if countries:
+    filtered_df = filtered_df[filtered_df["country"].isin(countries)]
+
+# -----------------------
+# State filter
+# -----------------------
+states = st.sidebar.multiselect(
+    "Select State(s)",
+    sorted(filtered_df["state"].dropna().unique())
+)
+
 if states:
     filtered_df = filtered_df[filtered_df["state"].isin(states)]
 
-# District filter (based on selected states)
+# -----------------------
+# District filter
+# -----------------------
 districts = st.sidebar.multiselect(
     "Select District(s)",
     sorted(filtered_df["district"].dropna().unique())
@@ -101,4 +111,5 @@ else:
     st.plotly_chart(fig, use_container_width=True)
 
     st.write(metric["chart_desc"])
+
 
