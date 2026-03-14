@@ -34,7 +34,7 @@ countries = st.sidebar.multiselect(
 filtered_df = df.copy()
 
 if countries:
-    filtered_df = filtered_df[filtered_df["country"].isin(countries)]
+    filtered_df = filtered_df[filtered_df["Country"].isin(countries)]
 
 # -----------------------
 # State filter
