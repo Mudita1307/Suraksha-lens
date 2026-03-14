@@ -28,7 +28,7 @@ st.write(
 # -----------------------
 countries = st.sidebar.multiselect(
     "Select Country",
-    sorted(df["country"].dropna().unique())
+    sorted(df["Country"].dropna().unique())
 )
 
 filtered_df = df.copy()
