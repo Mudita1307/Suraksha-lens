@@ -9,7 +9,7 @@ df = pd.read_csv("Tier2_clean3.csv", encoding="latin1")
 df.columns = df.columns.str.strip()
 
 # If state and district columns are swapped in the CSV
-df["state"], df["district"] = df["district"], df["state"]
+
 
 # -----------------------
 # Page title
@@ -101,3 +101,4 @@ else:
     st.plotly_chart(fig, use_container_width=True)
 
     st.write(metric["chart_desc"])
+
