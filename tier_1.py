@@ -5,17 +5,16 @@ import plotly.express as px
 # -----------------------
 # Load data
 # -----------------------
-df = pd.read_csv("Tier1_clean.csv", encoding="latin1")
+df = pd.read_csv("SL_T1.csv", encoding="latin1")
 df.columns = df.columns.str.strip()  # Remove extra spaces
 
 # -----------------------
 # Page title and subtitle
 # -----------------------
-st.header("Tier-1 : Rainfall-Driven Climate Hazard Index (1981–2025)")
+st.header("Tier-1 :Rainfall-Driven Climate Hazard Index (2010-26)")
 st.subheader("Measuring Rainfall Instability and Extreme Climate Signals Across States and Districts")
 st.write(
-    "Tier-1 evaluates rainfall-related climate stress by comparing current rainfall patterns to long-term historical norms"
-    "It captures anomalies, extreme events, dry spells, wet spells, and intensity spikes to assess climate hazard levels.")
+    "Tier-1 evaluates rainfall-related climate hazard using district-level observations. It captures deviations from long-term rainfall patterns, extreme rainfall events, dry spells, wet spells, and peak daily intensity to assess overall hazard levels.")
 
 
 # -----------------------
@@ -24,15 +23,15 @@ st.write(
 st.sidebar.title("Filters")
 
 # State
-states = st.sidebar.multiselect("Select State(s)", sorted(df["state"].unique()))
+states = st.sidebar.multiselect("Select State(s)", sorted(df["State"].unique()))
 filtered_df = df.copy()
 if states:
-    filtered_df = filtered_df[filtered_df["state"].isin(states)]
+    filtered_df = filtered_df[filtered_df["State"].isin(states)]
 
 # District
-districts = st.sidebar.multiselect("Select District(s)", sorted(filtered_df["district"].unique()))
+districts = st.sidebar.multiselect("Select District(s)", sorted(filtered_df["District"].unique()))
 if districts:
-    filtered_df = filtered_df[filtered_df["district"].isin(districts)]
+    filtered_df = filtered_df[filtered_df["District"].isin(districts)]
 
 # -----------------------
 # Metric mapping
@@ -131,16 +130,16 @@ if metric["column"] not in filtered_df.columns:
     st.error(f"Column '{metric['column']}' not found in data!")
 else:
     trend_df = (
-        filtered_df.groupby(["year", "district"])[metric["column"]]
+        filtered_df.groupby(["Year", "District"])[metric["column"]]
         .mean()
         .reset_index()
     )
 
     fig = px.line(
         trend_df,
-        x="year",
+        x="Year",
         y=metric["column"],
-        color="district",
+        color="District",
         markers=True
     )
 
