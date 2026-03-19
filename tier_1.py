@@ -37,71 +37,53 @@ if districts:
 # Metric mapping
 # -----------------------
 indicators = {
-    "Hazard Score": {
-        "column": "Hazard Score",
-        "chart_title": "Trend of Rainfall Hazard Score",
-        "chart_desc": "The hazard score combines rainfall instability, extreme events, dry spells, wet spells, and intensity spikes into a single index (0–1).Higher values indicate increasing rainfall-related climate stress."
+    "Annual Total Rainfall (mm)": {
+                "column": "Annual Total Rainfall (mm)", # Example of a different column name
+                "chart_title": "Trend of Annual Total Rainfall (mm)",
+                "chart_desc": "Total rainfall reflects overall precipitation levels. However, total rainfall alone does not capture climate instability or extreme patterns."
+            },
+            "Annual Rainfall Anomaly (mm)": {
+                "column": "Annual Rainfall Anomaly (mm)", # Example of a different column name
+                "chart_title": "Trend of Annual Rainfall Anomaly",
+                "chart_desc": "Rainfall anomaly measures deviation from historical average rainfall. Larger deviations indicate increasing climate variability."
+            },
 
-    },
-    "Total Rainfall": {
-        "column": "Total Rainfall",
-        "chart_title":  "Trend of Total Rainfall",
-        "chart_desc": "Total rainfall reflects overall precipitation levels. However, total rainfall alone does not capture climate instability or extreme patterns."
-    },
+            "Extreme Rainfall Days (90th Percentile)": {
+                "column": "Extreme Rainfall Days (90th Percentile)", # Example of a different column name
+                "chart_title": "Trend of Extreme Rainfall Days",
+                "chart_desc": "Represents the number of days on which rainfall exceeds the 90th percentile threshold. An increase in such days indicates a higher frequency of extreme rainfall events."
+            },
 
-    "Rainfall Anomaly": {
-        "column": "Rainfall Anomaly",
-        "chart_title": "Trend of Rainfall Anomaly Percentile ",
-        "chart_desc": "This indicator shows how unusual rainfall levels are compared to historical records. Higher percentiles indicate rarer and more extreme rainfall conditions."
+            "Very Heavy Rainfall Days (>50mm)": {
+                "column": "Very Heavy Rainfall Days (>50mm)", # Example of a different column name
+                "chart_title": "Trend of Very Heavy Rainfall Days",
+                "chart_desc": "Counts the number of days with rainfall exceeding 50 mm.Higher values reflect an increased occurrence of intense rainfall events."
+            },
 
-    },
-    "Rainfall Anomaly Percentile": {
-        "column": "Rainfall Anomaly Percentile",
-        "chart_title": "Trend of Rainfall Anomaly Percentile ",
-        "chart_desc": "Chart Description: This indicator shows how unusual rainfall levels are compared to historical records. Higher percentiles indicate rarer and more extreme rainfall conditions."
+            "Longest Consecutive Dry Spell (days)": {
+                "column": "Longest Consecutive Dry Spell (days)", # Example of a different column name
+                "chart_title": "Trend of Longest Consecutive Dry Spell",
+                "chart_desc": "Indicates the longest continuous period with minimal or no rainfall. Extended dry spells may signal increasing drought-like conditions.."
+            },
 
-    },
-  
-    "Rainfall Z-Score Percentile": {
-        "column": "Rainfall Z-Score Percentile",
-        "chart_title":"Trend of Rainfall Z-Score Percentile",
-        "chart_desc": "The Z-score percentile captures statistical extremeness of rainfall events. Higher values indicate more statistically extreme conditions."
-    },
+            "Longest Consecutive Wet Spell (days)": {
+                "column": "Longest Consecutive Wet Spell (days)", # Example of a different column name
+                "chart_title": "Trend of Longest Consecutive Dry Spell",
+                "chart_desc": "Measures the longest sequence of consecutive rainfall days. Prolonged wet periods may contribute to flooding and soil saturation."
+            },
 
+            
+            "Maximum Daily Rainfall (mm)": {
+                "column": "Maximum Daily Rainfall (mm)", # Example of a different column name
+                "chart_title": "Trend of Maximum Daily Rainfall",
+                "chart_desc": " Represents the highest recorded daily rainfall within a year. Higher values indicate more intense single-day rainfall events."
+            },
 
-
-    "Extreme Rainfall Days": {
-        "column": "Extreme Rainfall Days",
-        "chart_title": "Trend of Extreme Rainfall Days",
-        "chart_desc": "Counts the number of days exceeding the district-specific extreme rainfall threshold. More extreme days increase flood and landslide risk."
-
-    },
-    "Very Heavy Rainfall Days": {
-        "column": "Very Heavy Rainfall Days",
-        "chart_title": "Trend of Very Heavy Rainfall Days",
-        "chart_desc": "Measures the frequency of very heavy rainfall events. Higher values indicate greater short-term flood risk."
-
-    },
-    "Longest Dry Spell": {
-        "column": "Longest Dry Spell",
-        "chart_title":"Trend of Longest Dry Spell",
-        "chart_desc": "Indicates the longest stretch of minimal rainfall within a period. Longer dry spells signal drought-like stress conditions."
-    },
-
-    "Longest Wet Spell": {
-        "column": "Longest Wet Spell",
-        "chart_title": "Trend of Longest Wet Spell",
-        "chart_desc": "Measures consecutive days of sustained rainfall. Extended wet spells increase flood and landslide vulnerability."
-
-    },
-
-    "Peak Daily Rainfall Intensity": {
-        "column": "Peak Daily Rainfall Intensity",
-        "chart_title": "Trend of Peak Daily Rainfall Intensity",
-        "chart_desc": "Captures the highest single-day rainfall event within a period. High peak intensity reflects sudden shock-type rainfall events."
-
-
-    },
+            "Hazard Score": {
+                "column": "Rainfall Hazard Index (Tier-1)", # Example of a different column name
+                "chart_title": "Trend of Rainfall Hazard Score",
+                "chart_desc": "The hazard score is a composite index that reflects the degree of rainfall variability and extremity within a district.Higher values indicate greater climate hazard associated with irregular rainfall patterns, extreme events and prolonged dry or wet conditions."
+            }
 
     
 
