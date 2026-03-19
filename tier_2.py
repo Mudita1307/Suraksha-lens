@@ -25,35 +25,17 @@ st.write(
 # -----------------------
 # Sidebar filters
 # -----------------------
-countries = st.sidebar.multiselect(
-    "Select Country",
-    sorted(df["Country"].dropna().unique())
-)
 
+st.sidebar.title("Filters")
+
+# State
+states = st.sidebar.multiselect("Select State(s)", sorted(df["State"].unique()))
 filtered_df = df.copy()
-
-if countries:
-    filtered_df = filtered_df[filtered_df["Country"].isin(countries)]
-
-# -----------------------
-# State filter
-# -----------------------
-states = st.sidebar.multiselect(
-    "Select State(s)",
-    sorted(filtered_df["State"].dropna().unique())
-)
-
 if states:
-    filtered_df = filtered_df[filtered_df["state"].isin(states)]
+    filtered_df = filtered_df[filtered_df["State"].isin(states)]
 
-# -----------------------
-# District filter
-# -----------------------
-districts = st.sidebar.multiselect(
-    "Select District(s)",
-    sorted(filtered_df["District"].dropna().unique())
-)
-
+# District
+districts = st.sidebar.multiselect("Select District(s)", sorted(filtered_df["District"].unique()))
 if districts:
     filtered_df = filtered_df[filtered_df["District"].isin(districts)]
 
