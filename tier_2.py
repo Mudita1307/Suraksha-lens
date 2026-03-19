@@ -5,7 +5,7 @@ import plotly.express as px
 # -----------------------
 # Load data
 # -----------------------
-df = pd.read_csv("combined_output_srilanka.csv", encoding="latin1")
+df = pd.read_csv("SL_T4.csv", encoding="latin1")
 df.columns = df.columns.str.strip()
 
 # If state and district columns are swapped in the CSV
@@ -14,13 +14,12 @@ df.columns = df.columns.str.strip()
 # -----------------------
 # Page title
 # -----------------------
-st.header("Tier-2: Socio-Economic Exposure Index (1981–2025)")
+st.header("Tier-4: Climate Exploitation Risk Index (CERI) (2020-21)")
 st.subheader("Understanding Who Is Most Exposed to Rainfall-Related Climate Hazards")
 
 st.write(
-    "Tier-2 measures how socially and economically exposed each state or district is "
-    "to rainfall-related climate hazards. It combines population size, demographic structure "
-    "and livelihood vulnerability to identify where climate shocks would have the greatest human impact."
+    "Tier-2 evaluates socio-economic exposure to climate-related hazards using district-level indicators. It captures population concentration, labour force participation, economic activity, and education levels to assess where climate shocks may have the greatest human impact."
+
 )
 
 # -----------------------
@@ -41,7 +40,7 @@ if countries:
 # -----------------------
 states = st.sidebar.multiselect(
     "Select State(s)",
-    sorted(filtered_df["state"].dropna().unique())
+    sorted(filtered_df["State"].dropna().unique())
 )
 
 if states:
@@ -52,22 +51,64 @@ if states:
 # -----------------------
 districts = st.sidebar.multiselect(
     "Select District(s)",
-    sorted(filtered_df["district"].dropna().unique())
+    sorted(filtered_df["District"].dropna().unique())
 )
 
 if districts:
-    filtered_df = filtered_df[filtered_df["district"].isin(districts)]
+    filtered_df = filtered_df[filtered_df["District"].isin(districts)]
 
 # -----------------------
 # Indicator dictionary
 # -----------------------
 indicators = {
 
-    "Population Density": {
-        "column": "pop_density",
-        "chart_title": "Trend of Population Density",
-        "chart_desc": "Population density indicates the concentration of people per square kilometre. Higher density implies greater exposure intensity during rainfall-related climate shocks."
-    },
+    "Annual Total Rainfall (mm)": {
+                "column": "Annual Total Rainfall (mm)", # Example of a different column name
+                "chart_title": "Trend of Annual Total Rainfall (mm)",
+                "chart_desc": "Total rainfall reflects overall precipitation levels. However, total rainfall alone does not capture climate instability or extreme patterns."
+            },
+            "Annual Rainfall Anomaly (mm)": {
+                "column": "Annual Rainfall Anomaly (mm)", # Example of a different column name
+                "chart_title": "Trend of Annual Rainfall Anomaly",
+                "chart_desc": "Rainfall anomaly measures deviation from historical average rainfall. Larger deviations indicate increasing climate variability."
+            },
+
+            "Extreme Rainfall Days (90th Percentile)": {
+                "column": "Extreme Rainfall Days (90th Percentile)", # Example of a different column name
+                "chart_title": "Trend of Extreme Rainfall Days",
+                "chart_desc": "Represents the number of days on which rainfall exceeds the 90th percentile threshold. An increase in such days indicates a higher frequency of extreme rainfall events."
+            },
+
+            "Very Heavy Rainfall Days (>50mm)": {
+                "column": "Very Heavy Rainfall Days (>50mm)", # Example of a different column name
+                "chart_title": "Trend of Very Heavy Rainfall Days",
+                "chart_desc": "Counts the number of days with rainfall exceeding 50 mm.Higher values reflect an increased occurrence of intense rainfall events."
+            },
+
+            "Longest Consecutive Dry Spell (days)": {
+                "column": "Longest Consecutive Dry Spell (days)", # Example of a different column name
+                "chart_title": "Trend of Longest Consecutive Dry Spell",
+                "chart_desc": "Indicates the longest continuous period with minimal or no rainfall. Extended dry spells may signal increasing drought-like conditions.."
+            },
+
+            "Longest Consecutive Wet Spell (days)": {
+                "column": "Longest Consecutive Wet Spell (days)", # Example of a different column name
+                "chart_title": "Trend of Longest Consecutive Dry Spell",
+                "chart_desc": "Measures the longest sequence of consecutive rainfall days. Prolonged wet periods may contribute to flooding and soil saturation."
+            },
+
+            
+            "Maximum Daily Rainfall (mm)": {
+                "column": "Maximum Daily Rainfall (mm)", # Example of a different column name
+                "chart_title": "Trend of Maximum Daily Rainfall",
+                "chart_desc": " Represents the highest recorded daily rainfall within a year. Higher values indicate more intense single-day rainfall events."
+            },
+
+            "Hazard Score": {
+                "column": "Rainfall Hazard Index (Tier-1)", # Example of a different column name
+                "chart_title": "Trend of Rainfall Hazard Score",
+                "chart_desc": "The hazard score is a composite index that reflects the degree of rainfall variability and extremity within a district.Higher values indicate greater climate hazard associated with irregular rainfall patterns, extreme events and prolonged dry or wet conditions."
+            }
 
 }
 
@@ -95,14 +136,14 @@ else:
 
     trend_df = (
         filtered_df
-        .groupby(["year", "district"])[metric["column"]]
+        .groupby(["Year", "District"])[metric["column"]]
         .mean()
         .reset_index()
     )
 
     fig = px.line(
         trend_df,
-        x="year",
+        x="Year",
         y=metric["column"],
         color="district",
         markers=True
