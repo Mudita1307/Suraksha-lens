@@ -12,7 +12,7 @@ country = st.sidebar.selectbox("Select Country", ["India", "Sri Lanka"])
 
 # Map countries to their respective files
 data_files = {
-    "India": "Tier1_clean.csv",
+    "India": "Tier1_clean1.csv",
     "Sri Lanka": "SL_T1.csv"
 }
 
