@@ -117,7 +117,7 @@ if metric["column"] not in filtered_df.columns:
 else:
     # 1. Group by capitalized 'Year' and 'State'
     trend_df = (
-        filtered_df.groupby(["Year", "State"])[metric["column"]]
+        filtered_df.groupby(["Year", "District"])[metric["column"]]
         .mean()
         .reset_index()
     )
