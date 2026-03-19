@@ -17,10 +17,6 @@ st.write(
     "Tier-3 assesses vulnerability within child protection environments using district-level data. It analyses trends in reported child-related offences, including violence, exploitation, neglect, and abuse, to identify where protection systems may be under strain. Changes in reported cases are interpreted as signals of vulnerability, reflecting shifts in incidence, reporting practices, enforcement capacity, or public awareness."
 )
 
-
-# -----------------------
-# Sidebar filters
-# -----------------------
 st.sidebar.title("Filters")
 
 # State
@@ -196,7 +192,7 @@ if metric["column"] not in filtered_df.columns:
 else:
     # 1. Group by capitalized 'Year' and 'State'
     trend_df = (
-        filtered_df.groupby(["Year", "State"])[metric["column"]]
+        filtered_df.groupby(["Year", "District"])[metric["column"]]
         .mean()
         .reset_index()
     )
