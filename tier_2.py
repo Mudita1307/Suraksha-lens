@@ -45,7 +45,7 @@ if districts:
 indicators = {
 
     "Exposure Score": {
-        "column": "T",
+        "column": "Exposure Score",
         "chart_title": "rend of Composite Socio-Economic Exposure Score",
         "chart_desc": "The composite exposure score ranges from 0 (lowest exposure) to 1 (highest exposure). Higher values indicate districts where rainfall shocks would affect larger and more socio-economically vulnerable populations."
 
