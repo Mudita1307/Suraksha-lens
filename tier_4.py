@@ -48,7 +48,7 @@ indicators = {
 metric_name = st.sidebar.selectbox(
     "Select Indicator",
     options=list(indicators.keys()),
-    index=list(indicators.keys()).index("Hazard Score")
+    index=list(indicators.keys()).index("Risk Score")
 )
 
 metric = indicators[metric_name]
