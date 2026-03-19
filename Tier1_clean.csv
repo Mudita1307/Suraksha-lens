@@ -1,4 +1,4 @@
-district,state,year,Total Rainfall,Rainfall Anomaly,Rainfall Anomaly Percentile,Rainfall Z-Score Percentile,Extreme Rainfall Days,Very Heavy Rainfall Days,Longest Dry Spell,Longest Wet Spell,Peak Daily Rainfall Intensity,Hazard Score
+District,State,Year,Total Rainfall,Rainfall Anomaly,Rainfall Anomaly Percentile,Rainfall Z-Score Percentile,Extreme Rainfall Days,Very Heavy Rainfall Days,Longest Dry Spell,Longest Wet Spell,Peak Daily Rainfall Intensity,Hazard Score
 adilabad,telangana,1980,0,-1.214168213,0.528846154,0.414022298,0,0,0.571428571,0,0,0.212426342
 adilabad,telangana,1981,1463.564302,5.443545627,0.506837607,0.470663181,5.999999999,0.019230769,1,1,0.783934672,0.311577535
 adilabad,telangana,1982,853.3784591,-6.314146892,0.460420776,0.438736971,4.142857142,0.012820513,1,0.571428571,0.4910216,0.28256053
