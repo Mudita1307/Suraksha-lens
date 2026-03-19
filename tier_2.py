@@ -5,7 +5,7 @@ import plotly.express as px
 # -----------------------
 # Load data
 # -----------------------
-df = pd.read_csv("SL_T2.csv",  encoding="latin1")
+df = pd.read_csv("SL_T2.csv")
 df.columns = df.columns.str.strip()
 df = df.fillna(0)
 
