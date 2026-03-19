@@ -5,7 +5,7 @@ import plotly.express as px
 # -----------------------
 # Load data
 # -----------------------
-df = pd.read_csv("Tier4_clean1.csv", encoding="latin1")
+df = pd.read_csv("ind_sr_tier4.csv", encoding="latin1")
 df.columns = df.columns.str.strip()  # Remove extra spaces
 
 # -----------------------
@@ -27,13 +27,30 @@ st.sidebar.title("Filters")
 # State filter
 states = st.sidebar.multiselect("Select State(s)", sorted(df["state_clean"].unique()))
 filtered_df = df.copy()
-if states:
-    filtered_df = filtered_df[filtered_df["state_clean"].isin(states)]
+if countries:
+    filtered_df = filtered_df[filtered_df["Country"].isin(countries)]
 
+# -----------------------
+# State filter
+# -----------------------
+states = st.sidebar.multiselect(
+    "Select State(s)",
+    sorted(filtered_df["state"].dropna().unique())
+)
+
+if states:
+    filtered_df = filtered_df[filtered_df["state"].isin(states)]
+
+# -----------------------
 # District filter
-districts = st.sidebar.multiselect("Select District(s)", sorted(filtered_df["district_clean"].unique()))
+# -----------------------
+districts = st.sidebar.multiselect(
+    "Select District(s)",
+    sorted(filtered_df["district"].dropna().unique())
+)
+
 if districts:
-    filtered_df = filtered_df[filtered_df["district_clean"].isin(districts)]
+    filtered_df = filtered_df[filtered_df["district"].isin(districts)]
 
 # -----------------------
 # Metric mapping
