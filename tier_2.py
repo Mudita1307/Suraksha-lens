@@ -44,54 +44,60 @@ if districts:
 # -----------------------
 indicators = {
 
-    "Annual Total Rainfall (mm)": {
-                "column": "Annual Total Rainfall (mm)", # Example of a different column name
-                "chart_title": "Trend of Annual Total Rainfall (mm)",
-                "chart_desc": "Total rainfall reflects overall precipitation levels. However, total rainfall alone does not capture climate instability or extreme patterns."
-            },
-            "Annual Rainfall Anomaly (mm)": {
-                "column": "Annual Rainfall Anomaly (mm)", # Example of a different column name
-                "chart_title": "Trend of Annual Rainfall Anomaly",
-                "chart_desc": "Rainfall anomaly measures deviation from historical average rainfall. Larger deviations indicate increasing climate variability."
-            },
+    "Exposure Score": {
+        "column": "T",
+        "chart_title": "rend of Composite Socio-Economic Exposure Score",
+        "chart_desc": "The composite exposure score ranges from 0 (lowest exposure) to 1 (highest exposure). Higher values indicate districts where rainfall shocks would affect larger and more socio-economically vulnerable populations."
 
-            "Extreme Rainfall Days (90th Percentile)": {
-                "column": "Extreme Rainfall Days (90th Percentile)", # Example of a different column name
-                "chart_title": "Trend of Extreme Rainfall Days",
-                "chart_desc": "Represents the number of days on which rainfall exceeds the 90th percentile threshold. An increase in such days indicates a higher frequency of extreme rainfall events."
-            },
+    },
+    
+    "Population Density": {
+        "column": "Population_Density",
+        "chart_title": "Trend of Population Density",
+        "chart_desc": " Population density reflects the concentration of people within a given area. Higher density may increase the number of people exposed to climate hazards and amplify potential impacts."
 
-            "Very Heavy Rainfall Days (>50mm)": {
-                "column": "Very Heavy Rainfall Days (>50mm)", # Example of a different column name
-                "chart_title": "Trend of Very Heavy Rainfall Days",
-                "chart_desc": "Counts the number of days with rainfall exceeding 50 mm.Higher values reflect an increased occurrence of intense rainfall events."
-            },
+    },
 
-            "Longest Consecutive Dry Spell (days)": {
-                "column": "Longest Consecutive Dry Spell (days)", # Example of a different column name
-                "chart_title": "Trend of Longest Consecutive Dry Spell",
-                "chart_desc": "Indicates the longest continuous period with minimal or no rainfall. Extended dry spells may signal increasing drought-like conditions.."
-            },
+    "Labour Force Participation Rate – Male": {
+        "column": "Labour Force Participation rate_M",
+        "chart_title": "Trend of Male Labour Force Participation Rate",
+        "chart_desc": "This indicator shows the proportion of the male population actively participating in the labour force. Variations may influence household income stability and resilience to climate-related disruptions."
 
-            "Longest Consecutive Wet Spell (days)": {
-                "column": "Longest Consecutive Wet Spell (days)", # Example of a different column name
-                "chart_title": "Trend of Longest Consecutive Dry Spell",
-                "chart_desc": "Measures the longest sequence of consecutive rainfall days. Prolonged wet periods may contribute to flooding and soil saturation."
-            },
+    },
+    "Labour Force Participation Rate – Female": {
+        "column": "Labour Force Participation rate_F",
+        "chart_title": "Trend of Female Labour Force Participation Rate",
+        "chart_desc": "This indicator reflects the level of female participation in the labour force. Higher participation may indicate broader income sources, while lower participation may signal increased dependency."
 
-            
-            "Maximum Daily Rainfall (mm)": {
-                "column": "Maximum Daily Rainfall (mm)", # Example of a different column name
-                "chart_title": "Trend of Maximum Daily Rainfall",
-                "chart_desc": " Represents the highest recorded daily rainfall within a year. Higher values indicate more intense single-day rainfall events."
-            },
+    },
 
-            "Hazard Score": {
-                "column": "Rainfall Hazard Index (Tier-1)", # Example of a different column name
-                "chart_title": "Trend of Rainfall Hazard Score",
-                "chart_desc": "The hazard score is a composite index that reflects the degree of rainfall variability and extremity within a district.Higher values indicate greater climate hazard associated with irregular rainfall patterns, extreme events and prolonged dry or wet conditions."
-            }
+    "Economically Active Population – Male (%)": {
+        "column": "Economically Active Population_M (%)",
+        "chart_title": "Trend of Economically Active Male Population",
+        "chart_desc": " Represents the share of the male population engaged in economic activities. Higher values indicate greater economic engagement, which may influence adaptive capacity."
 
+    },
+
+    "Economically Active Population – Female (%)": {
+        "column": "Economically Active Population_F (%)",
+        "chart_title": "Trend of Economically Active Female Population",
+        "chart_desc": "This indicator reflects the proportion of the workforce dependent on agriculture. Districts with higher agricultural dependence are more sensitive to rainfall variability and extreme weather events."
+
+    },
+
+    "Literacy Rate – Female": {
+        "column": "Literacy Rate_F",
+        "chart_title": "Trend of Female Literacy Rate",
+        "chart_desc": "Indicates the proportion of literate females within the population. Higher literacy supports informed decision-making and enhances resilience to climate risks."
+
+    },
+
+    "Literacy Rate – Male": {
+        "column": "Literacy Rate_M",
+        "chart_title": "Trend of Male Literacy Rate",
+        "chart_desc": "Indicates the proportion of literate males within the population. Higher literacy levels are associated with improved access to information and adaptive capacity."
+
+    },
 }
 
 # -----------------------
