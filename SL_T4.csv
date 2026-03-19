@@ -1,0 +1,51 @@
+State,District,Year,Risk Score,Risk Category
+Eastern,Ampara,2020,0.326852094,Low Risk
+Eastern,Ampara,2021,0.370440949,Low Risk
+North Central,Anuradhapura,2020,0.471326243,Medium Risk
+North Central,Anuradhapura,2021,0.485956601,High Risk
+Uva,Badulla,2020,0.329056367,Low Risk
+Uva,Badulla,2021,0.383442205,Low Risk
+Eastern,Batticaloa,2020,0.31823025,Low Risk
+Eastern,Batticaloa,2021,0.397867882,Medium Risk
+Western,Colombo,2020,0.417847483,Medium Risk
+Western,Colombo,2021,0.443309179,Medium Risk
+Southern,Galle,2020,0.393398474,Low Risk
+Southern,Galle,2021,0.440294607,Medium Risk
+Western,Gampaha,2020,0.434061144,Medium Risk
+Western,Gampaha,2021,0.482922603,High Risk
+Southern,Hambantota,2020,,Low Risk
+Southern,Hambantota,2021,,Low Risk
+Northern,Jaffna,2020,0.394915888,Low Risk
+Northern,Jaffna,2021,0.499598233,High Risk
+Western,Kalutara,2020,0.431309616,Medium Risk
+Western,Kalutara,2021,0.46351202,Medium Risk
+Central,Kandy,2020,0.433571629,Medium Risk
+Central,Kandy,2021,0.385728218,Low Risk
+Sabaragamuwa,Kegalle,2020,0.422390622,Medium Risk
+Sabaragamuwa,Kegalle,2021,0.475647545,High Risk
+Northern,Kilinochchi,2020,0.351103284,Low Risk
+Northern,Kilinochchi,2021,0.474073297,High Risk
+North Western,Kurunegala,2020,0.428641731,Medium Risk
+North Western,Kurunegala,2021,0.54748443,High Risk
+Northern,Mannar,2020,0.325571392,Low Risk
+Northern,Mannar,2021,0.40314525,Medium Risk
+Central,Matale,2020,0.38557992,Low Risk
+Central,Matale,2021,0.433310203,Medium Risk
+Southern,Matara,2020,0.408746735,Medium Risk
+Southern,Matara,2021,0.42283178,Medium Risk
+Uva,Moneragala,2020,0.364750179,Low Risk
+Uva,Moneragala,2021,0.426780785,Medium Risk
+Northern,Mullaitivu,2020,0.332194764,Low Risk
+Northern,Mullaitivu,2021,0.382453537,Low Risk
+Central,Nuwara Eliya,2020,0.376811101,Low Risk
+Central,Nuwara Eliya,2021,0.409132033,Medium Risk
+North Central,Polonnaruwa,2020,0.373837459,Low Risk
+North Central,Polonnaruwa,2021,0.389406715,Low Risk
+North Western,Puttalam,2020,0.388708739,Low Risk
+North Western,Puttalam,2021,0.415613364,Medium Risk
+Sabaragamuwa,Ratnapura,2020,0.423169831,Medium Risk
+Sabaragamuwa,Ratnapura,2021,0.460990143,Medium Risk
+Eastern,Trincomalee,2020,0.345036857,Low Risk
+Eastern,Trincomalee,2021,0.374315925,Low Risk
+Northern,Vavuniya,2020,0.35327093,Low Risk
+Northern,Vavuniya,2021,0.365071374,Low Risk
