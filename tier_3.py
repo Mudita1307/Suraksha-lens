@@ -190,14 +190,14 @@ if metric["column"] not in filtered_df.columns:
     st.error(f"Column '{metric['column']}' not found in data!")
 else:
     trend_df = (
-        filtered_df.groupby(["year", "state"])[metric["column"]]
+        filtered_df.groupby(["Year", "State"])[metric["column"]]
         .mean()
         .reset_index()
     )
 
     fig = px.line(
         trend_df,
-        x="year",
+        x="Year",
         y=metric["column"],
         color="state",
         markers=True
