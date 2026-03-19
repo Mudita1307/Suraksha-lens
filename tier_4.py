@@ -5,7 +5,7 @@ import plotly.express as px
 # -----------------------
 # Load data
 # -----------------------
-df = pd.read_csv("SL_T1.csv", encoding="latin1")
+df = pd.read_csv("SL_T4.csv", encoding="latin1")
 df.columns = df.columns.str.strip()  # Remove extra spaces
 
 # -----------------------
@@ -15,7 +15,6 @@ st.header("Tier-4: Climate Exploitation Risk Index (CERI) (2020-21)")
 st.subheader("Identifying Priority Areas Facing Combined Climate and Social Risk")
 st.write(
     "Tier-4 integrates climate hazard, socio-economic exposure, and child protection vulnerability into a single composite index. It highlights areas where climate stress, population exposure, and protection risks overlap. Higher scores indicate a greater likelihood that climate-related stress may translate into increased risks affecting vulnerable populations.")
-
 
 # -----------------------
 # Sidebar filters
