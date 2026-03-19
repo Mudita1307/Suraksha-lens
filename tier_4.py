@@ -8,6 +8,9 @@ import plotly.express as px
 df = pd.read_csv("ind_sr_tier4_1.csv", encoding="latin1")
 df.columns = df.columns.str.strip()  # Remove extra spaces
 
+df["Year"] = pd.to_numeric(df["Year"], errors="coerce")
+df["Risk Score"] = pd.to_numeric(df["Risk Score"], errors="coerce")
+
 # -----------------------
 # Page title and subtitle
 # -----------------------
