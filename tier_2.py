@@ -18,7 +18,8 @@ st.header("Tier-4: Climate Exploitation Risk Index (CERI) (2020-21)")
 st.subheader("Understanding Who Is Most Exposed to Rainfall-Related Climate Hazards")
 
 st.write(
-    "Tier-2 evaluates socio-economic exposure to climate-related hazards using district-level indicators. It captures population concentration, labour force participation, economic activity, and education levels to assess where climate shocks may have the greatest human impact."
+    "Tier-2 evaluates socio-economic exposure to climate-related hazards using district-level indicators."
+    "It captures population concentration, labour force participation, economic activity, and education levels to assess where climate shocks may have the greatest human impact."
 
 )
 
