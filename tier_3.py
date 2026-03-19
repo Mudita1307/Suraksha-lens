@@ -30,7 +30,6 @@ districts = st.sidebar.multiselect("Select District(s)", sorted(filtered_df["Dis
 if districts:
     filtered_df = filtered_df[filtered_df["District"].isin(districts)]
 
-
 # -----------------------
 # Metric mapping
 # -----------------------
