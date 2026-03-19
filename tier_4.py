@@ -42,22 +42,22 @@ if countries:
 # -----------------------
 states = st.sidebar.multiselect(
     "Select State(s)",
-    sorted(filtered_df["state"].dropna().unique())
+    sorted(filtered_df["State"].dropna().unique())
 )
 
 if states:
-    filtered_df = filtered_df[filtered_df["state"].isin(states)]
+    filtered_df = filtered_df[filtered_df["State"].isin(states)]
 
 # -----------------------
 # District filter
 # -----------------------
 districts = st.sidebar.multiselect(
     "Select District(s)",
-    sorted(filtered_df["district"].dropna().unique())
+    sorted(filtered_df["District"].dropna().unique())
 )
 
 if districts:
-    filtered_df = filtered_df[filtered_df["district"].isin(districts)]
+    filtered_df = filtered_df[filtered_df["District"].isin(districts)]
 
 # -----------------------
 # Metric mapping
