@@ -26,6 +26,9 @@ st.write(
 # Sidebar filters
 # -----------------------
 
+# -----------------------
+# Sidebar filters
+# -----------------------
 st.sidebar.title("Filters")
 
 # State
