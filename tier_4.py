@@ -41,7 +41,7 @@ indicators = {
                 "column": "Risk Score", # Example of a different column name
                 "chart_title": "Trend of Composite Socio-Economic Exposure Score",
                 "chart_desc": "The risk score integrates hazard, exposure, and vulnerability into a single composite index (0–1). Higher values indicate greater overall climate-linked multi-risk."
-            },
+            }
             
 }
 # Default = Exposure Score
