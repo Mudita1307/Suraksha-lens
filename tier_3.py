@@ -39,12 +39,7 @@ if districts:
 # Metric mapping
 # -----------------------
 indicators = {
-    # --- Child Protection Indicators ---
-    "Vulnerability Score": {
-        "column": "Vulnerability Score",
-        "chart_title": "Trend of Child Protection Vulnerability Score",
-        "chart_desc": "This composite score reflects the overall level of vulnerability within child protection systems. The score ranges from 0 (lower vulnerability) to 1 (higher vulnerability). Higher values suggest increased strain on systems responsible for preventing and responding to risks affecting children."
-    },
+    
     "Child Homicide": {
         "column": "Child Homicide Cases",
         "chart_title": "Trend of Child Homicide Cases",
