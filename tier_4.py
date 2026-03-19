@@ -119,7 +119,7 @@ else:
         )
         fig = px.line(
             trend_df,
-            x="year",
+            x="Year",
             y="count",
             color=metric["column"],
             markers=True,
