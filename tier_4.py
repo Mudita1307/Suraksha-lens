@@ -97,7 +97,7 @@ else:
     # Numeric metric
     if pd.api.types.is_numeric_dtype(filtered_df[metric["column"]]):
         trend_df = (
-            filtered_df.groupby(["Year", "district_clean"])[metric["column"]]
+            filtered_df.groupby(["Year", "District"])[metric["column"]]
             .mean()
             .reset_index()
         )
@@ -105,7 +105,7 @@ else:
             trend_df,
             x="year",
             y=metric["column"],
-            color="district_clean",
+            color="District",
             markers=True,
             title=f"{metric['column'].capitalize()} Trend by District"
         )
