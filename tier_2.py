@@ -115,22 +115,21 @@ st.subheader(metric["chart_title"])
 if metric["column"] not in filtered_df.columns:
     st.error(f"Column '{metric['column']}' not found in data!")
 else:
-    # 1. Group by capitalized 'Year' and 'State'
     trend_df = (
         filtered_df.groupby(["Year", "District"])[metric["column"]]
         .mean()
         .reset_index()
     )
 
-    # 2. Ensure px.line uses capitalized 'Year' and 'State'
     fig = px.line(
         trend_df,
         x="Year",
         y=metric["column"],
-        color="State",  # Change 'state' to 'State'
-        markers=True,
-        template="plotly_white"
+        color="District",
+        markers=True
     )
 
+    st.plotly_chart(fig, use_container_width=True)
+    st.write(metric["chart_desc"])
     st.plotly_chart(fig, use_container_width=True)
     st.write(metric["chart_desc"])
