@@ -39,7 +39,6 @@ if districts:
 # Metric mapping
 # -----------------------
 indicators = {
-
     # --- Child Protection Indicators ---
     "Vulnerability Score": {
         "column": "Vulnerability Score",
