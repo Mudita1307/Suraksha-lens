@@ -103,7 +103,7 @@ else:
         )
         fig = px.line(
             trend_df,
-            x="year",
+            x="Year",
             y=metric["column"],
             color="District",
             markers=True,
