@@ -19,9 +19,7 @@ st.subheader("Understanding Who Is Most Exposed to Rainfall-Related Climate Haza
 
 st.write(
     "Tier-2 evaluates socio-economic exposure to climate-related hazards using district-level indicators."
-    "It captures population concentration, labour force participation, economic activity, and education levels to assess where climate shocks may have the greatest human impact."
-
-)
+    "It captures population concentration, labour force participation, economic activity, and education levels to assess where climate shocks may have the greatest human impact.")
 
 # -----------------------
 # Sidebar filters
