@@ -7,7 +7,7 @@ import plotly.express as px
 # -----------------------
 df = pd.read_csv("SL_T2.csv")
 df.columns = df.columns.str.strip()
-df = df.fillna(0)
+
 
 
 # If state and district columns are swapped in the CSV
