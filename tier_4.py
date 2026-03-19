@@ -64,12 +64,12 @@ if districts:
 # -----------------------
 indicators = {
     "Risk Score": {
-        "column": "CERI_norm",
+        "column": "Risk Score",
         "chart_title": "Trend of Composite Socio-Economic Exposure Score",
         "chart_desc": "The risk score integrates hazard, exposure, and vulnerability into a single composite index (0–1). Higher values indicate greater overall climate-linked multi-risk."
     },
     "Risk Category": {
-        "column": "Risk_Category",
+        "column": "Risk Category",
         "chart_title": "Risk Category Classification",
         "chart_desc": "Districts are classified into Low, Medium, or High Risk categories based on the composite index. High-risk districts represent priority areas for targeted intervention."
     },
