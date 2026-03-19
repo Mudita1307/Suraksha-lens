@@ -8,13 +8,14 @@ import plotly.express as px
 df = pd.read_csv("SL_T2_new.csv",  encoding="latin1")
 df.columns = df.columns.str.strip()
 
+
 # If state and district columns are swapped in the CSV
 
 
 # -----------------------
 # Page title
 # -----------------------
-st.header("Tier-4: Climate Exploitation Risk Index (CERI) (2020-21)")
+st.header("Tier-2: Socio-Economic Exposure Index (2006-21)")
 st.subheader("Understanding Who Is Most Exposed to Rainfall-Related Climate Hazards")
 
 st.write(
