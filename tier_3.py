@@ -11,12 +11,10 @@ df.columns = df.columns.str.strip()  # Remove extra spaces
 # -----------------------
 # Page title and subtitle
 # -----------------------
-st.header("Tier-3: Institutional & Exploitation Vulnerability Index (2017–2023)")
-st.subheader(" Understanding Where Protection Systems Show Signs of Strain During Climate and Economic Shocks")
+st.header("Tier-3: Institutional & Exploitation Vulnerability Index (2020-24)")
+st.subheader("Understanding Where Protection Systems Show Signs of Strain During Climate and Economic Shocks")
 st.write(
-    "Tier-3 assesses the vulnerability of state-level protection environments."
-    "It analyses trends in reported exploitation-related crimes to identify where institutional strain may increase vulnerability during climate or economic shocks."
-     " Changes in reported cases are interpreted as signals of system stress, reflecting shifts in incidence, reporting practices, enforcement capacity, or public awareness."
+    "Tier-3 assesses vulnerability within child protection environments using district-level data. It analyses trends in reported child-related offences, including violence, exploitation, neglect, and abuse, to identify where protection systems may be under strain. Changes in reported cases are interpreted as signals of vulnerability, reflecting shifts in incidence, reporting practices, enforcement capacity, or public awareness."
 )
 
 
