@@ -29,6 +29,11 @@ filtered_df = df.copy()
 if states:
     filtered_df = filtered_df[filtered_df["State"].isin(states)]
 
+# District
+districts = st.sidebar.multiselect("Select District(s)", sorted(filtered_df["District"].unique()))
+if districts:
+    filtered_df = filtered_df[filtered_df["District"].isin(districts)]
+
 
 # -----------------------
 # Metric mapping
