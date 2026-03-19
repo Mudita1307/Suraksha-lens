@@ -25,7 +25,7 @@ st.write(
 st.sidebar.title("Filters")
 
 # State filter
-states = st.sidebar.multiselect("Select State(s)", sorted(df["state_clean"].unique()))
+#states = st.sidebar.multiselect("Select State(s)", sorted(df["state_clean"].unique()))
 filtered_df = df.copy()
 if countries:
     filtered_df = filtered_df[filtered_df["Country"].isin(countries)]
