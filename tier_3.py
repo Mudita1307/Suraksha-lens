@@ -24,10 +24,10 @@ st.write(
 st.sidebar.title("Filters")
 
 # State
-states = st.sidebar.multiselect("Select State(s)", sorted(df["state"].unique()))
+states = st.sidebar.multiselect("Select State(s)", sorted(df["State"].unique()))
 filtered_df = df.copy()
 if states:
-    filtered_df = filtered_df[filtered_df["state"].isin(states)]
+    filtered_df = filtered_df[filtered_df["State"].isin(states)]
 
 
 # -----------------------
