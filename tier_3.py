@@ -39,42 +39,144 @@ if districts:
 # Metric mapping
 # -----------------------
 indicators = {
-    "Protection Vulnerability Score": {
-        "column": "vulnerability",
-        "chart_title": "Trend of Protection Vulnerability Score",
-        "chart_desc": "This composite score reflects the overall strength of a state’s protection environment. The score ranges from 0 (stronger protection systems) to 1 (weaker protection systems). Higher values suggest that institutions may be under strain and less able to prevent or respond to exploitation during periods of climate, economic, or social stress."
-
+    indicators = {
+    # --- Child Protection Indicators ---
+    "Vulnerability Score": {
+        "column": "Vulnerability Score",
+        "chart_title": "Trend of Child Protection Vulnerability Score",
+        "chart_desc": "This composite score reflects the overall level of vulnerability within child protection systems. The score ranges from 0 (lower vulnerability) to 1 (higher vulnerability). Higher values suggest increased strain on systems responsible for preventing and responding to risks affecting children."
     },
-    "Human Trafficking Cases": {
-        "column": "human_val",
-        "chart_title":  "Trend of Reported Human Trafficking Cases",
-        "chart_desc": "This indicator tracks officially reported human trafficking cases. Rising trends may reflect increasing exploitation risks, weakened preventive systems, or greater stress within vulnerable communities, particularly during or after climate and economic shocks."
+    "Child Homicide": {
+        "column": "Child Homicide Cases",
+        "chart_title": "Trend of Child Homicide Cases",
+        "chart_desc": "Tracks reported cases of homicide involving children. Such incidents represent severe breakdowns in protection and safety."
+    },
+    "Attempted Child Murder": {
+        "column": "Attempted Child Murder Cases",
+        "chart_title": "Trend of Attempted Child Murder Cases",
+        "chart_desc": "Captures reported attempts of fatal violence against children. Trends may indicate serious threats to child safety and protection systems."
+    },
+    "Child Serious Injury": {
+        "column": "Child Serious Injury Cases",
+        "chart_title": "Trend of Child Serious Injury Cases",
+        "chart_desc": "Represents cases involving significant physical harm to children. Higher values may indicate increased exposure to unsafe environments or violence."
+    },
+    "Child Assault": {
+        "column": "Child Assault Cases",
+        "chart_title": "Trend of Child Assault Cases",
+        "chart_desc": "Tracks reported incidents of physical assault against children. Changes may reflect shifts in safety conditions or reporting."
+    },
+    "Child Sexual Exploitation": {
+        "column": "Child Sexual Exploitation Cases",
+        "chart_title": "Trend of Child Sexual Exploitation Cases",
+        "chart_desc": "Captures cases involving exploitation of children for sexual purposes. Rising trends may indicate increased vulnerability or improved detection and reporting."
+    },
+    "Child Abduction": {
+        "column": "Child Abduction Cases",
+        "chart_title": "Trend of Child Abduction Cases",
+        "chart_desc": "Represents reported cases of child abduction. Higher levels may signal increased risks related to safety and security."
+    },
+    "Child Kidnapping": {
+        "column": "Child Kidnapping Cases",
+        "chart_title": "Trend of Child Kid kidnapping Cases",
+        "chart_desc": "Tracks reported kidnapping cases involving children. Increases may indicate heightened risks of coercion or exploitation."
+    },
+    "Child Rape": {
+        "column": "Child Rape Cases",
+        "chart_title": "Trend of Child Rape Cases",
+        "chart_desc": "Captures reported rape cases involving children. Trends may indicate severe protection risks and vulnerabilities."
+    },
+    "Child Sexual Offence": {
+        "column": "Child Sexual Offence Cases",
+        "chart_title": "Trend of Child Sexual Offence Cases",
+        "chart_desc": "Represents a broader category of sexual offences against children. Higher values may reflect increased vulnerability or improved reporting mechanisms."
+    },
+    "Child Trafficking": {
+        "column": "Child Trafficking Cases",
+        "chart_title": "Trend of Child Trafficking Cases",
+        "chart_desc": "Tracks reported cases of trafficking involving children. Rising trends may indicate increased organised exploitation risks."
+    },
+    "Child Aggravated Sexual Abuse": {
+        "column": "Child Aggravated Sexual Abuse Cases",
+        "chart_title": "Trend of Child Aggravated Sexual Abuse Cases",
+        "chart_desc": "Captures severe forms of sexual abuse involving children. Higher levels indicate significant protection concerns."
+    },
+    "Adultery Cases": {
+        "column": "Adultery Cases",
+        "chart_title": "Trend of Adultery Cases",
+        "chart_desc": "Represents reported adultery-related cases. While not directly a child-specific offence, trends may reflect broader social conditions influencing household stability."
+    },
+    "Child Cruelty": {
+        "column": "Child Cruelty Cases",
+        "chart_title": "Trend of Child Cruelty Cases",
+        "chart_desc": "Tracks cases involving cruelty or neglect towards children. Higher values may indicate stress within caregiving environments."
+    },
+    "Child Indecent Acts": {
+        "column": "Child Indecent Acts Cases",
+        "chart_title": "Trend of Child Indecent Acts Cases",
+        "chart_desc": "Represents cases involving inappropriate or indecent acts affecting children. Trends may indicate risks related to exploitation or misconduct."
+    },
+    "Child Sexual Harassment": {
+        "column": "Child Sexual Harassment Cases",
+        "chart_title": "Trend of Child Sexual Harassment Cases",
+        "chart_desc": "Tracks reported cases of sexual harassment involving children. Higher values may indicate increased exposure to unsafe environments."
+    },
+    "Child Assault & Injury": {
+        "column": "Child Assault & Injury Cases",
+        "chart_title": "Trend of Child Assault and Injury Cases",
+        "chart_desc": "Captures combined incidents of assault and injury involving children. Trends may reflect broader patterns of violence affecting children."
+    },
+    "Child Obscene Content Exposure": {
+        "column": "Child Exposure to Obscene Content Cases",
+        "chart_title": "Trend of Child Exposure to Obscene Content Cases",
+        "chart_desc": "Represents cases where children are exposed to inappropriate or explicit content. Increases may reflect growing digital or environmental risks."
+    },
+    "Child Exploitation & Assault": {
+        "column": "Child Exploitation & Assault Cases",
+        "chart_title": "Trend of Child Exploitation and Assault Cases",
+        "chart_desc": "Captures combined cases of exploitation and physical harm. Higher values indicate overlapping vulnerabilities."
+    },
+    "Child Domestic Violence Exposure": {
+        "column": "Child Domestic Violence Exposure Cases",
+        "chart_title": "Trend of Child Exposure to Domestic Violence",
+        "chart_desc": "Tracks cases where children are exposed to domestic violence. Such exposure may have long-term impacts on safety and well-being."
+    },
+    "Child Protection & Guardianship": {
+        "column": "Child Protection & Guardianship Cases",
+        "chart_title": "Trend of Child Protection and Guardianship Cases",
+        "chart_desc": "Represents cases related to custody, protection, and guardianship. Trends may reflect pressures on formal protection systems."
+    },
+    "Child Media-Related Offence": {
+        "column": "Child Media-Related Offence Cases",
+        "chart_title": "Trend of Child Media-Related Offence Cases",
+        "chart_desc": "Captures offences involving media or digital platforms affecting children. Increases may indicate emerging risks in digital environments."
+    },
+    "Child Education Neglect": {
+        "column": "Child Education Neglect Cases",
+        "chart_title": "Trend of Child Education Neglect Cases",
+        "chart_desc": "Tracks cases where children are deprived of educational access or support. Higher values may signal broader socio-economic stress."
+    },
+    "Child Verbal Abuse": {
+        "column": "Child Verbal Abuse Cases",
+        "chart_title": "Trend of Child Verbal Abuse Cases",
+        "chart_desc": "Represents reported cases of verbal abuse involving children. Trends may reflect underlying social and household stress factors."
     },
 
-    "Crimes Against Children": {
-        "column": "children_val",
-        "chart_title": "Trend of Crimes Against Children",
-        "chart_desc": "This indicator captures reported crimes against children, including abuse, exploitation, and neglect. Increases may signal growing pressure on child protection systems and heightened vulnerability during periods of displacement, livelihood loss, or social instability."
-
+    # --- Labour Force Indicators ---
+    "Labour Force Participation Rate – Male": {
+        "column": "Labour Force Participation Rate – Male",
+        "chart_title": "Trend of Male Labour Force Participation Rate",
+        "chart_desc": "This indicator shows the proportion of the male population actively participating in the labour force. Variations may influence household income stability and resilience to climate-related disruptions."
     },
-    "Kidnapping Cases": {
-        "column": "kidnapping_val",
-        "chart_title": "Trend of Reported Cybercrime Cases",
-        "chart_desc": "This indicator tracks reported kidnapping cases. Higher levels may point to serious security stress and increased vulnerability to coercion, trafficking, or organised exploitation networks."
-
-    },
+    "Labour Force Participation Rate – Female": {
+        "column": "Labour Force Participation Rate – Female",
+        "chart_title": "Trend of Female Labour Force Participation Rate",
+        "chart_desc": "This indicator reflects the level of female participation in the labour force. Higher participation may indicate broader income sources, while lower participation may signal increased dependency."
+    }
+}
   
     
-    
 
-    
-
-
-
-    
-
-    
-}
 
 # Default = Exposure Score
 metric_name = st.sidebar.selectbox(
