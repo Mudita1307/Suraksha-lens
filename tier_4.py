@@ -44,8 +44,9 @@ indicators = {
     },
     "Risk Category": {
         "column": "Risk Category",
-        "chart_title": "Distribution of Risk Categories",
-        "chart_desc": "Districts are classified into Low, Medium, and High risk categories. High-risk districts represent priority areas."
+        "chart_title": "Category Classification",
+        "chart_desc": " Districts are classified into Low, Medium, or High Risk categories based on the composite index. High-risk districts represent priority areas for targeted intervention.
+"
     }
 }
 
