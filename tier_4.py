@@ -80,11 +80,11 @@ else:
             color=metric["column"],
             barmode="stack",
             color_discrete_map={
-                "High": "#FF0000",     # Red
-                "Medium": "#FFC107",   # Yellow (better visibility)
-                "Low": "#008000"       # Green
+                "High Risk": "#FF0000",     # Red
+                "Medium Risk": "#FFC107",   # Yellow (better visibility)
+                "Low Risk": "#008000"       # Green
             },
-            category_orders={metric["column"]: ["Low", "Medium", "High"]},
+            category_orders={metric["column"]: ["Low Risk", "Medium Risk", "High Risk"]},
             text_auto=True
         )
 
