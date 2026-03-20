@@ -5,7 +5,7 @@ import plotly.express as px
 # -----------------------
 # Load data
 # -----------------------
-df = pd.read_csv("SL_T2.csv")
+df = pd.read_csv("SL_T2 - SL_T2.csv")
 df.columns = df.columns.str.strip()
 
 #df["Population_Density"] = df["Population_Density"].round().astype(int)
