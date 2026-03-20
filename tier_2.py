@@ -48,7 +48,16 @@ indicators = {
     "Exposure Score": {
         "column": "Exposure Score",
         "chart_title": "Trend of Composite Socio-Economic Exposure Score",
-        "chart_desc": "The composite exposure score ranges from 0 (lowest exposure) to 1 (highest exposure). Higher values indicate districts where rainfall shocks would affect larger and more socio-economically vulnerable populations."
+        "chart_desc": """The composite exposure score ranges from 0 (lowest exposure) to 1 (highest exposure). Higher values indicate districts where rainfall shocks would affect larger and more socio-economically vulnerable populations.
+
+
+    <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000; color: #000000;">
+        <strong>Note:</strong> Data for certain districts is unavailable for specific years due to gaps in official sources. 
+        No imputation has been applied. Exposure scores are calculated using available data only.<br><br>
+         <strong>2006–2007:</strong> Data is unavailable for Ampara, Batticaloa, Moneragala, and Trincomalee.<br>
+         <strong>2006–2010:</strong> Data is unavailable for Jaffna, Kilinochchi, Mannar, Mullaitivu, and Vavuniya.
+    </div>
+    """
 
     },
     
