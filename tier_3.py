@@ -122,37 +122,77 @@ Hambantota has no data for 2020–2024.
     "Child Rape": {
         "column": "Child Rape Cases",
         "chart_title": "Trend of Child Rape Cases",
-        "chart_desc": "Captures reported rape cases involving children. Trends may indicate severe protection risks and vulnerabilities."
+        "chart_desc": """Captures reported rape cases involving children. Trends may indicate severe protection risks and vulnerabilities.
+        
+Note : No data is available for Hambantota for the period 2020 to 2024.
+"""
+
+        
     },
     "Child Sexual Offence": {
         "column": "Child Sexual Offence Cases",
         "chart_title": "Trend of Child Sexual Offence Cases",
-        "chart_desc": "Represents a broader category of sexual offences against children. Higher values may reflect increased vulnerability or improved reporting mechanisms."
+        "chart_desc": """Represents a broader category of sexual offences against children. Higher values may reflect increased vulnerability or improved reporting mechanisms.
+        
+Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, 
+Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa,
+Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
+"""
+        
     },
     "Child Trafficking": {
         "column": "Child Trafficking Cases",
         "chart_title": "Trend of Child Trafficking Cases",
-        "chart_desc": "Tracks reported cases of trafficking involving children. Rising trends may indicate increased organised exploitation risks."
+        "chart_desc": """Tracks reported cases of trafficking involving children. Rising trends may indicate increased organised exploitation risks.
+        
+Note :  Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, 
+Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu,
+Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
+"""
+
+
+        
     },
     "Child Aggravated Sexual Abuse": {
         "column": "Child Aggravated Sexual Abuse Cases",
         "chart_title": "Trend of Child Aggravated Sexual Abuse Cases",
-        "chart_desc": "Captures severe forms of sexual abuse involving children. Higher levels indicate significant protection concerns."
+        "chart_desc": """Captures severe forms of sexual abuse involving children. Higher levels indicate significant protection concerns.
+
+Note:  No data is available for Hambantota for the period 2020 to 2024.
+"""
+
+        
     },
     "Adultery Cases": {
         "column": "Adultery Cases",
         "chart_title": "Trend of Adultery Cases",
-        "chart_desc": "Represents reported adultery-related cases. While not directly a child-specific offence, trends may reflect broader social conditions influencing household stability."
+        "chart_desc": """Represents reported adultery-related cases. While not directly a child-specific offence, trends may reflect broader social conditions influencing household stability.
+        
+Note : Data is missing for 2023 in Batticaloa, Colombo, Gampaha, Jaffna, Kalutara, Kegalle, Kilinochchi, Mullaitivu, Trincomalee, and Vavuniya.
+Hambantota has no data for 2020–2024.
+"""
+
+        
     },
     "Child Cruelty": {
         "column": "Child Cruelty Cases",
         "chart_title": "Trend of Child Cruelty Cases",
-        "chart_desc": "Tracks cases involving cruelty or neglect towards children. Higher values may indicate stress within caregiving environments."
+        "chart_desc": """Tracks cases involving cruelty or neglect towards children. Higher values may indicate stress within caregiving environments.
+        
+Note :  Data is missing for 2023 in Badulla, Gampaha, Mannar, and Moneragala.
+"""
+        
     },
     "Child Indecent Acts": {
         "column": "Child Indecent Acts Cases",
         "chart_title": "Trend of Child Indecent Acts Cases",
-        "chart_desc": "Represents cases involving inappropriate or indecent acts affecting children. Trends may indicate risks related to exploitation or misconduct."
+        "chart_desc": """Represents cases involving inappropriate or indecent acts affecting children. Trends may indicate risks related to exploitation or misconduct.
+        
+Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara,
+Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Trincomalee, and Vavuniya.
+"""
+
+        
     },
     "Child Sexual Harassment": {
         "column": "Child Sexual Harassment Cases",
