@@ -194,4 +194,10 @@ else:
 
     st.plotly_chart(fig, use_container_width=True)
     st.write(metric["chart_desc"])
-  
+
+st.write(
+    """Note: Data for certain districts is unavailable for specific years due to gaps in official sources. No imputation has been applied. Exposure scores are calculated using available data only.
+         1.2006–2007: Data is unavailable for Ampara, Batticaloa, Moneragala, and Trincomalee.
+         2.2006–2010: Data is unavailable for Jaffna, Kilinochchi, Mannar, Mullaitivu, and Vavuniya."""
+
+)
