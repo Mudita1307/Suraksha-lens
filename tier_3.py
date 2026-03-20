@@ -50,7 +50,7 @@ indicators = {
         
 Note : Data is missing for the year 2023 in Badulla, Galle, Kandy, Kegalle, Kurunegala, Mannar,
 Matale, Moneragala, Mullaitivu, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya
-    """
+"""
         
     },
     "Attempted Child Murder": {
@@ -58,16 +58,16 @@ Matale, Moneragala, Mullaitivu, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, a
         "chart_title": "Trend of Attempted Child Murder Cases",
         "chart_desc": """Captures reported attempts of fatal violence against children. Trends may indicate serious threats to child safety and protection systems.
 
-Note : Data is missing for the year 2023 in Ampara, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, 
-Kegalle, Kilinochchi, Mannar, Matale, Matara, Moneragala, Mullaitivu, Polonnaruwa, Ratnapura, Trincomalee, and Vavuniya.
-Hambantota has no data available for 2020 to 2024.
-    """
+Note : Data is missing for the year 2023 in Ampara, Batticaloa, Colombo, Galle, Gampaha, Jaffna,
+Kalutara, Kandy, Kegalle, Kilinochchi, Mannar, Matale, Matara, Moneragala, Mullaitivu,
+Polonnaruwa, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data available for 2020 to 2024.
+"""
 
     },
     "Child Serious Injury": {
         "column": "Child Serious Injury Cases",
         "chart_title": """Trend of Child Serious Injury Cases",
-        "chart_desc": "Represents cases involving significant physical harm to children. Higher values may indicate increased exposure to unsafe environments or violence.
+        "chart_desc": """Represents cases involving significant physical harm to children. Higher values may indicate increased exposure to unsafe environments or violence.
 
 Note :  Data is missing for 2023 in Badulla, Gampaha, Kalutara, and Vavuniya.
 Hambantota has no data for 2020–2024.
