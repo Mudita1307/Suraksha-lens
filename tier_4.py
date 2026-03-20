@@ -106,22 +106,24 @@ else:
         )
 
     # --- LOGIC FOR LINE CHART (Risk Score) ---
-    else:
-        trend_df = (
-            filtered_df.groupby(["Year", "District"])[metric["column"]]
-            .mean()
-            .reset_index()
+    # --- LOGIC FOR BAR CHART (Risk Category) ---
+    elif metric_name == "Risk Category":
+        # Create a bar chart showing the count of districts in each risk category per year
+        fig = px.histogram(
+            filtered_df, 
+            x="Year", 
+            color=metric["column"],
+            barmode="stack", # Stacks Low, Medium, and High on top of each other
+            category_orders={metric["column"]: ["Low", "Medium", "High"]}, # Sets proper order
+            color_discrete_map={"High": "red", "Medium": "orange", "Low": "green"},
+            text_auto=True, # Shows the count number on each bar segment
+            title="Distribution of Risk Categories over Time"
         )
 
-        fig = px.line(
-            trend_df,
-            x="Year",
-            y=metric["column"],
-            color="District",
-            markers=True,
-            template="plotly_white"
+        fig.update_layout(
+            xaxis_title="Year",
+            yaxis_title="Number of Districts",
+            legend_title="Risk Level"
         )
 
-    # Render Chart
-    st.plotly_chart(fig, use_container_width=True)
-    st.info(metric["chart_desc"])
+        st.plotly_chart(fig, use_container_width=True)
