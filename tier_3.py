@@ -190,6 +190,7 @@ Note :  Data is missing for 2023 in Badulla, Gampaha, Mannar, and Moneragala.
         
 Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara,
 Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Trincomalee, and Vavuniya.
+Hambantota has no data for 2020–2024.
 """
 
         
@@ -197,47 +198,101 @@ Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matara, Moneragala, Mullaitivu,
     "Child Sexual Harassment": {
         "column": "Child Sexual Harassment Cases",
         "chart_title": "Trend of Child Sexual Harassment Cases",
-        "chart_desc": "Tracks reported cases of sexual harassment involving children. Higher values may indicate increased exposure to unsafe environments."
+        "chart_desc": """Tracks reported cases of sexual harassment involving children. Higher values may indicate increased exposure to unsafe environments.
+
+Note :  Data is missing for 2023 in Mannar.Hambantota has no data for 2020–2024.
+"""
+
     },
     "Child Assault & Injury": {
         "column": "Child Assault & Injury Cases",
         "chart_title": "Trend of Child Assault and Injury Cases",
-        "chart_desc": "Captures combined incidents of assault and injury involving children. Trends may reflect broader patterns of violence affecting children."
+        "chart_desc": """Captures combined incidents of assault and injury involving children. Trends may reflect broader patterns of violence affecting children.
+
+Note : No data is available for Hambantota for the period 2020 to 2024.
+"""
+
+
+        
     },
     "Child Obscene Content Exposure": {
         "column": "Child Exposure to Obscene Content Cases",
         "chart_title": "Trend of Child Exposure to Obscene Content Cases",
-        "chart_desc": "Represents cases where children are exposed to inappropriate or explicit content. Increases may reflect growing digital or environmental risks."
+        "chart_desc": """Represents cases where children are exposed to inappropriate or explicit content. Increases may reflect growing digital or environmental risks.
+        
+ Note : Data is missing for 2023 in Ampara, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kegalle, Kilinochchi, Mannar, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Puttalam, Ratnapura, Trincomalee, and Vavuniya.
+ Hambantota has no data for 2020–2024.
+ """
+
+
+        
     },
     "Child Exploitation & Assault": {
         "column": "Child Exploitation & Assault Cases",
         "chart_title": "Trend of Child Exploitation and Assault Cases",
-        "chart_desc": "Captures combined cases of exploitation and physical harm. Higher values indicate overlapping vulnerabilities."
+        "chart_desc": """Captures combined cases of exploitation and physical harm. Higher values indicate overlapping vulnerabilities.
+Note : Data is missing for 2023 in Ampara, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kegalle,
+Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Polonnaruwa, Puttalam, Ratnapura, Trincomalee,
+and Vavuniya.Hambantota has no data for 2020–2024.
+"""
+
     },
     "Child Domestic Violence Exposure": {
         "column": "Child Domestic Violence Exposure Cases",
         "chart_title": "Trend of Child Exposure to Domestic Violence",
-        "chart_desc": "Tracks cases where children are exposed to domestic violence. Such exposure may have long-term impacts on safety and well-being."
+        "chart_desc": "Tracks cases where children are exposed to domestic violence. Such exposure may have long-term impacts on safety and well-being.
+
+Note : : Data is missing for 2023 in Ampara, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, 
+Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu,
+Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
+"""
+
     },
     "Child Protection & Guardianship": {
         "column": "Child Protection & Guardianship Cases",
         "chart_title": "Trend of Child Protection and Guardianship Cases",
-        "chart_desc": "Represents cases related to custody, protection, and guardianship. Trends may reflect pressures on formal protection systems."
+        "chart_desc": """Represents cases related to custody, protection, and guardianship. Trends may reflect pressures on formal protection systems.
+
+Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, 
+Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu,
+Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
+"""
+
     },
     "Child Media-Related Offence": {
         "column": "Child Media-Related Offence Cases",
         "chart_title": "Trend of Child Media-Related Offence Cases",
-        "chart_desc": "Captures offences involving media or digital platforms affecting children. Increases may indicate emerging risks in digital environments."
+        "chart_desc": """Captures offences involving media or digital platforms affecting children. Increases may indicate emerging risks in digital environments.
+        
+Note :  Data is missing for 2023 in Anuradhapura, Batticaloa, Gampaha, Kalutara, Kegalle,
+Kilinochchi, Kurunegala, and Mullaitivu.Hambantota has no data for 2020–2024.
+"""
+
     },
     "Child Education Neglect": {
         "column": "Child Education Neglect Cases",
         "chart_title": "Trend of Child Education Neglect Cases",
-        "chart_desc": "Tracks cases where children are deprived of educational access or support. Higher values may signal broader socio-economic stress."
+        "chart_desc": """Tracks cases where children are deprived of educational access or support. Higher values may signal broader socio-economic stress.
+        
+Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Colombo, Galle, Gampaha, Jaffna, Kalutara,
+Kandy, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.
+Hambantota has no data for 2020–2024.
+"""
+
+
+
+        
     },
     "Child Verbal Abuse": {
         "column": "Child Verbal Abuse Cases",
         "chart_title": "Trend of Child Verbal Abuse Cases",
-        "chart_desc": "Represents reported cases of verbal abuse involving children. Trends may reflect underlying social and household stress factors."
+        "chart_desc": """Represents reported cases of verbal abuse involving children. Trends may reflect underlying social and household stress factors.
+
+Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, 
+Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, 
+Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
+"""
+        
     },
 
     
