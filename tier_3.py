@@ -66,7 +66,7 @@ Polonnaruwa, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data availab
     },
     "Child Serious Injury": {
         "column": "Child Serious Injury Cases",
-        "chart_title": """Trend of Child Serious Injury Cases",
+        "chart_title": "Trend of Child Serious Injury Cases",
         "chart_desc": """Represents cases involving significant physical harm to children. Higher values may indicate increased exposure to unsafe environments or violence.
 
 Note :  Data is missing for 2023 in Badulla, Gampaha, Kalutara, and Vavuniya.
