@@ -34,7 +34,7 @@ if districts:
 # Metric mapping
 # -----------------------
 indicators = {
-    indicators = {
+
     "Vulnerability Score ": {
         "column": "Vulnerability Score ",
         "chart_title": "Trend of Child Protection Vulnerability Score",
