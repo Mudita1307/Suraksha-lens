@@ -8,7 +8,7 @@ import plotly.express as px
 df = pd.read_csv("SL_T2.csv")
 df.columns = df.columns.str.strip()
 
-df["Population_Density"] = df["Population_Density"].astype(int)
+df["Population_Density"] = df["Population_Density"].round().astype(int)
 
 # If state and district columns are swapped in the CSV
 
