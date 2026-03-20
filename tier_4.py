@@ -40,12 +40,12 @@ indicators = {
     "Risk Score": {
         "column": "Risk Score",
         "chart_title": "Trend of Composite Socio-Economic Exposure Score",
-        "chart_desc": "The risk score integrates hazard, exposure, and vulnerability (0–1)."
+        "chart_desc": "The risk score integrates hazard, exposure, and vulnerability into a single composite index (0–1). Higher values indicate greater overall climate-linked multi-risk."
     },
     "Risk Category": {
         "column": "Risk Category", 
         "chart_title": "Distribution of Risk Categories",
-        "chart_desc": "Districts are categorized into Low, Medium, or High Risk levels."
+        "chart_desc": "Districts are classified into Low, Medium, or High Risk categories based on the composite index. High-risk districts represent priority areas for targeted intervention."
     }
 }
 
@@ -75,7 +75,7 @@ else:
             color=metric["column"],
             barmode="stack",
             # Red for High, Yellow for Medium, Green for Low
-            color_discrete_map={"High": "#e74c3c", "Medium": "#f1c40f", "Low": "#2ecc71"},
+            color_discrete_map={"High": "#FF0000", "Medium": "#FFEFD5", "Low": "#008000"},
             category_orders={metric["column"]: ["Low", "Medium", "High"]},
             text_auto=True
         )
