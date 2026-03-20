@@ -81,7 +81,7 @@ else:
             barmode="stack",
             color_discrete_map={
                 "High": "red",
-                "Medium": "orange",
+                "Medium": "yellow",
                 "Low": "green"
             },
             category_orders={metric["column"]: ["Low", "Medium", "High"]},
@@ -133,7 +133,7 @@ else:
         st.markdown(
             "Districts are classified into "
             "<span style='color:green; font-weight:bold;'>Low</span>, "
-            "<span style='color:orange; font-weight:bold;'>Medium</span>, and "
+            "<span style='color:yellow; font-weight:bold;'>Medium</span>, and "
             "<span style='color:red; font-weight:bold;'>High</span> risk categories. "
             "<span style='color:red; font-weight:bold;'>High-risk</span> districts represent priority areas.",
             unsafe_allow_html=True
