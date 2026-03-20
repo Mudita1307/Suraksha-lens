@@ -45,8 +45,7 @@ indicators = {
     "Risk Category": {
         "column": "Risk Category",
         "chart_title": "Category Classification",
-        "chart_desc": " Districts are classified into Low, Medium, or High Risk categories based on the composite index. High-risk districts represent priority areas for targeted intervention.
-"
+        "chart_desc": " Districts are classified into Low, Medium, or High Risk categories based on the composite index. High-risk districts represent priority areas for targeted intervention."
     }
 }
 
