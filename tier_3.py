@@ -40,8 +40,9 @@ indicators = {
         "chart_desc": """This composite score reflects the overall level of vulnerability within child protection systems. The score ranges from 0 (lower vulnerability) to 1 (higher vulnerability). Higher values suggest increased strain on systems responsible for preventing and responding to risks affecting children.
 
 <div style="background-color: #ffe6e6; padding: 15px; border-radius: 5px; border: 1px solid #ff4b4b; color: #b30000;">
-        <strong>Note:</strong> {"The vulnerability score is unavailable for Hambantota for all years from 2020 to 2024 due to missing underlying indicator data."}
-    </div>
+    <strong>Note:</strong> The vulnerability score is unavailable for Hambantota for all years from 2020 to 2024 due to missing underlying indicator data.
+</div>
+
 """
 
         
