@@ -45,12 +45,12 @@ indicators = {
     "Risk Category": {
         "column": "Risk Category",
         "chart_title": "Category Classification",
-        "chart_desc": " Districts are classified into Low, Medium, or High Risk categories based on the composite index. 
+        "chart_desc": " Districts are classified into Low, Medium, or High Risk categories based on the composite index. "
 
-High Risk: Districts with a risk score greater than or equal to 0.67
-Medium Risk: Districts with a risk score between 0.34 and 0.66
-Low Risk: Districts with a risk score below 0.34 
-"
+"High Risk: Districts with a risk score greater than or equal to 0.67"
+"Medium Risk: Districts with a risk score between 0.34 and 0.66"
+"Low Risk: Districts with a risk score below 0.34 "
+
     }
 }
 
