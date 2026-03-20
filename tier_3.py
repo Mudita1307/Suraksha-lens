@@ -34,16 +34,15 @@ if districts:
 # Metric mapping
 # -----------------------
 indicators = {
-
     "Vulnerability Score": {
-        "column": "Vulnerability Score",
-        "chart_title": "Trend of Child Protection Vulnerability Score",
-        "chart_desc": """This composite score reflects the overall level of vulnerability within child protection systems. The score ranges from 0 (lower vulnerability) to 1 (higher vulnerability). 
+    "column": "Vulnerability Score",
+    "chart_title": "Trend of Child Protection Vulnerability Score",
+    "chart_desc": """This composite score reflects the overall level of vulnerability within child protection systems. The score ranges from 0 (lower vulnerability) to 1 (higher vulnerability). 
 
 <div style="background-color: #ffe6e6; padding: 15px; border-radius: 5px; border: 1px solid #ff4b4b; color: #b30000;">
     <strong>Note:</strong> The vulnerability score is unavailable for Hambantota for all years from 2020 to 2024 due to missing underlying indicator data.
 </div>"""
-    },
+},
     "Child Homicide": {
         "column": "Child Homicide Cases",
         "chart_title": "Trend of Child Homicide Cases",
