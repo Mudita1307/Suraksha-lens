@@ -66,13 +66,24 @@ Hambantota has no data available for 2020 to 2024.
     },
     "Child Serious Injury": {
         "column": "Child Serious Injury Cases",
-        "chart_title": "Trend of Child Serious Injury Cases",
-        "chart_desc": "Represents cases involving significant physical harm to children. Higher values may indicate increased exposure to unsafe environments or violence."
+        "chart_title": """Trend of Child Serious Injury Cases",
+        "chart_desc": "Represents cases involving significant physical harm to children. Higher values may indicate increased exposure to unsafe environments or violence.
+
+Note :  Data is missing for 2023 in Badulla, Gampaha, Kalutara, and Vavuniya.
+Hambantota has no data for 2020–2024.
+"""
+
     },
     "Child Assault": {
         "column": "Child Assault Cases",
         "chart_title": "Trend of Child Assault Cases",
-        "chart_desc": "Tracks reported incidents of physical assault against children. Changes may reflect shifts in safety conditions or reporting."
+        "chart_desc": """Tracks reported incidents of physical assault against children. Changes may reflect shifts in safety conditions or reporting.
+Note: Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha,
+Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, 
+Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, and Trincomalee.
+Hambantota has no data for 2020–2024.
+"""
+
     },
     "Child Sexual Exploitation": {
         "column": "Child Sexual Exploitation Cases",
