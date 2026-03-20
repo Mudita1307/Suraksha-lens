@@ -156,17 +156,7 @@ indicators = {
         "chart_desc": "Represents reported cases of verbal abuse involving children. Trends may reflect underlying social and household stress factors."
     },
 
-    # --- Labour Force Indicators ---
-    "Labour Force Participation Rate – Male": {
-        "column": "Labour Force Participation Rate – Male",
-        "chart_title": "Trend of Male Labour Force Participation Rate",
-        "chart_desc": "This indicator shows the proportion of the male population actively participating in the labour force. Variations may influence household income stability and resilience to climate-related disruptions."
-    },
-    "Labour Force Participation Rate – Female": {
-        "column": "Labour Force Participation Rate – Female",
-        "chart_title": "Trend of Female Labour Force Participation Rate",
-        "chart_desc": "This indicator reflects the level of female participation in the labour force. Higher participation may indicate broader income sources, while lower participation may signal increased dependency."
-    }
+    
 }
   
     
