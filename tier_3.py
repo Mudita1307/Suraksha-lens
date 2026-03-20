@@ -46,12 +46,21 @@ indicators = {
     "Child Homicide": {
         "column": "Child Homicide Cases",
         "chart_title": "Trend of Child Homicide Cases",
-        "chart_desc": "Tracks reported cases of homicide involving children. Such incidents represent severe breakdowns in protection and safety."
+        "chart_desc": """Tracks reported cases of homicide involving children. Such incidents represent severe breakdowns in protection and safety.
+        
+                         Note :Data is missing for the year 2023 in Badulla, Galle, Kandy, Kegalle, Kurunegala, Mannar,
+                         Matale, Moneragala, Mullaitivu, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya"""
+        
     },
     "Attempted Child Murder": {
         "column": "Attempted Child Murder Cases",
         "chart_title": "Trend of Attempted Child Murder Cases",
-        "chart_desc": "Captures reported attempts of fatal violence against children. Trends may indicate serious threats to child safety and protection systems."
+        "chart_desc": """Captures reported attempts of fatal violence against children. Trends may indicate serious threats to child safety and protection systems.
+
+                          Data is missing for the year 2023 in Ampara, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, 
+                          Kegalle, Kilinochchi, Mannar, Matale, Matara, Moneragala, Mullaitivu, Polonnaruwa, Ratnapura, Trincomalee, and Vavuniya.
+                          Hambantota has no data available for 2020 to 2024."""
+
     },
     "Child Serious Injury": {
         "column": "Child Serious Injury Cases",
