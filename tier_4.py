@@ -45,7 +45,7 @@ indicators = {
     "Risk Category": {
         "column": "Risk Category",
         "chart_title": "Distribution of Risk Categories",
-        "chart_desc": "Districts are classified into Low, Medium, or High Risk categories."
+        "chart_desc": "Districts are classified into Low, Medium, and High risk categories. High-risk districts represent priority areas."
     }
 }
 
@@ -55,7 +55,7 @@ metric_name = st.sidebar.selectbox(
     index=0
 )
 
-# ✅ FIX: define metric
+# ✅ Define metric
 metric = indicators[metric_name]
 
 # -----------------------
@@ -80,9 +80,9 @@ else:
             color=metric["column"],
             barmode="stack",
             color_discrete_map={
-                "High": "red",
-                "Medium": "yellow",
-                "Low": "green"
+                "High": "#FF0000",     # Red
+                "Medium": "#FFC107",   # Yellow (better visibility)
+                "Low": "#008000"       # Green
             },
             category_orders={metric["column"]: ["Low", "Medium", "High"]},
             text_auto=True
@@ -127,16 +127,6 @@ else:
         st.plotly_chart(fig, use_container_width=True)
 
     # -----------------------
-    # Description (Colored text)
+    # Description (Plain Text)
     # -----------------------
-    if metric_name == "Risk Category":
-        st.markdown(
-            "Districts are classified into "
-            "<span style='color:green; font-weight:bold;'>Low</span>, "
-            "<span style='color:yellow; font-weight:bold;'>Medium</span>, and "
-            "<span style='color:red; font-weight:bold;'>High</span> risk categories. "
-            "<span style='color:red; font-weight:bold;'>High-risk</span> districts represent priority areas.",
-            unsafe_allow_html=True
-        )
-    else:
-        st.write(metric["chart_desc"])
+    st.write(metric["chart_desc"])
