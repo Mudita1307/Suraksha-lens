@@ -113,7 +113,7 @@ Hambantota has no data for 2020–2024.
         "chart_title": "Trend of Child Kid kidnapping Cases",
         "chart_desc": """Tracks reported kidnapping cases involving children. Increases may indicate heightened risks of coercion or exploitation.
         
-Data is missing for 2023 in Vavuniya.
+Note : Data is missing for 2023 in Vavuniya.
 Hambantota has no data for 2020–2024.
 """
 
