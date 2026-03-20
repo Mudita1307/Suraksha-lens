@@ -240,7 +240,7 @@ and Vavuniya.Hambantota has no data for 2020–2024.
     "Child Domestic Violence Exposure": {
         "column": "Child Domestic Violence Exposure Cases",
         "chart_title": "Trend of Child Exposure to Domestic Violence",
-        "chart_desc": "Tracks cases where children are exposed to domestic violence. Such exposure may have long-term impacts on safety and well-being.
+        "chart_desc": """Tracks cases where children are exposed to domestic violence. Such exposure may have long-term impacts on safety and well-being.
 
 Note : : Data is missing for 2023 in Ampara, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, 
 Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu,
