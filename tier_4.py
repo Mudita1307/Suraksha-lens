@@ -55,29 +55,53 @@ metric_name = st.sidebar.selectbox(
     index=list(indicators.keys()).index("Risk Score")
 )
 
-metric = indicators[metric_name]
-
-# -----------------------
-# Line chart
-# -----------------------
 st.subheader(metric["chart_title"])
 
 if metric["column"] not in filtered_df.columns:
     st.error(f"Column '{metric['column']}' not found in data!")
 else:
-    trend_df = (
-        filtered_df.groupby(["Year", "District"])[metric["column"]]
-        .mean()
-        .reset_index()
-    )
+    # --- LOGIC FOR CATEGORICAL HEATMAP (Risk Category) ---
+    if metric_name == "Risk Category":
+        # Create a pivot table for the heatmap: Districts as rows, Years as columns
+        heatmap_data = filtered_df.pivot(index="District", columns="Year", values=metric["column"])
+        
+        # Define a color map to ensure High is Red, Medium is Orange, Low is Green
+        color_map = {"High": "red", "Medium": "orange", "Low": "green"}
+        
+        fig = px.imshow(
+            heatmap_data,
+            labels=dict(x="Year", y="District", color="Risk Level"),
+            x=heatmap_data.columns,
+            y=heatmap_data.index,
+            color_continuous_scale=[(0, "green"), (0.5, "orange"), (1, "red")], # Fallback if numeric
+            # For categorical, it's better to use specific colors:
+        )
+        
+        # Customizing categorical colors in Plotly can be tricky, 
+        # so often a density heatmap or a simple table works best:
+        fig = px.density_heatmap(
+            filtered_df, 
+            x="Year", 
+            y="District", 
+            z=metric["column"],
+            color_continuous_scale="Reds" # Darker red = Higher risk category
+        )
 
-    fig = px.line(
-        trend_df,
-        x="Year",
-        y=metric["column"],
-        color="District",
-        markers=True
-    )
+    # --- LOGIC FOR LINE CHART (Risk Score) ---
+    else:
+        trend_df = (
+            filtered_df.groupby(["Year", "District"])[metric["column"]]
+            .mean()
+            .reset_index()
+        )
+
+        fig = px.line(
+            trend_df,
+            x="Year",
+            y=metric["column"],
+            color="District",
+            markers=True
+        )
 
     st.plotly_chart(fig, use_container_width=True)
     st.write(metric["chart_desc"])
