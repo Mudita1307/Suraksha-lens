@@ -5,12 +5,8 @@ import plotly.express as px
 # -----------------------
 # Load data
 # -----------------------
-try:
-    df = pd.read_csv("SL_T4.csv", encoding="latin1")
-    df.columns = df.columns.str.strip()  # Remove extra spaces
-except FileNotFoundError:
-    st.error("CSV file 'SL_T4.csv' not found. Please ensure it is in the same folder.")
-    st.stop()
+df = pd.read_csv("SL_T4.csv", encoding="latin1")
+df.columns = df.columns.str.strip()  # Remove extra spaces
 
 # -----------------------
 # Page title and subtitle
@@ -18,21 +14,20 @@ except FileNotFoundError:
 st.header("Tier-4: Climate Exploitation Risk Index (CERI) (2020-21)")
 st.subheader("Identifying Priority Areas Facing Combined Climate and Social Risk")
 st.write(
-    "Tier-4 integrates climate hazard, socio-economic exposure, and child protection vulnerability. "
-    "Higher scores indicate a greater likelihood that climate-related stress affects vulnerable populations.")
+    "Tier-4 integrates climate hazard, socio-economic exposure, and child protection vulnerability into a single composite index. It highlights areas where climate stress, population exposure, and protection risks overlap. Higher scores indicate a greater likelihood that climate-related stress may translate into increased risks affecting vulnerable populations.")
 
 # -----------------------
 # Sidebar filters
 # -----------------------
 st.sidebar.title("Filters")
 
-# State Filter
+# State
 states = st.sidebar.multiselect("Select State(s)", sorted(df["State"].unique()))
 filtered_df = df.copy()
 if states:
     filtered_df = filtered_df[filtered_df["State"].isin(states)]
 
-# District Filter
+# District
 districts = st.sidebar.multiselect("Select District(s)", sorted(filtered_df["District"].unique()))
 if districts:
     filtered_df = filtered_df[filtered_df["District"].isin(districts)]
@@ -42,30 +37,24 @@ if districts:
 # -----------------------
 indicators = {
     "Risk Score": {
-        "column": "Risk Score",
-        "chart_title": "Trend of Composite Socio-Economic Exposure Score",
-        "chart_desc": "The risk score integrates hazard, exposure, and vulnerability into a single composite index (0–1)."
-    },
+                "column": "Risk Score", # Example of a different column name
+                "chart_title": "Trend of Composite Socio-Economic Exposure Score",
+                "chart_desc": "The risk score integrates hazard, exposure, and vulnerability into a single composite index (0–1). Higher values indicate greater overall climate-linked multi-risk."
+            },
     "Risk Category": {
-        "column": "Risk Category",
-        "chart_title": "Heatmap of Risk Category Classification by District",
-        "chart_desc": "Districts are classified into Low, Medium, or High Risk categories. Darker colors represent priority areas."
-    }
+                "column":"Risk Category Classification", # Example of a different column name
+                "chart_title": "Trend of Composite Socio-Economic Exposure Score",
+                "chart_desc": "Districts are classified into Low, Medium, or High Risk categories based on the composite index. High-risk districts represent priority areas for targeted intervention."
+            }
+            
 }
-
-# User Selection
+# Default = Exposure Score
 metric_name = st.sidebar.selectbox(
     "Select Indicator",
     options=list(indicators.keys()),
-    index=0
+    index=list(indicators.keys()).index("Risk Score")
 )
 
-# Assign 'metric' variable AFTER the selection to avoid NameError
-metric = indicators[metric_name]
-
-# -----------------------
-# Visualization Logic
-# -----------------------
 st.subheader(metric["chart_title"])
 
 if metric["column"] not in filtered_df.columns:
@@ -73,57 +62,46 @@ if metric["column"] not in filtered_df.columns:
 else:
     # --- LOGIC FOR CATEGORICAL HEATMAP (Risk Category) ---
     if metric_name == "Risk Category":
-        # 1. Convert text to numbers for Plotly scaling
-        # (Using a numeric scale ensures the order: Low < Medium < High)
-        cat_map = {"Low": 1, "Medium": 2, "High": 3}
-        heatmap_df = filtered_df.copy()
-        heatmap_df['Risk_Rank'] = heatmap_df[metric["column"]].map(cat_map)
-
-        # 2. Pivot data for Heatmap
-        # We use 'max' to handle cases where there might be duplicate rows for a Year/District
-        pivot_df = heatmap_df.pivot_table(
-            index="District", 
-            columns="Year", 
-            values="Risk_Rank", 
-            aggfunc='max'
-        )
-
+        # Create a pivot table for the heatmap: Districts as rows, Years as columns
+        heatmap_data = filtered_df.pivot(index="District", columns="Year", values=metric["column"])
+        
+        # Define a color map to ensure High is Red, Medium is Orange, Low is Green
+        color_map = {"High": "red", "Medium": "orange", "Low": "green"}
+        
         fig = px.imshow(
-            pivot_df,
+            heatmap_data,
             labels=dict(x="Year", y="District", color="Risk Level"),
-            x=pivot_df.columns,
-            y=pivot_df.index,
-            color_continuous_scale=[[0, 'green'], [0.5, 'yellow'], [1, 'red']],
-            aspect="auto"
+            x=heatmap_data.columns,
+            y=heatmap_data.index,
+            color_continuous_scale=[(0, "green"), (0.5, "orange"), (1, "red")], # Fallback if numeric
+            # For categorical, it's better to use specific colors:
         )
         
-        # Update colorbar to show Low/Medium/High instead of 1/2/3
-        fig.update_coloraxes(
-            colorbar=dict(
-                tickvals=[1, 2, 3],
-                ticktext=["Low", "Medium", "High"]
-            )
+        # Customizing categorical colors in Plotly can be tricky, 
+        # so often a density heatmap or a simple table works best:
+        fig = px.density_heatmap(
+            filtered_df, 
+            x="Year", 
+            y="District", 
+            z=metric["column"],
+            color_continuous_scale="Reds" # Darker red = Higher risk category
         )
 
     # --- LOGIC FOR LINE CHART (Risk Score) ---
-    # --- LOGIC FOR BAR CHART (Risk Category) ---
-    elif metric_name == "Risk Category":
-        # Create a bar chart showing the count of districts in each risk category per year
-        fig = px.histogram(
-            filtered_df, 
-            x="Year", 
-            color=metric["column"],
-            barmode="stack", # Stacks Low, Medium, and High on top of each other
-            category_orders={metric["column"]: ["Low", "Medium", "High"]}, # Sets proper order
-            color_discrete_map={"High": "red", "Medium": "orange", "Low": "green"},
-            text_auto=True, # Shows the count number on each bar segment
-            title="Distribution of Risk Categories over Time"
+    else:
+        trend_df = (
+            filtered_df.groupby(["Year", "District"])[metric["column"]]
+            .mean()
+            .reset_index()
         )
 
-        fig.update_layout(
-            xaxis_title="Year",
-            yaxis_title="Number of Districts",
-            legend_title="Risk Level"
+        fig = px.line(
+            trend_df,
+            x="Year",
+            y=metric["column"],
+            color="District",
+            markers=True
         )
 
-        st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)
+    st.write(metric["chart_desc"])
