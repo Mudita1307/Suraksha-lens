@@ -78,7 +78,8 @@ Hambantota has no data for 2020–2024.
         "column": "Child Assault Cases",
         "chart_title": "Trend of Child Assault Cases",
         "chart_desc": """Tracks reported incidents of physical assault against children. Changes may reflect shifts in safety conditions or reporting.
-Note: Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha,
+        
+Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha,
 Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, 
 Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, and Trincomalee.
 Hambantota has no data for 2020–2024.
