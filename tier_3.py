@@ -89,17 +89,35 @@ Hambantota has no data for 2020–2024.
     "Child Sexual Exploitation": {
         "column": "Child Sexual Exploitation Cases",
         "chart_title": "Trend of Child Sexual Exploitation Cases",
-        "chart_desc": "Captures cases involving exploitation of children for sexual purposes. Rising trends may indicate increased vulnerability or improved detection and reporting."
+        "chart_desc": """Captures cases involving exploitation of children for sexual purposes. Rising trends may indicate increased vulnerability or improved detection and reporting.
+
+Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Galle, Kalutara, Kegalle,
+Kilinochchi, Kurunegala, Mannar, Matale, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Trincomalee, and Vavuniya.
+Hambantota has no data for 2020–2024.
+"""
+
     },
     "Child Abduction": {
         "column": "Child Abduction Cases",
         "chart_title": "Trend of Child Abduction Cases",
-        "chart_desc": "Represents reported cases of child abduction. Higher levels may signal increased risks related to safety and security."
+        "chart_desc": """Represents reported cases of child abduction. Higher levels may signal increased risks related to safety and security.
+        
+Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Jaffna, Kilinochchi, Kurunegala, Mannar, Moneragala, Mullaitivu, Puttalam, and Vavuniya.
+Hambantota has no data for 2020–2024.
+"""
+
+
     },
     "Child Kidnapping": {
         "column": "Child Kidnapping Cases",
         "chart_title": "Trend of Child Kid kidnapping Cases",
-        "chart_desc": "Tracks reported kidnapping cases involving children. Increases may indicate heightened risks of coercion or exploitation."
+        "chart_desc": """Tracks reported kidnapping cases involving children. Increases may indicate heightened risks of coercion or exploitation.
+        
+Data is missing for 2023 in Vavuniya.
+Hambantota has no data for 2020–2024.
+"""
+
+        
     },
     "Child Rape": {
         "column": "Child Rape Cases",
