@@ -47,7 +47,7 @@ indicators = {
         "chart_desc": "The risk score integrates hazard, exposure, and vulnerability into a single composite index (0–1)."
     },
     "Risk Category": {
-        "column": "Risk Category Classification",
+        "column": "Risk Category",
         "chart_title": "Heatmap of Risk Category Classification by District",
         "chart_desc": "Districts are classified into Low, Medium, or High Risk categories. Darker colors represent priority areas."
     }
