@@ -510,7 +510,30 @@ if country == "India":
         Soreng (West)), Tamil Nadu (Avadi, Mayiladuthurai, Tambaram), Uttar Pradesh (Kanpur Nagar, Varanasi)
         
         </div>
+
+        <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
+        <strong></strong>2022 Data is unavailable for following: Andhra Pradesh (Anantapur, Cuddapah, Guntur Urban, Nellore, Prakasham, Rajahmundry, 
+        Tirupathi Urban, Vijayawada City, Vijayawada Railway, Visakha Rural), Bihar (Bhabhua), Gujarat (W Rly Ahmedabad, W Rly Vadodara), Himachal Pradesh (Nurpur), 
+        Jammu & Kashmir (Crime Jammu, Crime Srinagar), Karnataka (KGF, KRailways), Kerala (Ernakulam Commr, Kannur, Kollam Commr, Kozhikode Commr, Thrissur Commr, Trivandrum Commr), 
+        Madhya Pradesh (Bhopal, Hoshangabad, Indore), Maharashtra (Amravati Commr, Chhatrapati Sambhajinagar Commr, Chhatrapati Sambhajinagar Railway, Chhatrapati Sambhajinagar Rural, 
+        Dharashiv, Mira Bhayandar Vasai Virar Commr, Mumbai Commr, Nagpur Commr, Nasik Commr, Pune Commr, Solapur Commr, Thane Commr), Mizoram (Crime and EOU), 
+        Nagaland (Crime, Cyber Security, Narcotics, Noklak, Shamator, Tseminyu, Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, Phek, Tuensang, Wokha, Zunheboto), 
+        Puducherry (All Districts), Punjab (Cyber Crime Wing), Rajasthan (ATS & SOG, Anupgarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, Jodhpur Crime, Kekri, 
+        Khairtal-Tijara, Kotputli-Behror, Neem Ka Thana, Phalodi, Salumbar, Sanchore, Shahpura), Sikkim (CID, East, North, South, West), Tamil Nadu (Mayiladuthurai), 
+        Uttar Pradesh (Amroha, Kanpur Nagar, Varanasi)
         
+        </div>
+
+        <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
+        <strong></strong>2023 Data is unavailable for following: Andhra Pradesh (Anantapur, Cuddapah, Guntur Urban, Nellore, Prakasham, Rajahmundry, Tirupathi Urban, 
+        Vijayawada City, Vijayawada Railway, Visakha Rural), Bihar (Bhabhua), Gujarat (W.Rly Ahmedabad, W.Rly Vadodara), Jammu & Kashmir (Crime Jammu, Crime Srinagar), 
+        Karnataka (K.G.F., K.Railways), Kerala (All Districts, Ernakulam Commr, Kannur, Kollam Commr, Kozhikode Commr, Thrissur Commr, Trivandrum Commr), 
+        Madhya Pradesh (Bhopal, Hoshangabad, Indore), Maharashtra (Amravati Commr, Aurangabad Commr, Aurangabad Railway, Aurangabad Rural, Mira Bhayandar Vasai Virar Commr, 
+        Mumbai Commr, Nagpur Commr, Nasik Commr, Osmanabad, Pune Commr, Solapur Commr, Thane Commr), Nagaland (Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, 
+        Phek, Tuensang, Wokha, Zunheboto), Puducherry (All Districts), Rajasthan (SOG), Sikkim (East, North, South, West), Uttar Pradesh (Kanpur Nagar, Kanpur Outer,
+        Lucknow Grameen, Varanasi, Varanasi Dehat)
+
+        </div>
         """,
         unsafe_allow_html=True
     )
