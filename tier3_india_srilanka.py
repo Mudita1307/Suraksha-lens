@@ -471,6 +471,7 @@ if country == "India":
         <strong></strong>Values represent reported cases. A value of 0 indicates no reported cases, not absence of risk. 
         Trends may be influenced by changes in reporting practices, enforcement capacity, or public awareness. Indicators should be interpreted alongside contextual factors.
         No missing values have been artificially filled, scores are computed using available data only.
+        
         </div>
    
 
@@ -481,8 +482,35 @@ if country == "India":
         Manendragarh–Chirmiri–Bharatpur, Mohla–Manpur–Ambagarh Chouki, Sakti, Sarangarh–Bilaigarh), Gujarat (W Rly Ahmedabad, W Rly Vadodara), 
         Himachal Pradesh (Nurpur), Jammu & Kashmir (Anti Narcotic Task Force Jammu, Anti Narcotic Task Force Kashmir, CICE Jammu, CICE Kashmir, 
         Cyber Crime Jammu, Cyber Crime Kashmir, EOW Jammu, EOW Kashmir, Special Crime Wing Jammu, Special Crime Wing Kashmir), Karnataka 
-        (KGF, KRailways, Vijayanagara), Kerala (All Districts, Ernakulam 
+        (KGF, KRailways, Vijayanagara), Kerala (All Districts, Ernakulam Commr, Kannur City, Kannur Rural, Kollam Commr, Kozhikode Commr, Thrissur Commr,
+        Trivandrum Commr), Madhya Pradesh (Bhopal Commissionarate, Bhopal Rural, Indore Commissionarate, Indore Rural, Narmadapuram), Maharashtra 
+        (Amravati Commr, Chhatrapati Sambhajinagar Commr, Chhatrapati Sambhajinagar Railway, Chhatrapati Sambhajinagar Rural, Dharashiv, Mira Bhayandar Vasai Virar Commr,
+        Mumbai Commr, Nagpur Commr, Nasik Commr, Pune Commr, Solapur Commr, Thane Commr), Meghalaya (Khasi Hills Eastern West), Mizoram (Crime and EOU), Nagaland 
+        (Crime, Cyber Security, Narcotics, Noklak, Shamator, Tseminyu, Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, Phek, Tuensang, Wokha, Zunheboto),
+        Puducherry (Puducherry), Punjab (Cyber Crime Wing, Malerkotla), Rajasthan (ATS & SOG, Anupgarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, 
+        Jodhpur Crime, Kekri, Khairtal-Tijara, Kotputli-Behror, Neem Ka Thana, Phalodi, Salumbar, Sanchore, Shahpura), Sikkim (CID, Gangtok (East), Gyalshing (West), 
+        Mangan (North), Namchi (South), Pakyong (East), Soreng (West)), Tamil Nadu (Avadi, Mayiladuthurai, Tambaram), Uttar Pradesh (Kanpur Commissionarate, Kanpur Outer, 
+        Varanasi Commissionarate, Varanasi Dehat), Uttarakhand (Cyber Cell)
+        
         </div>
+        
+        <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
+        <strong></strong>2021 Data is unavailable for following: Andhra Pradesh (Alluri Sitharama Raju, Anakapalli, Anantapuramu, Annamayya, 
+        Bapatla, Dr BR Ambedkar Konaseema, Eluru, Kakinada, NTR, Nandyal, Palnadu, Parvathipuram Manyam, Prakasam, Sri Potti Sriramulu Nellore, 
+        Sri Sathya Sai, Tirupati, Vijayawada Railway, YSR), Assam (Bajali, Tamulpur), Bihar (Bhabhua), Chhattisgarh (Khairagarh–Chhuikhadan–Gandai,
+        Manendragarh–Chirmiri–Bharatpur, Mohla–Manpur–Ambagarh Chouki, Sakti, Sarangarh–Bilaigarh), Gujarat (W Rly Ahmedabad, W Rly Vadodara), 
+        Himachal Pradesh (Nurpur), Jammu & Kashmir (Anti Narcotic Task Force Kashmir, CICE Jammu, CICE Kashmir, EOW Jammu, EOW Kashmir, Special Crime Wing Jammu, 
+        Special Crime Wing Kashmir), Karnataka (KGF, KRailways, Vijayanagara), Kerala (All Districts, Ernakulam Commr, Kannur, Kollam Commr, Kozhikode Commr, Thrissur Commr, 
+        Trivandrum Commr), Madhya Pradesh (Bhopal Commissionarate, Bhopal Rural, Indore Commissionarate, Indore Rural, Narmadapuram), Maharashtra (Amravati Commr, Chhatrapati 
+        Sambhajinagar Commr, Chhatrapati Sambhajinagar Railway, Chhatrapati Sambhajinagar Rural, Dharashiv, Mira Bhayandar Vasai Virar Commr, Mumbai Commr, Nagpur Commr,
+        Nasik Commr, Pune Commr, Solapur Commr, Thane Commr), Meghalaya (Khasi Hills Eastern West), Mizoram (Crime and EOU), Nagaland (Crime, Cyber Security, Narcotics, 
+        Noklak, Shamator, Tseminyu, Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, Phek, Tuensang, Wokha, Zunheboto), Puducherry (All Districts), 
+        Punjab (Cyber Crime Wing), Rajasthan (ATS & SOG, Anupgarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, Jodhpur Crime, Kekri, Khairtal-Tijara, 
+        Kotputli-Behror, Neem Ka Thana, Phalodi, Salumbar, Sanchore, Shahpura), Sikkim (Gangtok (East), Gyalshing (West), Mangan (North), Namchi (South), Pakyong (East), 
+        Soreng (West)), Tamil Nadu (Avadi, Mayiladuthurai, Tambaram), Uttar Pradesh (Kanpur Nagar, Varanasi)
+        
+        </div>
+        
         """,
         unsafe_allow_html=True
     )
