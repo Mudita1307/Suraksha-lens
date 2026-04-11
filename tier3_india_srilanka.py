@@ -480,8 +480,8 @@ else:
     st.markdown(
         """
         <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000;">
-        <strong></strong>Trends reflect reported cases and may be influenced by changes in reporting practices, enforcement capacity, 
-        or public awareness.Indicators are interpreted alongside other contextual data.
+        <strong></strong>Note: Trends reflect reported cases and may be influenced by changes in reporting practices, enforcement capacity, 
+        or public awareness. Indicators are interpreted alongside other contextual data.
         </div>
         """,
         unsafe_allow_html=True
