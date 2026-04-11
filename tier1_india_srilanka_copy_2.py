@@ -47,7 +47,7 @@ if st.session_state.prev_country != country:
 # -----------------------
 content = {
     "India": {
-        "header": "Tier-1 : India : Rainfall-Driven Climate Hazard Index (2010-26)",
+        "header": "Tier-1 : India : Rainfall-Driven Climate Hazard Index (2010-25)",
         "subheader": "Measuring Rainfall Instability and Extreme Climate Signals Across States and Districts",
         "write": "Tier-1 evaluates rainfall-related climate hazard using district-level observations. It captures deviations from long-term rainfall patterns, extreme rainfall events, dry spells, wet spells, and peak daily intensity to assess overall hazard levels.",
     },
