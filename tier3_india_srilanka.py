@@ -476,7 +476,7 @@ if country == "India":
    
 
         <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
-        <strong></strong>V2020 Data is unavailable for following: Andhra Pradesh (Alluri Sitharama Raju, Anakapalli, Anantapuramu, Annamayya, 
+        <strong></strong>2020 Data is unavailable for following: Andhra Pradesh (Alluri Sitharama Raju, Anakapalli, Anantapuramu, Annamayya, 
         Bapatla, Dr BR Ambedkar Konaseema, Eluru, Kakinada, NTR, Nandyal, Palnadu, Parvathipuram Manyam, Prakasam, Sri Potti Sriramulu Nellore, 
         Sri Sathya Sai, Tirupati, Vijayawada Railway, YSR), Assam (Bajali, Tamulpur), Bihar (Kaimur (Bhabhua)), Chhattisgarh (Khairagarh–Chhuikhadan–Gandai,
         Manendragarh–Chirmiri–Bharatpur, Mohla–Manpur–Ambagarh Chouki, Sakti, Sarangarh–Bilaigarh), Gujarat (W Rly Ahmedabad, W Rly Vadodara), 
