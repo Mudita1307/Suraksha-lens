@@ -74,7 +74,7 @@ if country == "India":
     indicators = {
         "Vulnerability Score": {
             "column": "Vulnerability Score",
-            "chart_title": "Trend of Social Vulnerability Score",
+            "chart_title": "Trend of Vulnerability Score",
             "chart_desc": "This composite score reflects overall social vulnerability across districts. It ranges from 0 (lower vulnerability) to 1 (higher vulnerability). Higher values indicate greater levels of reported crimes and potential strain on social protection systems."
         },
         "Crimes Against Children (Cases)": {
