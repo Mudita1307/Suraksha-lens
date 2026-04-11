@@ -188,12 +188,12 @@ else:
         "Economically Active Population – Male (%)": {
                 "column": "Economically Active Population_M (%)", # Example of a different column name
                 "chart_title": "Trend of Economically Active Male Population",
-                "chart_desc": "Represents the share of the male population engaged in economic activities. Higher values indicate greater economic engagement, which may influence adaptive capacity."
+                "chart_desc": " Indicates the proportion of literate females within the population. Higher literacy supports informed decision-making and enhances resilience to climate risks."
             },
         "Economically Active Population – Female (%)": {
                 "column": "Economically Active Population_F (%)", # Example of a different column name
                 "chart_title": "Trend of Economically Active Female Population",
-                "chart_desc": "This indicator reflects the proportion of the workforce dependent on agriculture. Districts with higher agricultural dependence are more sensitive to rainfall variability and extreme weather events."
+                "chart_desc": "Represents the share of the female population engaged in economic activities. Higher values indicate greater female participation in the workforce, reflecting improved economic inclusion and potential enhancement in household resilience and adaptive capacity."
             },
         "Literacy Rate – Female": {
                 "column": "Literacy Rate_F", # Example of a different column name
