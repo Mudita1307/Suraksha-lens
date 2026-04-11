@@ -472,6 +472,8 @@ if country == "India":
         Trends may be influenced by changes in reporting practices, enforcement capacity, or public awareness. Indicators should be interpreted alongside contextual factors.
         No missing values have been artificially filled, scores are computed using available data only.
         </div>
+        """"
+        """"
 
         <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
         <strong></strong>V2020 Data is unavailable for following: Andhra Pradesh (Alluri Sitharama Raju, Anakapalli, Anantapuramu, Annamayya, 
