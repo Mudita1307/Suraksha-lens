@@ -542,8 +542,10 @@ else:
     st.markdown(
         """
         <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000;">
-        <strong></strong>Note: Trends reflect reported cases and may be influenced by changes in reporting practices, enforcement capacity, 
-        or public awareness. Indicators are interpreted alongside other contextual data.
+        <strong></strong>Note: Values represent reported cases. A value of 0 indicates no reported cases, not absence of risk.
+        Trends may be influenced by changes in reporting practices, enforcement capacity, or public awareness. Indicators should be interpreted alongside contextual factors.
+        No missing values have been artificially filled, scores are computed using available data only.
+
         </div>
         """,
         unsafe_allow_html=True
