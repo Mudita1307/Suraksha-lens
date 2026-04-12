@@ -314,4 +314,15 @@ if country == "India":
         """,
         unsafe_allow_html=True
     )
+else: 
+    st.markdown(
+        """
+        <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000;">
+        <strong></strong>Note:Data for certain districts is unavailable for specific years due to gaps in official sources. No imputation has been applied. Exposure scores are calculated using available data only. 
+                              2006–2007: Data is unavailable for Ampara, Batticaloa, Moneragala, and Trincomalee.
+                              2006–2010: Data is unavailable for Jaffna, Kilinochchi, Mannar, Mullaitivu, and Vavuniya.
 
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
