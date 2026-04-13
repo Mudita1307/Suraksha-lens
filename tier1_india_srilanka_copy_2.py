@@ -52,7 +52,7 @@ content = {
         "write": "Tier-1 evaluates rainfall-related climate hazard using district-level observations. It captures deviations from long-term rainfall patterns, extreme rainfall events, dry spells, wet spells, and peak daily intensity to assess overall hazard levels.",
     },
     "Sri Lanka": {
-        "header": "Tier-1 : Sri Lanka : Rainfall-Driven Climate Hazard Index (2010-25)",
+        "header": "Tier-1 : Sri Lanka : Rainfall-Driven Climate Hazard Index (2010-26)",
         "subheader": "Measuring Rainfall Instability and Extreme Climate Signals Across States and Districts",
         "write": " Tier-1 evaluates rainfall-related climate hazard using district-level observations. It captures deviations from long-term rainfall patterns, extreme rainfall events, dry spells, wet spells, and peak daily intensity to assess overall hazard levels",
         
