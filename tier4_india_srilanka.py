@@ -257,3 +257,16 @@ else:
     # Description (Plain Text)
     # -----------------------
     st.write(metric["chart_desc"])
+if country == "India":
+    st.markdown(
+        """
+        <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000;">
+        <strong></strong>Risk Scores are calculated by combining Hazard (Tier 1), Exposure (Tier 2), Vulnerability (Tier 3) scores at the district level for the common
+        time period (2020–2021). Scores are computed using all available data. Where one or more scores are unavailable for a district, the Risk Score is calculated 
+        using the remaining available scores. No assumptions or artificial imputation have been applied. Districts with no available scores across all three components 
+        are excluded from the analysis.
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
