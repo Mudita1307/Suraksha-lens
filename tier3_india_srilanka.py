@@ -188,7 +188,7 @@ Hambantota has no data for 2020–2024.
     },
     "Child Kidnapping": {
         "column": "Child Kidnapping Cases",
-        "chart_title": "Trend of Child Kid kidnapping Cases",
+        "chart_title": "Trend of Child kidnapping Cases",
         "chart_desc": """Tracks reported kidnapping cases involving children. Increases may indicate heightened risks of coercion or exploitation.
         
 Note : Data is missing for 2023 in Vavuniya.
