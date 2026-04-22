@@ -24,7 +24,7 @@ data_files = {
 @st.cache_data
 def load_data(file_path):
     df = pd.read_csv(file_path, encoding="latin1")
-    df.columns = df.columns.str.strip()
+    #df.columns = df.columns.str.strip()
     print(df.columns)
     return df
 
