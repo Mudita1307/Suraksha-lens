@@ -7,7 +7,7 @@ import plotly.express as px
 # -----------------------
 st.set_page_config(page_title="Climate Hazard Index", layout="wide")
 
-st.sidebar.title("Global Settings")
+#st.sidebar.title("Global Settings")
 country = st.sidebar.selectbox("Select Country", ["India", "Sri Lanka"])
 
 # -----------------------
