@@ -1,7 +1,7 @@
 import streamlit as st
 
 # ✅ MUST be first Streamlit command
-st.set_page_config(page_title="Climate Dashboard", layout="wide")
+st.set_page_config(page_title="Suraksha Lens Dashboard", layout="wide")
 
 # ---- Initialize session ----
 if "logged_in" not in st.session_state:
