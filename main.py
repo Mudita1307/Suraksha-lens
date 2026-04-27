@@ -61,7 +61,7 @@ else:
     page_5 = st.Page("tier4_india_srilanka.py", title="Tier 4: Climate Exploitation Risk Index", icon="❄️")
 
     # ---- Navigation ----
-    pg = st.navigation([main_page, page_1, page_2, page_3, page_4, page_5])
+    pg = st.navigation([ page_1, page_2, page_3, page_4, page_5])
     pg.run()
 
     # ---- Logout ----
