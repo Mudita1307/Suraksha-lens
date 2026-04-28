@@ -30,6 +30,7 @@ def login():
         "Mudita.sharma@saicjs.com": "nbm@sl",
         "maya.singh@nhrf.no":"nhrf@sl2026",
         "consultant.india@nhrf.no":"nhrf@sl2026",
+        
         "lawofficersv@gmail.com":"sv@sl2026"
     }
 
