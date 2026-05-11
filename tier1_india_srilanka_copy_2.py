@@ -283,19 +283,69 @@ if country == "India":
         unsafe_allow_html=True
     )
 
-gdf = gpd.read_file(
-    "gadm41_LKA_1.geojson"
+
+
+
+
+import streamlit as st
+import geopandas as gpd
+import pandas as pd
+import folium
+from streamlit_folium import st_folium
+
+# -----------------------------------
+# Title
+# -----------------------------------
+st.title("Hazard Dashboard")
+
+# -----------------------------------
+# Country selection
+# -----------------------------------
+country = st.sidebar.selectbox(
+    "Select Country",
+    ["India", "Sri Lanka"]
 )
 
+# -----------------------------------
+# Country-wise files
+# -----------------------------------
+shape_files = {
+
+    "India": "india.geojson",
+
+    "Sri Lanka": "srilanka.geojson"
+}
+
+data_files = {
+
+    "India": "IND_T1.csv",
+
+    "Sri Lanka": "SL_T1.csv"
+}
+
+# -----------------------------------
+# Read shapefile
+# -----------------------------------
+gdf = gpd.read_file(
+    shape_files[country]
+)
+
+# -----------------------------------
 # Rename district column
+# Change according to your data
+# -----------------------------------
 gdf = gdf.rename(columns={
     "NAME_1": "District"
 })
 
-# Convert CRS
+# -----------------------------------
+# CRS
+# -----------------------------------
 gdf = gdf.to_crs(epsg=4326)
 
+# -----------------------------------
 # Clean district names
+# -----------------------------------
 gdf["District"] = (
     gdf["District"]
     .str.upper()
@@ -303,17 +353,15 @@ gdf["District"] = (
 )
 
 # -----------------------------------
-# Read CSV
+# Read selected CSV
 # -----------------------------------
 df = pd.read_csv(
-    "SL_T1.csv",
-    encoding="latin1"
+    data_files[country]
 )
 
-
-
-
+# -----------------------------------
 # Clean district names
+# -----------------------------------
 df["District"] = (
     df["District"]
     .str.upper()
@@ -321,7 +369,7 @@ df["District"] = (
 )
 
 # -----------------------------------
-# Select Year
+# Select year
 # -----------------------------------
 year = st.sidebar.selectbox(
     "Select Year",
@@ -336,7 +384,7 @@ df_year = df[
 ]
 
 # -----------------------------------
-# Merge shapefile + CSV
+# Merge
 # -----------------------------------
 gdf_year = gdf.merge(
     df_year,
@@ -349,30 +397,40 @@ gdf_year = gdf.merge(
 # -----------------------------------
 value_column = "Rainfall Hazard Index (Tier-1)"
 
-# Convert to numeric
+# Convert numeric
 gdf_year[value_column] = pd.to_numeric(
     gdf_year[value_column],
     errors="coerce"
 )
 
 # -----------------------------------
-# Optional debug table
+# Country map center
 # -----------------------------------
-debug_df = gdf_year.drop(columns="geometry")
+map_center = {
 
-st.write(debug_df.head())
+    "India": [22.5, 78.9],
+
+    "Sri Lanka": [7.8, 80.7]
+}
+
+zoom_level = {
+
+    "India": 5,
+
+    "Sri Lanka": 7
+}
 
 # -----------------------------------
-# Create Folium map
+# Create map
 # -----------------------------------
 m = folium.Map(
-    location=[7.8, 80.7],
-    zoom_start=7,
+    location=map_center[country],
+    zoom_start=zoom_level[country],
     tiles="CartoDB positron"
 )
 
 # -----------------------------------
-# Color classification
+# Color function
 # -----------------------------------
 def get_color(value):
 
@@ -380,15 +438,16 @@ def get_color(value):
         return "gray"
 
     elif value >= 0.25:
-        return "red"       # High
+        return "red"
 
     elif value >= 0.10:
-        return "yellow"    # Medium
+        return "yellow"
 
     else:
-        return "green"     # Low
+        return "green"
+
 # -----------------------------------
-# Add GeoJson layer
+# Add GeoJson
 # -----------------------------------
 folium.GeoJson(
 
@@ -414,20 +473,12 @@ folium.GeoJson(
     style_function=lambda feature: {
 
         "fillColor": get_color(
-
-            float(
-                feature["properties"][value_column]
-            )
-
-            if feature["properties"][value_column]
-            is not None
-
-            else None
+            feature["properties"][value_column]
         ),
 
         "color": "black",
-        "weight": 1.5,
-        "fillOpacity": 0.8,
+        "weight": 1,
+        "fillOpacity": 0.7,
     }
 
 ).add_to(m)
@@ -437,7 +488,21 @@ folium.GeoJson(
 # -----------------------------------
 st_folium(
     m,
-    width=700,
+    width=1200,
     height=700
 )
 
+# -----------------------------------
+# Dynamic legend
+# -----------------------------------
+st.markdown(f"""
+### Legend ({country} - {year})
+
+🟩 Low Risk (< 0.10)
+
+🟨 Medium Risk (0.10 - 0.25)
+
+🟥 High Risk (> 0.25)
+
+⚪ No Data
+""")
