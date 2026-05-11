@@ -306,8 +306,10 @@ gdf["District"] = (
 # Read CSV
 # -----------------------------------
 df = pd.read_csv(
-    "SL_T1"
-)
+    "SL_T1",encoding="latin1")
+
+
+
 
 # Clean district names
 df["District"] = (
