@@ -294,11 +294,11 @@ import folium
 from streamlit_folium import st_folium
 
 
-if country == "India":
+if country == "Sri Lanka":
 
-    # Read India GeoJSON
+    # Read Sri Lanka GeoJSON
     gdf = gpd.read_file(
-        "india.geojson"
+        "gadm41_LKA_1.geojson"
     )
 
     # Rename column
@@ -306,14 +306,14 @@ if country == "India":
         "NAME_1": "District"
     })
 
-    # Read India CSV
+    # Read Sri Lanka CSV
     df = pd.read_csv(
-        "IND_T1.csv"
+        "SL_T1.csv"
     )
 
     # Map settings
-    map_location = [22.5, 78.9]
-    zoom_level = 5
+    map_location = [7.8, 80.7]
+    zoom_level = 7
 
 # -----------------------------------
 # SRI LANKA
