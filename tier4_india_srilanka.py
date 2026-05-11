@@ -399,13 +399,13 @@ def get_color(value):
     if pd.isna(value):
         return "gray"
 
-    elif value == "High":
+    elif value == "High Risk":
         return "red"
 
-    elif value == "Medium":
+    elif value == "Medium Risk":
         return "yellow"
 
-    elif value == "Low":
+    elif value == "Low Risk":
         return "green"
 
     else:
