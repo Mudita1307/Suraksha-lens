@@ -311,6 +311,8 @@ if country == "Sri Lanka":
         "SL_T1.csv"
     )
 
+    value_column = "Rainfall Hazard Index (Tier-1)"
+
     # Map settings
     map_location = [7.8, 80.7]
     zoom_level = 7
@@ -334,6 +336,10 @@ else:
     df = pd.read_csv(
         "IND_T1.csv"
     )
+
+    value_column = "Hazard Score"
+
+    
 
     # Map settings
     map_location = [7.8, 80.7]
@@ -385,7 +391,7 @@ gdf_year = gdf.merge(
 # -----------------------------------
 # Value Column
 # -----------------------------------
-value_column = "Rainfall Hazard Index (Tier-1)"
+
 
 # Convert numeric
 gdf_year[value_column] = pd.to_numeric(
