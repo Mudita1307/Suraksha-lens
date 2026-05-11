@@ -322,7 +322,7 @@ else:
 
     # Read Sri Lanka GeoJSON
     gdf = gpd.read_file(
-        "gadm41_LKA_1.geojson"
+        "gadm41_IND_1.geojson"
     )
 
     # Rename column
@@ -332,7 +332,7 @@ else:
 
     # Read Sri Lanka CSV
     df = pd.read_csv(
-        "SL_T1.csv"
+        "IND_T1.csv"
     )
 
     # Map settings
