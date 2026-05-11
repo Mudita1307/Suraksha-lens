@@ -639,7 +639,7 @@ year = st.sidebar.selectbox(
 # Filter selected year
 # -----------------------------------
 df_year = df[
-    df["Year"] == Year
+    df["Year"] == year
 ]
 
 # -----------------------------------
