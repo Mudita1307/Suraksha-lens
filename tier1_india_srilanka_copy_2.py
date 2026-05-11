@@ -283,7 +283,7 @@ if country == "India":
         unsafe_allow_html=True
     )
 
-df = gpd.read_file(
+gdf = gpd.read_file(
     "gadm41_LKA_1.geojson"
 )
 
