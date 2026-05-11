@@ -337,7 +337,7 @@ else:
         "IND_T1.csv"
     )
 
-    value_column = "Hazard Score"
+    value_column =  "Hazard Score"
 
     
 
