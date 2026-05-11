@@ -574,7 +574,7 @@ if country == "Sri Lanka":
         "SL_T3.csv"
     )
 
-    value_column = "Rainfall Hazard Index (Tier-1)"
+    value_column = "Vulnerability Score"
 
     # Map settings
     map_location = [7.8, 80.7]
@@ -600,7 +600,7 @@ else:
         "IND_T3.csv"
     )
 
-    value_column =  "Hazard Score"
+    value_column =  "Vulnerability Score"
 
     
 
