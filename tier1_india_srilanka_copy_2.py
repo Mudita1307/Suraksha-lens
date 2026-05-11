@@ -343,7 +343,7 @@ else:
 
     # Map settings
     map_location = [23.5937, 80.9629]
-    zoom_level = 4
+    zoom_level = 5
 
 
 gdf = gdf.to_crs(epsg=4326)
