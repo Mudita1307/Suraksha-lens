@@ -342,7 +342,7 @@ else:
     
 
     # Map settings
-    map_location = [7.8, 80.7]
+    map_location =  [22.5, 78.9]
     zoom_level = 7
 
 
