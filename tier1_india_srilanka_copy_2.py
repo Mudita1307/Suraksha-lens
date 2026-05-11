@@ -1,6 +1,11 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import streamlit as st
+import geopandas as gpd
+import pandas as pd
+import folium
+from streamlit_folium import st_folium
 
 # -----------------------
 # Config
@@ -279,7 +284,7 @@ if country == "India":
     )
 
 df = gpd.read_file(
-    r"gadm41_LKA_1.geojson"
+    "gadm41_LKA_1.geojson"
 )
 
 # Rename district column
