@@ -437,21 +437,7 @@ folium.GeoJson(
 # -----------------------------------
 st_folium(
     m,
-    width=1200,
+    width=700,
     height=700
 )
 
-# -----------------------------------
-# Legend
-# -----------------------------------
-st.markdown("""
-### Legend
-
-🟩 0 - 1  → Low  
-🟨 1 - 2  → Low Medium  
-🟧 2 - 4  → Medium  
-🟥 4 - 6  → Medium High  
-🔴 6 - 8  → High  
-🟣 8 - 9  → Very High  
-⚪ No Data
-""")
