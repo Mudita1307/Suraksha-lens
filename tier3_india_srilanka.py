@@ -550,3 +550,199 @@ else:
         """,
         unsafe_allow_html=True
     )
+import streamlit as st
+import geopandas as gpd
+import pandas as pd
+import folium
+from streamlit_folium import st_folium
+
+
+if country == "Sri Lanka":
+
+    # Read Sri Lanka GeoJSON
+    gdf = gpd.read_file(
+        "gadm41_LKA_1.geojson"
+    )
+
+    # Rename column
+    gdf = gdf.rename(columns={
+        "NAME_1": "District"
+    })
+
+    # Read Sri Lanka CSV
+    df = pd.read_csv(
+        "SL_T3.csv"
+    )
+
+    value_column = "Rainfall Hazard Index (Tier-1)"
+
+    # Map settings
+    map_location = [7.8, 80.7]
+    zoom_level = 7
+
+# -----------------------------------
+# SRI LANKA
+# -----------------------------------
+else:
+
+    # Read Sri Lanka GeoJSON
+    gdf = gpd.read_file(
+        "gadm41_IND_1.geojson"
+    )
+
+    # Rename column
+    gdf = gdf.rename(columns={
+        "NAME_1": "District"
+    })
+
+    # Read Sri Lanka CSV
+    df = pd.read_csv(
+        "IND_T3.csv"
+    )
+
+    value_column =  "Hazard Score"
+
+    
+
+    # Map settings
+    map_location = [23.5937, 80.9629]
+    zoom_level = 5
+
+
+gdf = gdf.to_crs(epsg=4326)
+
+# -----------------------------------
+# Clean district names
+# -----------------------------------
+gdf["District"] = (
+    gdf["District"]
+    .str.upper()
+    .str.strip()
+)
+
+df["District"] = (
+    df["District"]
+    .str.upper()
+    .str.strip()
+)
+
+# -----------------------------------
+# Select Year
+# -----------------------------------
+year = st.sidebar.selectbox(
+    "Select Year",
+    sorted(df["Year"].unique()),
+    key="year_select"
+)
+
+# -----------------------------------
+# Filter selected year
+# -----------------------------------
+df_year = df[
+    df["Year"] == year
+]
+
+# -----------------------------------
+# Merge shapefile + CSV
+# -----------------------------------
+gdf_year = gdf.merge(
+    df_year,
+    on="District",
+    how="left"
+)
+
+# -----------------------------------
+# Value Column
+# -----------------------------------
+
+
+# Convert numeric
+gdf_year[value_column] = pd.to_numeric(
+    gdf_year[value_column],
+    errors="coerce"
+)
+
+# -----------------------------------
+# Create Folium Map
+# -----------------------------------
+m = folium.Map(
+    location=map_location,
+    zoom_start=zoom_level,
+    tiles="CartoDB positron"
+)
+
+# -----------------------------------
+# Color Function
+# -----------------------------------
+def get_color(value):
+
+    if pd.isna(value):
+        return "gray"
+
+    elif value >= 0.25:
+        return "red"
+
+    elif value >= 0.10:
+        return "yellow"
+
+    else:
+        return "green"
+
+# -----------------------------------
+# Add GeoJson Layer
+# -----------------------------------
+folium.GeoJson(
+
+    gdf_year.to_json(),
+
+    tooltip=folium.GeoJsonTooltip(
+
+        fields=[
+            "District",
+            value_column
+        ],
+
+        aliases=[
+            "District:",
+            "Hazard Score:"
+        ],
+
+        localize=True,
+        sticky=True,
+        labels=True,
+    ),
+
+    style_function=lambda feature: {
+
+        "fillColor": get_color(
+            feature["properties"][value_column]
+        ),
+
+        "color": "black",
+        "weight": 1,
+        "fillOpacity": 0.7,
+    }
+
+).add_to(m)
+
+# -----------------------------------
+# Display Map
+# -----------------------------------
+st_folium(
+    m,
+    width=1200,
+    height=700
+)
+
+# -----------------------------------
+# Dynamic Legend
+# -----------------------------------
+min_value = round(
+    gdf_year[value_column].min(),
+    2
+)
+
+max_value = round(
+    gdf_year[value_column].max(),
+    2
+)
