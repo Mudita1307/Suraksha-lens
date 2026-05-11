@@ -279,7 +279,7 @@ if country == "India":
     )
 
 df = gpd.read_file(
-    r"E:\SAICJS\map\gadm41_LKA_1.shp"
+    r"gadm41_LKA_1.geojson"
 )
 
 # Rename district column
