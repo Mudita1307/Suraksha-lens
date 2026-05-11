@@ -320,7 +320,7 @@ else:
         "IND_T4.csv"
     )
 
-    value_column =  "Risk Category"
+    value_column ="Risk Category"
 
     
 
