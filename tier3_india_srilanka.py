@@ -631,7 +631,7 @@ df["District"] = (
 # -----------------------------------
 year = st.sidebar.selectbox(
     "Select Year",
-    sorted(df["year"].unique()),
+    sorted(df["Year"].unique()),
     key="year_select"
 )
 
@@ -639,7 +639,7 @@ year = st.sidebar.selectbox(
 # Filter selected year
 # -----------------------------------
 df_year = df[
-    df["Year"] == year
+    df["Year"] == Year
 ]
 
 # -----------------------------------
