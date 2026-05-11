@@ -313,7 +313,7 @@ shape_files = {
 
     "India": "india.geojson",
 
-    "Sri Lanka": "srilanka.geojson"
+    "Sri Lanka": "gadm41_LKA_1.geojson"
 }
 
 data_files = {
