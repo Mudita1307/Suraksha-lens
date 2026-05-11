@@ -631,7 +631,7 @@ df["District"] = (
 # -----------------------------------
 year = st.sidebar.selectbox(
     "Select Year",
-    sorted(df["Year"].unique()),
+    sorted(df["year"].unique()),
     key="year_select"
 )
 
