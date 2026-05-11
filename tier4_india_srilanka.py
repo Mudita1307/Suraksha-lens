@@ -427,7 +427,7 @@ folium.GeoJson(
 
         aliases=[
             "District:",
-            "Hazard Score:"
+            "Risk Category:"
         ],
 
         localize=True,
