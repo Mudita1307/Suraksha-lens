@@ -339,9 +339,7 @@ else:
     map_location = [7.8, 80.7]
     zoom_level = 7
 
-# -----------------------------------
-# CRS
-# -----------------------------------
+
 gdf = gdf.to_crs(epsg=4326)
 
 # -----------------------------------
@@ -360,7 +358,7 @@ df["District"] = (
 )
 
 # -----------------------------------
-# Select year
+# Select Year
 # -----------------------------------
 year = st.sidebar.selectbox(
     "Select Year",
@@ -369,14 +367,14 @@ year = st.sidebar.selectbox(
 )
 
 # -----------------------------------
-# Filter year
+# Filter selected year
 # -----------------------------------
 df_year = df[
     df["Year"] == year
 ]
 
 # -----------------------------------
-# Merge
+# Merge shapefile + CSV
 # -----------------------------------
 gdf_year = gdf.merge(
     df_year,
@@ -385,10 +383,98 @@ gdf_year = gdf.merge(
 )
 
 # -----------------------------------
-# Create map
+# Value Column
+# -----------------------------------
+value_column = "Rainfall Hazard Index (Tier-1)"
+
+# Convert numeric
+gdf_year[value_column] = pd.to_numeric(
+    gdf_year[value_column],
+    errors="coerce"
+)
+
+# -----------------------------------
+# Create Folium Map
 # -----------------------------------
 m = folium.Map(
     location=map_location,
     zoom_start=zoom_level,
     tiles="CartoDB positron"
 )
+
+# -----------------------------------
+# Color Function
+# -----------------------------------
+def get_color(value):
+
+    if pd.isna(value):
+        return "gray"
+
+    elif value >= 0.25:
+        return "red"
+
+    elif value >= 0.10:
+        return "yellow"
+
+    else:
+        return "green"
+
+# -----------------------------------
+# Add GeoJson Layer
+# -----------------------------------
+folium.GeoJson(
+
+    gdf_year.to_json(),
+
+    tooltip=folium.GeoJsonTooltip(
+
+        fields=[
+            "District",
+            value_column
+        ],
+
+        aliases=[
+            "District:",
+            "Hazard Score:"
+        ],
+
+        localize=True,
+        sticky=True,
+        labels=True,
+    ),
+
+    style_function=lambda feature: {
+
+        "fillColor": get_color(
+            feature["properties"][value_column]
+        ),
+
+        "color": "black",
+        "weight": 1,
+        "fillOpacity": 0.7,
+    }
+
+).add_to(m)
+
+# -----------------------------------
+# Display Map
+# -----------------------------------
+st_folium(
+    m,
+    width=1200,
+    height=700
+)
+
+# -----------------------------------
+# Dynamic Legend
+# -----------------------------------
+min_value = round(
+    gdf_year[value_column].min(),
+    2
+)
+
+max_value = round(
+    gdf_year[value_column].max(),
+    2
+)
+
