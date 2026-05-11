@@ -4,3 +4,4 @@ plotly
 matplotlib
 folium
 streamlit_folium
+geopandas
