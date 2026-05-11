@@ -278,3 +278,171 @@ if country == "India":
         unsafe_allow_html=True
     )
 
+df = gpd.read_file(
+    r"E:\SAICJS\map\gadm41_LKA_1.shp"
+)
+
+# Rename district column
+gdf = gdf.rename(columns={
+    "NAME_1": "District"
+})
+
+# Convert CRS
+gdf = gdf.to_crs(epsg=4326)
+
+# Clean district names
+gdf["District"] = (
+    gdf["District"]
+    .str.upper()
+    .str.strip()
+)
+
+# -----------------------------------
+# Read CSV
+# -----------------------------------
+df = pd.read_csv(
+    "SL_T1"
+)
+
+# Clean district names
+df["District"] = (
+    df["District"]
+    .str.upper()
+    .str.strip()
+)
+
+# -----------------------------------
+# Select Year
+# -----------------------------------
+year = st.sidebar.selectbox(
+    "Select Year",
+    sorted(df["Year"].unique())
+)
+
+# -----------------------------------
+# Filter selected year
+# -----------------------------------
+df_year = df[
+    df["Year"] == year
+]
+
+# -----------------------------------
+# Merge shapefile + CSV
+# -----------------------------------
+gdf_year = gdf.merge(
+    df_year,
+    on="District",
+    how="left"
+)
+
+# -----------------------------------
+# Value column
+# -----------------------------------
+value_column = "Rainfall Hazard Index (Tier-1)"
+
+# Convert to numeric
+gdf_year[value_column] = pd.to_numeric(
+    gdf_year[value_column],
+    errors="coerce"
+)
+
+# -----------------------------------
+# Optional debug table
+# -----------------------------------
+debug_df = gdf_year.drop(columns="geometry")
+
+st.write(debug_df.head())
+
+# -----------------------------------
+# Create Folium map
+# -----------------------------------
+m = folium.Map(
+    location=[7.8, 80.7],
+    zoom_start=7,
+    tiles="CartoDB positron"
+)
+
+# -----------------------------------
+# Color classification
+# -----------------------------------
+def get_color(value):
+
+    if pd.isna(value):
+        return "gray"
+
+    elif value >= 0.25:
+        return "red"       # High
+
+    elif value >= 0.10:
+        return "yellow"    # Medium
+
+    else:
+        return "green"     # Low
+# -----------------------------------
+# Add GeoJson layer
+# -----------------------------------
+folium.GeoJson(
+
+    gdf_year,
+
+    tooltip=folium.GeoJsonTooltip(
+
+        fields=[
+            "District",
+            value_column
+        ],
+
+        aliases=[
+            "District:",
+            "Hazard Score:"
+        ],
+
+        localize=True,
+        sticky=True,
+        labels=True,
+    ),
+
+    style_function=lambda feature: {
+
+        "fillColor": get_color(
+
+            float(
+                feature["properties"][value_column]
+            )
+
+            if feature["properties"][value_column]
+            is not None
+
+            else None
+        ),
+
+        "color": "black",
+        "weight": 1.5,
+        "fillOpacity": 0.8,
+    }
+
+).add_to(m)
+
+# -----------------------------------
+# Display map
+# -----------------------------------
+st_folium(
+    m,
+    width=1200,
+    height=700
+)
+
+# -----------------------------------
+# Legend
+# -----------------------------------
+st.markdown("""
+### Legend
+
+🟩 0 - 1  → Low  
+🟨 1 - 2  → Low Medium  
+🟧 2 - 4  → Medium  
+🟥 4 - 6  → Medium High  
+🔴 6 - 8  → High  
+🟣 8 - 9  → Very High  
+⚪ No Data
+""")
