@@ -284,7 +284,7 @@ if country == "India":
     )
 
 
-st.subheader(content[country]["subheader"])
+st.subheader("Map)
 
 
 import streamlit as st
