@@ -329,6 +329,7 @@ else:
         unsafe_allow_html=True
     )
 
+st.write("")
 
 import streamlit as st
 import geopandas as gpd
