@@ -272,6 +272,7 @@ if country == "India":
     )
 
 st.write("")
+st.subheader("Risk Category Map")
 
 import streamlit as st
 import geopandas as gpd
