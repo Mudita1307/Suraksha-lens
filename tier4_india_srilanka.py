@@ -374,7 +374,7 @@ gdf_year = gdf.merge(
 # -----------------------------------
 # Value Column
 # -----------------------------------
-
+gdf_year 
 
 # Convert numeric
 gdf_year[value_column] = pd.to_numeric(
