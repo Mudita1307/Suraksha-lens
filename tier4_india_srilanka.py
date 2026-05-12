@@ -376,11 +376,11 @@ gdf_year = gdf.merge(
 # -----------------------------------
 gdf_year 
 
-# Convert numeric
-gdf_year[value_column] = pd.to_numeric(
-    gdf_year[value_column],
-    errors="coerce"
-)
+# # Convert numeric
+# gdf_year[value_column] = pd.to_numeric(
+#     gdf_year[value_column],
+#     errors="coerce"
+# )
 
 # -----------------------------------
 # Create Folium Map
