@@ -552,7 +552,7 @@ else:
     )
 
 st.write("")
-st.write("Vulnerability Score Map")
+st.subheader("Vulnerability Score Map")
 
 import streamlit as st
 import geopandas as gpd
