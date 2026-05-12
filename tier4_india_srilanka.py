@@ -457,15 +457,3 @@ st_folium(
     height=700
 )
 
-# -----------------------------------
-# Dynamic Legend
-# -----------------------------------
-min_value = round(
-    gdf_year[value_column].min(),
-    2
-)
-
-max_value = round(
-    gdf_year[value_column].max(),
-    2
-)
