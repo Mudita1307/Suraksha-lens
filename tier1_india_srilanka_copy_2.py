@@ -284,6 +284,7 @@ if country == "India":
     )
 
 st.write("")
+st.subheader("Hazard Score Map")
 
 
 
