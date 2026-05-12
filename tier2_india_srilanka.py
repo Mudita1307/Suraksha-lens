@@ -330,6 +330,7 @@ else:
     )
 
 st.write("")
+st.subheader("Exposure Score Map")
 
 import streamlit as st
 import geopandas as gpd
