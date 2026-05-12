@@ -283,7 +283,7 @@ if country == "India":
         unsafe_allow_html=True
     )
 
-st.write("Map")
+st.write("")
 
 
 
