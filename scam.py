@@ -35,8 +35,7 @@ st.markdown(
         <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000;">
         <strong></strong>Note: Qilafy provides AI-assisted verification support intended to help users assess potential digital risks and 
         misinformation exposure. Outputs should be used as supportive guidance and not as sole evidence for legal or enforcement purposes. 
-        Users should independently verify relevant information and conduct their own research before taking any action. 
-        or public awareness.Indicators are interpreted alongside other contextual data.
+        Users should independently verify relevant information and conduct their own research before taking any action.
         </div>
         """,
         unsafe_allow_html=True
