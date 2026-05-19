@@ -13,18 +13,13 @@ st.write("""
 st.header("What Qilafy Helps Detect")
 
 st.markdown("""
-    **Scam and phishing attempts**
-    
-    **Suspicious or unsafe URLs**
-    
-    **Fake or manipulated images**
-    
-    **Potential deepfake content**
-    
-    **Misinformation, misleading media, fake news**
-    
-    **Suspicious digital activity**
-    """)
+- **Scam and phishing attempts**
+- **Suspicious or unsafe URLs**
+- **Fake or manipulated images**
+- **Potential deepfake content**
+- **Misinformation, misleading media, fake news**
+- **Suspicious digital activity**
+""")
 st.header("Why This Matters")
 
 st.write("""With the growing spread of online scams, fake content, and manipulated media, verification has become increasingly important for safer digital engagement.
