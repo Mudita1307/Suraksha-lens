@@ -18,8 +18,11 @@ st.markdown("""
     **Suspicious or unsafe URLs**
     
     **Fake or manipulated images**
+    
     **Potential deepfake content**
+    
     **Misinformation, misleading media, fake news**
+    
     **Suspicious digital activity**
     """)
 st.header("Why This Matters")
