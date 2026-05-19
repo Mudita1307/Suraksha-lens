@@ -25,6 +25,7 @@ st.markdown("""
 st.header("Why This Matters")
 
 st.write("""With the growing spread of online scams, fake content, and manipulated media, verification has become increasingly important for safer digital engagement.
+
 Through this collaboration, Suraksha Lens aims to improve digital awareness and support users with accessible AI-enabled verification tools for safer and more informed online decision-making.
 """)
 
