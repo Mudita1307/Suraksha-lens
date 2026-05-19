@@ -6,7 +6,7 @@ import streamlit as st
 st.header("About the Partnership")
 
 st.write("""
-    As part of Suraksha Lens’ commitment to strengthening digital safety and misinformation awareness, we have partnered with QilaAI to integrate Qilafy, their AI-powered verification and scam detection solution, into the platform.
+    As part of Suraksha Lens’ commitment to strengthening digital safety and misinformation awareness, we have partnered with  [QilaAI](https://qilafy.com//)to integrate Qilafy, their AI-powered verification and scam detection solution, into the platform.
     
   This layer helps users identify potential scams, phishing attempts, manipulated media, suspicious links, misinformation, and possible deepfake content through AI-assisted verification support.
     """)
