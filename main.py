@@ -64,10 +64,10 @@ else:
     page_3 = st.Page("tier2_india_srilanka.py", title="Tier 2: Exposure", icon="❄️")
     page_4 = st.Page("tier3_india_srilanka.py", title="Tier 3: Vulnerability", icon="❄️")
     page_5 = st.Page("tier4_india_srilanka.py", title="Tier 4: Climate Exploitation Risk Index", icon="❄️")
-    page_5 = st.Page("scam.py", title="Qilafy – AI Verification & Scam Detection", icon="❄️")
+    page_6 = st.Page("scam.py", title="Qilafy – AI Verification & Scam Detection", icon="❄️")
 
     # ---- Navigation ----
-    pg = st.navigation([ page_1, page_2, page_3, page_4, page_5])
+    pg = st.navigation([ page_1, page_2, page_3, page_4, page_5,page_6])
     pg.run()
 
     # ---- Logout ----
