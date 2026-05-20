@@ -24,7 +24,6 @@ def login():
     users = {
         "admin": "1234",
         "chaitra": "abcd",
-        "mudita": "pass123",
         "Ntasha.bhardwaj@saicjs.com": "nbm@sl",
         "Bushra.khan@saicjs.com": "nbm@sl",
         "Mudita.sharma@saicjs.com": "nbm@sl",
