@@ -32,7 +32,9 @@ def login():
         "consultant.india@nhrf.no":"nhrf@sl2026",
         "aanchal.modani@saicjs.com":"sl@2026",
         
-        "lawofficersv@gmail.com":"sv@sl2026"
+        "lawofficersv@gmail.com":"sv@sl2026",
+        "reidun.ryland@nhrf.no":"nhrf@sl2026",
+        "consultant.srilanka@nhrf.no":"nhrf@sl2026"
     }
 
     if submit:
