@@ -531,8 +531,8 @@ legend_html = """
 m.get_root().html.add_child(folium.Element(legend_html))
 st_folium(
     m,
-    width=900,
-    height=600
+    width=700,
+    height=500
 )
 
 
