@@ -406,7 +406,7 @@ gdf_year[value_column] = pd.to_numeric(
 m = folium.Map(
     location=map_location,
     zoom_start=zoom_level,
-    tiles="CartoDB positron"
+    tiles=None
 )
 
 # -----------------------------------
