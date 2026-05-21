@@ -528,3 +528,4 @@ legend._template = Template(legend_html)
 
 m.get_root().add_child(legend)
 
+
