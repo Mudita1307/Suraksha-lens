@@ -454,19 +454,11 @@ folium.GeoJson(
 # -----------------------------------
 # Display Map
 # -----------------------------------
-st_folium(
-    m,
-    width=1200,
-    height=700
-)
-from branca.element import Template, MacroElement
 
 # -----------------------------------
-# Legend HTML
+# Add Legend
 # -----------------------------------
 legend_html = """
-{% macro html(this, kwargs) %}
-
 <div style="
     position: fixed;
     bottom: 50px;
@@ -474,58 +466,67 @@ legend_html = """
     width: 180px;
     height: 140px;
     z-index:9999;
-    font-size:14px;
-    background-color:white;
+    background-color: white;
     border:2px solid grey;
     border-radius:6px;
     padding: 10px;
-">
+    font-size:14px;
+    ">
 
 <b>Risk Category</b><br><br>
 
-<i style="background:red;
-          width:18px;
-          height:18px;
-          float:left;
-          margin-right:8px;
-          opacity:0.7;">
-</i> High Risk <br><br>
-
-<i style="background:yellow;
-          width:18px;
-          height:18px;
-          float:left;
-          margin-right:8px;
-          opacity:0.7;">
-</i> Medium Risk <br><br>
-
-<i style="background:green;
-          width:18px;
-          height:18px;
-          float:left;
-          margin-right:8px;
-          opacity:0.7;">
-</i> Low Risk <br><br>
-
-<i style="background:gray;
-          width:18px;
-          height:18px;
-          float:left;
-          margin-right:8px;
-          opacity:0.7;">
-</i> No Data
-
+<div>
+    <span style="
+        background:red;
+        width:15px;
+        height:15px;
+        display:inline-block;
+        margin-right:8px;">
+    </span>
+    High Risk
 </div>
 
-{% endmacro %}
+<div>
+    <span style="
+        background:yellow;
+        width:15px;
+        height:15px;
+        display:inline-block;
+        margin-right:8px;">
+    </span>
+    Medium Risk
+</div>
+
+<div>
+    <span style="
+        background:green;
+        width:15px;
+        height:15px;
+        display:inline-block;
+        margin-right:8px;">
+    </span>
+    Low Risk
+</div>
+
+<div>
+    <span style="
+        background:gray;
+        width:15px;
+        height:15px;
+        display:inline-block;
+        margin-right:8px;">
+    </span>
+    No Data
+</div>
+
+</div>
 """
 
-# -----------------------------------
-# Add Legend to Map
-# -----------------------------------
-legend = MacroElement()
-legend._template = Template(legend_html)
-
-m.get_root().add_child(legend)
+m.get_root().html.add_child(folium.Element(legend_html))
+st_folium(
+    m,
+    width=1200,
+    height=700
+)
 
 
