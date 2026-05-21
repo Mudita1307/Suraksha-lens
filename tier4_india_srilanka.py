@@ -459,4 +459,72 @@ st_folium(
     width=1200,
     height=700
 )
+from branca.element import Template, MacroElement
+
+# -----------------------------------
+# Legend HTML
+# -----------------------------------
+legend_html = """
+{% macro html(this, kwargs) %}
+
+<div style="
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+    width: 180px;
+    height: 140px;
+    z-index:9999;
+    font-size:14px;
+    background-color:white;
+    border:2px solid grey;
+    border-radius:6px;
+    padding: 10px;
+">
+
+<b>Risk Category</b><br><br>
+
+<i style="background:red;
+          width:18px;
+          height:18px;
+          float:left;
+          margin-right:8px;
+          opacity:0.7;">
+</i> High Risk <br><br>
+
+<i style="background:yellow;
+          width:18px;
+          height:18px;
+          float:left;
+          margin-right:8px;
+          opacity:0.7;">
+</i> Medium Risk <br><br>
+
+<i style="background:green;
+          width:18px;
+          height:18px;
+          float:left;
+          margin-right:8px;
+          opacity:0.7;">
+</i> Low Risk <br><br>
+
+<i style="background:gray;
+          width:18px;
+          height:18px;
+          float:left;
+          margin-right:8px;
+          opacity:0.7;">
+</i> No Data
+
+</div>
+
+{% endmacro %}
+"""
+
+# -----------------------------------
+# Add Legend to Map
+# -----------------------------------
+legend = MacroElement()
+legend._template = Template(legend_html)
+
+m.get_root().add_child(legend)
 
