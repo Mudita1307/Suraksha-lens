@@ -1,6 +1,11 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import streamlit as st
+import geopandas as gpd
+import pandas as pd
+import folium
+from streamlit_folium import st_folium
 
 # -----------------------
 # Config
@@ -274,11 +279,7 @@ if country == "India":
 st.write("")
 st.subheader("Risk Category Map")
 
-import streamlit as st
-import geopandas as gpd
-import pandas as pd
-import folium
-from streamlit_folium import st_folium
+
 
 
 if country == "Sri Lanka":
