@@ -391,7 +391,13 @@ gdf_year = gdf.merge(
 m = folium.Map(
     location=map_location,
     zoom_start=zoom_level,
-    tiles="CartoDB positron"
+    tiles=None,
+    zoom_control=False,      # removes + / - buttons
+    scrollWheelZoom=False,   # disable mouse wheel zoom
+    dragging=False,          # disable map dragging
+    doubleClickZoom=False,   # disable double click zoom
+    touchZoom=False          # disable touch zoom
+
 )
 
 # -----------------------------------
