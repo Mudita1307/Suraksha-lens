@@ -551,7 +551,6 @@ else:
         unsafe_allow_html=True
     )
 
-st.write("")
-st.subheader("Vulnerability Score Map")
+
 
 
