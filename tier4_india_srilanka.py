@@ -515,16 +515,7 @@ legend_html = """
     Low Risk
 </div>
 
-<div>
-    <span style="
-        background:gray;
-        width:15px;
-        height:15px;
-        display:inline-block;
-        margin-right:8px;">
-    </span>
-    No Data
-</div>
+
 
 </div>
 """
