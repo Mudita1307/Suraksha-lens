@@ -296,8 +296,6 @@ if metric_name == "Risk Category":
 </style>
 """
 
-m.get_root().header.add_child(
-    folium.Element(transparent_css)
 )
 
     # -----------------------------------
