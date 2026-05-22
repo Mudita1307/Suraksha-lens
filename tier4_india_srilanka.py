@@ -193,204 +193,92 @@ metric = indicators[metric_name]
 # -----------------------
 # Visualization
 # -----------------------
-st.subheader(metric["chart_title"])
 
-if metric["column"] not in filtered_df.columns:
-    st.error(f"Column '{metric['column']}' not found in data!")
+# =========================================================
+# RISK CATEGORY → MAP
+# =========================================================
+if metric_name == "Risk Category":
 
-else:
-    # -----------------------
-    # Risk Category (Stacked Bar)
-    # -----------------------
-    if metric_name == "Risk Category":
+    st.subheader("Risk Category Map")
 
-        filtered_df = filtered_df.dropna(subset=["Year", metric["column"]])
+    # -----------------------------------
+    # Load shapefile + CSV
+    # -----------------------------------
+    if country == "Sri Lanka":
 
-        fig = px.histogram(
-            filtered_df,
-            x="Year",
-            color=metric["column"],
-            barmode="stack",
-            color_discrete_map={
-                "High Risk": "#FF0000",     # Red
-                "Medium Risk": "#FFC107",   # Yellow (better visibility)
-                "Low Risk": "#008000"       # Green
-            },
-            category_orders={metric["column"]: ["Low Risk", "Medium Risk", "High Risk"]},
-            text_auto=True
+        gdf = gpd.read_file(
+            "gadm41_LKA_1.geojson"
         )
 
-        fig.update_layout(
-            yaxis_title="Number of Districts",
-            xaxis_title="Year"
+        gdf = gdf.rename(columns={
+            "NAME_1": "District"
+        })
+
+        map_df = pd.read_csv(
+            "SL_T4.csv"
         )
 
-    # -----------------------
-    # Risk Score (Line Chart)
-    # -----------------------
+        map_location = [7.8, 80.7]
+        zoom_level = 7
+
     else:
-        trend_df = (
-            filtered_df.groupby(["Year", "District"])[metric["column"]]
-            .mean()
-            .reset_index()
+
+        gdf = gpd.read_file(
+            "gadm41_IND_1.geojson"
         )
 
-        # Clean data
-        trend_df["Year"] = pd.to_numeric(trend_df["Year"], errors="coerce")
-        trend_df[metric["column"]] = pd.to_numeric(trend_df[metric["column"]], errors="coerce")
+        gdf = gdf.rename(columns={
+            "NAME_2": "District"
+        })
 
-        trend_df = trend_df.dropna()
+        map_df = pd.read_csv(
+            "IND_T4.csv"
+        )
 
-        if trend_df.empty:
-            st.warning("No data available after filtering.")
-        else:
-            fig = px.line(
-                trend_df,
-                x="Year",
-                y=metric["column"],
-                color="District",
-                markers=True
-            )
+        map_location = [23.5937, 80.9629]
+        zoom_level = 5
 
-    # -----------------------
-    # Plot
-    # -----------------------
-    if 'fig' in locals():
-        st.plotly_chart(fig, use_container_width=True)
-
-    # -----------------------
-    # Description (Plain Text)
-    # -----------------------
-    st.write(metric["chart_desc"])
-if country == "India":
-    st.markdown(
-        """
-        <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000;">
-        <strong></strong>Risk Scores are calculated by combining Hazard (Tier 1), Exposure (Tier 2), Vulnerability (Tier 3) scores at the district level for the common
-        time period (2020–2021). Scores are computed using all available data. Where one or more scores are unavailable for a district, the Risk Score is calculated 
-        using the remaining available scores. No assumptions or artificial imputation have been applied. Districts with no available scores across all three components 
-        are excluded from the analysis.
-
-        </div>
-        """,
-        unsafe_allow_html=True
+    # -----------------------------------
+    # Clean names
+    # -----------------------------------
+    gdf["District"] = (
+        gdf["District"]
+        .str.upper()
+        .str.strip()
     )
 
-st.write("")
-st.subheader("Risk Category Map")
-
-
-
-
-if country == "Sri Lanka":
-
-    # Read Sri Lanka GeoJSON
-    gdf = gpd.read_file(
-        "gadm41_LKA_1.geojson"
+    map_df["District"] = (
+        map_df["District"]
+        .str.upper()
+        .str.strip()
     )
 
-    # Rename column
-    gdf = gdf.rename(columns={
-        "NAME_1": "District"
-    })
-
-    # Read Sri Lanka CSV
-    df = pd.read_csv(
-        "SL_T4.csv"
+    # -----------------------------------
+    # Year filter
+    # -----------------------------------
+    year = st.sidebar.selectbox(
+        "Select Year",
+        sorted(map_df["Year"].unique())
     )
 
-    value_column = "Risk Category"
+    df_year = map_df[
+        map_df["Year"] == year
+    ]
 
-    # Map settings
-    map_location = [7.8, 80.7]
-    zoom_level = 7
-
-# -----------------------------------
-# SRI LANKA
-# -----------------------------------
-else:
-
-    # Read Sri Lanka GeoJSON
-    gdf = gpd.read_file(
-        "gadm41_IND_1.geojson"
+    # -----------------------------------
+    # Merge
+    # -----------------------------------
+    gdf_year = gdf.merge(
+        df_year,
+        on="District",
+        how="left"
     )
 
-    # Rename column
-    gdf = gdf.rename(columns={
-        "NAME_1": "District"
-    })
-
-    # Read Sri Lanka CSV
-    df = pd.read_csv(
-        "IND_T4.csv"
-    )
-
-    value_column ="Risk Category"
-
-    
-
-    # Map settings
-    map_location = [23.5937, 80.9629]
-    zoom_level = 5
-
-
-gdf = gdf.to_crs(epsg=4326)
-
-# -----------------------------------
-# Clean district names
-# -----------------------------------
-gdf["District"] = (
-    gdf["District"]
-    .str.upper()
-    .str.strip()
-)
-
-df["District"] = (
-    df["District"]
-    .str.upper()
-    .str.strip()
-)
-
-# -----------------------------------
-# Select Year
-# -----------------------------------
-year = st.sidebar.selectbox(
-    "Select Year",
-    sorted(df["Year"].unique()),
-    key="year_select"
-)
-
-# -----------------------------------
-# Filter selected year
-# -----------------------------------
-df_year = df[
-    df["Year"] == year
-]
-
-# -----------------------------------
-# Merge shapefile + CSV
-# -----------------------------------
-gdf_year = gdf.merge(
-    df_year,
-    on="District",
-    how="left"
-)
-
-# -----------------------------------
-# Value Column
-# -----------------------------------
-
-# # Convert numeric
-# gdf_year[value_column] = pd.to_numeric(
-#     gdf_year[value_column],
-#     errors="coerce"
-# )
-
-# -----------------------------------
-# Create Folium Map
-# -----------------------------------
-m = folium.Map(
-    location=map_location,
+    # -----------------------------------
+    # Create map
+    # -----------------------------------
+    m = folium.Map(
+        location=map_location,
     zoom_start=zoom_level,
     tiles=None,
     zoom_control=False,      # removes + / - buttons
@@ -399,73 +287,31 @@ m = folium.Map(
     doubleClickZoom=False,   # disable double click zoom
     touchZoom=False          # disable touch zoom
 
-)
+    )
 
-# -----------------------------------
-# Color Function
-# -----------------------------------
-def get_color(value):
+    # -----------------------------------
+    # Color function
+    # -----------------------------------
+    def get_color(value):
 
-    if pd.isna(value):
-        return "gray"
+        if pd.isna(value):
+            return "gray"
 
-    elif value == "High Risk":
-        return "red"
+        elif value == "High Risk":
+            return "red"
 
-    elif value == "Medium Risk":
-        return "yellow"
+        elif value == "Medium Risk":
+            return "yellow"
 
-    elif value == "Low Risk":
-        return "green"
+        elif value == "Low Risk":
+            return "green"
 
-    else:
-        return "gray"
+        else:
+            return "gray"
 
-# -----------------------------------
-# Add GeoJson Layer
-# -----------------------------------
-folium.GeoJson(
+    # -----------------------------------
 
-    gdf_year.to_json(),
-
-    tooltip=folium.GeoJsonTooltip(
-
-        fields=[
-            "District",
-            value_column
-        ],
-
-        aliases=[
-            "District:",
-            "Risk Category:"
-        ],
-
-        localize=True,
-        sticky=True,
-        labels=True,
-    ),
-
-    style_function=lambda feature: {
-
-        "fillColor": get_color(
-            feature["properties"][value_column]
-        ),
-
-        "color": "black",
-        "weight": 1,
-        "fillOpacity": 0.7,
-    }
-
-).add_to(m)
-
-# -----------------------------------
-# Display Map
-# -----------------------------------
-
-# -----------------------------------
-# Add Legend
-# -----------------------------------
-legend_html = """
+    legend_html = """
 <div style="
     position: fixed;
     bottom: 50px;
@@ -478,7 +324,7 @@ legend_html = """
     border-radius:6px;
     padding: 10px;
     font-size:14px;
-    ">
+">
 
 <b>Risk Category</b><br><br>
 
@@ -520,11 +366,93 @@ legend_html = """
 </div>
 """
 
-m.get_root().html.add_child(folium.Element(legend_html))
-st_folium(
-    m,
-    width=700,
-    height=500
-)
+# Add legend to map
+    m.get_root().html.add_child(folium.Element(legend_html))
+
+    # Add layer
+    # -----------------------------------
+    folium.GeoJson(
+
+        gdf_year,
+
+        style_function=lambda feature: {
+            "fillColor": get_color(
+                feature["properties"]["Risk Category"]
+            ),
+            "color": "black",
+            "weight": 1,
+            "fillOpacity": 0.7,
+        },
+
+        tooltip=folium.GeoJsonTooltip(
+            fields=["District", "Risk Category"],
+            aliases=["District:", "Risk Category:"]
+        )
+
+    ).add_to(m)
+    
+
+    st_folium(m, width=800, height=900)
+
+# =========================================================
+# RISK SCORE → LINE GRAPH
+# =========================================================
+else:
+
+    st.subheader(metric["chart_title"])
+
+    trend_df = (
+        filtered_df.groupby(["Year", "District"])[metric["column"]]
+        .mean()
+        .reset_index()
+    )
+
+    trend_df["Year"] = pd.to_numeric(
+        trend_df["Year"],
+        errors="coerce"
+    )
+
+    trend_df[metric["column"]] = pd.to_numeric(
+        trend_df[metric["column"]],
+        errors="coerce"
+    )
+
+    trend_df = trend_df.dropna()
+
+    fig = px.line(
+        trend_df,
+        x="Year",
+        y=metric["column"],
+        color="District",
+        markers=True
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
+
+    st.write(metric["chart_desc"])
+
+
+
+
+if country == "India":
+    st.markdown(
+        """
+        <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000;">
+        <strong></strong>Risk Scores are calculated by combining Hazard (Tier 1), Exposure (Tier 2), Vulnerability (Tier 3) scores at the district level for the common
+        time period (2020–2021). Scores are computed using all available data. Where one or more scores are unavailable for a district, the Risk Score is calculated 
+        using the remaining available scores. No assumptions or artificial imputation have been applied. Districts with no available scores across all three components 
+        are excluded from the analysis.
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+st.write("")
+
+
 
 
