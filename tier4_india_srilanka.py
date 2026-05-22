@@ -56,7 +56,7 @@ if st.session_state.prev_country != country:
 # -----------------------
 content = {
     "India": {
-        "header": "Tier-4 : India : Climate Exploitation Risk Index (CERI) (2020-21)",
+        "header": "tier-4 : India : Climate Exploitation Risk Index (CERI) (2020-21)",
         "subheader": "Identifying Priority Areas Facing Combined Climate and Social Risk",
         "write": """
 Tier-4 integrates climate hazard, socio-economic exposure, and child protection vulnerability into a single composite index. 
