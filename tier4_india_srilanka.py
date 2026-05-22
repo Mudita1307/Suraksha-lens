@@ -288,6 +288,17 @@ if metric_name == "Risk Category":
     touchZoom=False          # disable touch zoom
 
     )
+    transparent_css = """
+<style>
+.leaflet-container {
+    background: transparent !important;
+}
+</style>
+"""
+
+m.get_root().header.add_child(
+    folium.Element(transparent_css)
+)
 
     # -----------------------------------
     # Color function
