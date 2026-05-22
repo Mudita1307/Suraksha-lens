@@ -288,15 +288,7 @@ if metric_name == "Risk Category":
     touchZoom=False          # disable touch zoom
 
     )
-    transparent_css = """
-<style>
-.leaflet-container {
-    background: transparent !important;
-}
-</style>
-"""
-
-)
+ 
 
     # -----------------------------------
     # Color function
