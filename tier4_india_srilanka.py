@@ -334,8 +334,7 @@ m.get_root().header.add_child(
     border:2px solid grey;
     border-radius:6px;
     padding: 10px;
-    font-size:14px;
-">
+    font-size:14px;">
 
 <b>Risk Category</b><br><br>
 
