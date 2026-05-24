@@ -162,7 +162,7 @@ else:
 
             "Longest Consecutive Wet Spell (days)": {
                 "column": "Longest Consecutive Wet Spell (days)", # Example of a different column name
-                "chart_title": "Trend of Longest Consecutive Dry Spell",
+                "chart_title": "Trend of Longest Consecutive Wet Spell",
                 "chart_desc": "Measures the longest sequence of consecutive rainfall days. Prolonged wet periods may contribute to flooding and soil saturation."
             },
 
