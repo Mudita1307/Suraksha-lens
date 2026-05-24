@@ -62,7 +62,7 @@ else:
     main_page = st.Page("main.py", title="Main Page", icon="🎈")
     page_1 = st.Page("Suraksha_Lens.py", title="Discover Suraksha Lens with us", icon="❄️")
     page_2 = st.Page("tier1_india_srilanka_copy_2.py", title="Tier 1: Hazard", icon="❄️")
-    page_3 = st.Page("tier2_india_srilanka_upd.py", title="Tier 2: Exposure", icon="❄️")
+    
     page_4 = st.Page("tier3_india_srilanka.py", title="Tier 3: Vulnerability", icon="❄️")
     page_5 = st.Page("tier4_india_srilanka.py", title="Tier 4: Climate Exploitation Risk Index", icon="❄️")
     page_6 = st.Page("scam.py", title="Qilafy – AI Verification & Scam Detection", icon="❄️")
