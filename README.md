@@ -104,8 +104,6 @@ app/                # Streamlit dashboard application
 data/               # Raw and processed datasets
 geojson/            # Geospatial boundary files
 scripts/            # Processing and analytics scripts
-assets/             # Dashboard visuals and images
-docs/               # Documentation and reports
 ```
 
 ---
