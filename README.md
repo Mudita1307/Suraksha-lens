@@ -4,6 +4,8 @@
 
 A flagship initiative of the South Asian Institute of Crime and Justice Studies (SAICJS).
 
+---
+
 ## About
 
 Suraksha Lens is an AI-enabled early warning and early action platform designed to identify and prevent climate-linked exploitation before it occurs.
@@ -22,14 +24,18 @@ Suraksha Lens is designed to support:
 
 through anticipatory, evidence-based protection and coordinated response systems.
 
+---
+
 # Regions Covered
 
 Current implementation includes:
+
 - India
 - Sri Lanka
 
 with scalability across South Asia.
 
+---
 
 # Climate Exploitation Risk Index (CERI)
 
@@ -76,6 +82,8 @@ The final index operationalises exploitation risk through the interaction of haz
 - Multi-country comparative analysis
 - Community-informed validation workflows
 
+---
+
 # Technology Stack
 
 - Python
@@ -86,6 +94,8 @@ The final index operationalises exploitation risk through the interaction of haz
 - GeoJSON
 - Machine Learning / AI
 - Geospatial Analytics
+
+---
 
 # Repository Structure
 
@@ -98,6 +108,8 @@ assets/             # Dashboard visuals and images
 docs/               # Documentation and reports
 ```
 
+---
+
 # Community-Centered Intelligence
 
 A core component of Suraksha Lens is the Community Safety Evidence Leaders (CSEL) network, which enables:
@@ -107,13 +119,21 @@ A core component of Suraksha Lens is the Community Safety Evidence Leaders (CSEL
 - Trust-building
 - Continuous feedback loops
 
-This creates a dynamic cycle of: Data → Insight → Response → Community Validation → Improved Intelligence
+This creates a dynamic cycle of:
+
+```text
+Data → Insight → Response → Community Validation → Improved Intelligence
+```
+
+---
 
 # Why It Matters
 
 Climate change is increasingly driving displacement, livelihood disruption, and unsafe migration across South Asia. These disruptions often heighten the risk of exploitation, trafficking, and digital harm, particularly for already vulnerable populations.
 
 Suraksha Lens aims to bridge the gap between climate risk intelligence and human protection by connecting data, technology, research, and community insight into a unified anticipatory protection system.
+
+---
 
 # Future Roadmap
 
@@ -124,6 +144,8 @@ Suraksha Lens aims to bridge the gap between climate risk intelligence and human
 - Adaptive capacity modelling
 - Advanced AI-enabled signal intelligence
 - Integrated humanitarian response systems
+
+---
 
 # Team
 
@@ -139,7 +161,13 @@ Research and Communications Officer
 ## Aanchal Modani
 Researcher
 
+## Jody Miller
+Founding Member & Advisor
+
+---
+
 # Organisation
 
 ## South Asian Institute of Crime and Justice Studies (SAICJS)
+
 SAICJS is focused on interdisciplinary research, policy engagement, and technology-driven approaches addressing crime, justice, gender, climate vulnerability, migration, and human protection across South Asia.
