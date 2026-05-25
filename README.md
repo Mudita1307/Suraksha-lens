@@ -161,8 +161,6 @@ Research and Communications Officer
 ## Aanchal Modani
 Researcher
 
-## Jody Miller
-Founding Member & Advisor
 
 ---
 
