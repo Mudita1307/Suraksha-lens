@@ -59,7 +59,7 @@ content = {
         "header": "Tier-4 : India : Climate Exploitation Risk Index (CERI) (2020-21)",
         "subheader": "Identifying Priority Areas Facing Combined Climate and Social Risk",
         "write": """
-Tier-4 integrates climate hazard, socio-economic exposure, and child protection vulnerability into a single composite index. 
+Tier-4 integrates climate hazard, socio-economic exposure, and vulnerability into a single composite index. 
 It highlights areas where climate stress, population exposure, and protection risks overlap. 
 Higher scores indicate a greater likelihood that climate-related stress may translate into increased risks affecting vulnerable populations.
 """
