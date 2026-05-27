@@ -9,8 +9,8 @@ streamlit
 geopandas
 folium
 streamlit-folium
-pandas
 fiona
 pyproj
 shapely
 rtree
+openpyxl
