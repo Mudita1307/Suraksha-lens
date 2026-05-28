@@ -25,7 +25,7 @@ country = st.sidebar.selectbox(
 # File Paths
 # -----------------------
 data_files = {
-    
+    "India":"IND_T4.csv",
     "Sri Lanka": "SL_T4.csv"
 }
 
