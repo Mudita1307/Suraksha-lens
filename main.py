@@ -33,7 +33,8 @@ def login():
         
         "lawofficersv@gmail.com":"sv@sl2026",
         "reidun.ryland@nhrf.no":"nhrf@sl2026",
-        "consultant.srilanka@nhrf.no":"nhrf@sl2026"
+        "consultant.srilanka@nhrf.no":"nhrf@sl2026",
+        "ipenprogram@gmail.com" : "nhrf@sl2026"
     }
 
     if submit:
