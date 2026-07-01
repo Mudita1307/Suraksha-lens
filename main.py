@@ -27,11 +27,12 @@ def login():
         "Ntasha.bhardwaj@saicjs.com": "nbm@sl",
         "Bushra.khan@saicjs.com": "nbm@sl",
         "Mudita.sharma@saicjs.com": "nbm@sl",
-        "maya.singh@nhrf.no":"nhrf@sl2026",
-        "consultant.india@nhrf.no":"nhrf@sl2026",
         "aanchal.modani@saicjs.com":"sl@2026",
+        "consultantai@saicjs.com":"ai@sl",
         
         "lawofficersv@gmail.com":"sv@sl2026",
+        "maya.singh@nhrf.no":"nhrf@sl2026",
+        "consultant.india@nhrf.no":"nhrf@sl2026",
         "reidun.ryland@nhrf.no":"nhrf@sl2026",
         "consultant.srilanka@nhrf.no":"nhrf@sl2026",
         "ipenprogram@gmail.com" : "nhrf@sl2026"
