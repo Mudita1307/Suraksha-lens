@@ -35,7 +35,8 @@ def login():
         "consultant.india@nhrf.no":"nhrf@sl2026",
         "reidun.ryland@nhrf.no":"nhrf@sl2026",
         "consultant.srilanka@nhrf.no":"nhrf@sl2026",
-        "ipenprogram@gmail.com" : "nhrf@sl2026"
+        "ipenprogram@gmail.com" : "nhrf@sl2026",
+        "munnadeblr@gmail.com":"mn@sl2026"
     }
 
     if submit:
