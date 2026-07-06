@@ -218,5 +218,16 @@
     "legend_high": "High Risk",
     "legend_medium": "Medium Risk",
     "legend_low": "Low Risk"
+  },
+  "scam": {
+    "about_header": "About the Partnership",
+    "about_write": "As part of Suraksha Lens' commitment to strengthening digital safety and misinformation awareness, we have partnered with [QilaAI](https://qilafy.com//) to integrate [Qilafy](https://qilafy.com/qilafy/), their AI-powered verification and scam detection solution, into the platform.\n\nThis layer helps users identify potential scams, phishing attempts, manipulated media, suspicious links, misinformation, and possible deepfake content through AI-assisted verification support.",
+    "detect_header": "What Qilafy Helps Detect",
+    "detect_list": "- **Scam and phishing attempts**\n- **Suspicious or unsafe URLs**\n- **Fake or manipulated images**\n- **Potential deepfake content**\n- **Misinformation, misleading media, fake news**\n- **Suspicious digital activity**",
+    "why_header": "Why This Matters",
+    "why_write": "With the growing spread of online scams, fake content, and manipulated media, verification has become increasingly important for safer digital engagement.\n\nThrough this collaboration, Suraksha Lens aims to improve digital awareness and support users with accessible AI-enabled verification tools for safer and more informed online decision-making.",
+    "access_header": "Access Qilafy",
+    "access_write": "Users can register and access Qilafy through the official platform below: https://app.qilafy.com/signup",
+    "note": "Note: Qilafy provides AI-assisted verification support intended to help users assess potential digital risks and misinformation exposure. Outputs should be used as supportive guidance and not as sole evidence for legal or enforcement purposes. Users should independently verify relevant information and conduct their own research before taking any action."
   }
 }
