@@ -2,25 +2,30 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+from i18n import t, inject_font_css
+
 # -----------------------
 # Config
 # -----------------------
 st.set_page_config(page_title="Climate Hazard Index", layout="wide")
+inject_font_css()
 
-#st.sidebar.title("Global Settings")
-country = st.sidebar.selectbox("Select Country", ["India", "Sri Lanka"])
+COUNTRY_CODES = ["India", "Sri Lanka"]
+
+country = st.sidebar.selectbox(
+    t("common.select_country"),
+    COUNTRY_CODES,
+    format_func=lambda c: t("common.india") if c == "India" else t("common.sri_lanka"),
+    key="country",
+)
 
 # -----------------------
 # File Paths
 # -----------------------
-
-
-
 data_files = {
-    "India":"IND_T3.csv",
+    "India": "IND_T3.csv",
     "Sri Lanka": "SL_T3.csv"
 }
-
 
 # -----------------------
 # Load Data
@@ -28,7 +33,6 @@ data_files = {
 @st.cache_data
 def load_data(file_path):
     df = pd.read_csv(file_path, encoding="latin1")
-    #df.columns = df.columns.str.strip()
     print(df.columns)
     return df
 
@@ -49,336 +53,57 @@ if st.session_state.prev_country != country:
 # -----------------------
 # Dynamic Content (Header + Note)
 # -----------------------
-content = {
+st.header(t(f"tier3.content.{country}.header"))
+st.subheader(t(f"tier3.content.{country}.subheader"))
+st.write(t(f"tier3.content.{country}.write"))
+
+# -----------------------
+# Indicator Column Mapping (technical - CSV column names, not translated)
+# -----------------------
+INDICATOR_COLUMNS = {
     "India": {
-        "header": "Tier-3 : India : Social Vulnerability Index (2020-23)",
-        "subheader": "Understanding Patterns of Social Risk and Institutional Strain Across Districts",
-        "write": "Tier-3 assesses social vulnerability using district-level crime data across India. It analyses trends in reported offences against children, women, and marginalized communities, along with cybercrime, to identify areas where social protection systems may be under strain. Changes in reported cases are interpreted as signals of vulnerability, reflecting shifts in incidence, reporting practices, enforcement capacity, or public awareness.",
+        "vulnerability_score": "Vulnerability Score",
+        "crimes_against_children": "Crimes Against Children (Cases)",
+        "crimes_against_women": "Crimes Against Women (Cases)",
+        "crimes_against_sc": "Crimes Against SC Communities (Cases)",
+        "crimes_against_st": "Crimes Against ST Communities (Cases)",
+        "cybercrime_cases": "Cybercrime Cases",
     },
     "Sri Lanka": {
-        "header": "Tier-3 : Sri Lanka : Institutional & Exploitation Vulnerability Index (2020-24)",
-        "subheader": "Understanding Where Protection Systems Show Signs of Strain During Climate and Economic Shocks",
-        "write": "Tier-3 assesses vulnerability within child protection environments using district-level data. It analyses trends in reported child-related offences, including violence, exploitation, neglect, and abuse, to identify where protection systems may be under strain. Changes in reported cases are interpreted as signals of vulnerability, reflecting shifts in incidence, reporting practices, enforcement capacity, or public awareness."
-        
-    }
-}
-
-st.header(content[country]["header"])
-st.subheader(content[country]["subheader"])
-st.write(content[country]["write"]) 
-
-# -----------------------
-# Indicator Mapping
-# -----------------------
-if country == "India":
-    indicators = {
-        "Vulnerability Score": {
-            "column": "Vulnerability Score",
-            "chart_title": "Trend of Vulnerability Score",
-            "chart_desc": "This composite score reflects overall social vulnerability across districts. It ranges from 0 (lower vulnerability) to 1 (higher vulnerability). Higher values indicate greater levels of reported crimes and potential strain on social protection systems."
-        },
-        "Crimes Against Children (Cases)": {
-            "column": "Crimes Against Children (Cases)",
-            "chart_title": "Trend of Crimes Against Children",
-            "chart_desc": "Tracks reported cases involving crimes against children. Higher values may indicate increased risks to child safety or improved detection and reporting mechanisms."
-        },
-        "Crimes Against Women (Cases)": {
-            "column": "Crimes Against Women (Cases)",
-            "chart_title": "Trend of Crimes Against Women",
-            "chart_desc": "Represents reported offences against women. Trends may reflect changes in gender-based violence, social conditions, or reporting practices."
-        },
-        "Crimes Against SC Communities (Cases)": {
-            "column": "Crimes Against SC Communities (Cases)",
-            "chart_title": "Crimes Against SC Communities (Cases)",
-            "chart_desc": "Tracks reported crimes against Scheduled Caste communities. Higher values may indicate social inequality, discrimination, or increased reporting."
-        },
-        "Crimes Against ST Communities (Cases)": {
-            "column": "Crimes Against ST Communities (Cases)",
-            "chart_title": "Trend of Crimes Against ST Communities",
-            "chart_desc": "Represents reported offences against Scheduled Tribe communities. Trends may highlight vulnerabilities linked to marginalization or geographic isolation."
-        },
-        "Cybercrime Cases": {
-            "column": "Cybercrime Cases",
-            "chart_title": "Trend of Cybercrime Cases",
-            "chart_desc": " Tracks reported cybercrime incidents. Rising trends may indicate increasing digital risks, greater internet penetration, or improved reporting systems."
-        },
-        
-
-        
-        
-
-        
-    
-    }
-else:
-    indicators = {
-    "Vulnerability Score": {
-    "column": "Vulnerability Score",
-    "chart_title": "Trend of Child Protection Vulnerability Score",
-    "chart_desc": """This composite score reflects the overall level of vulnerability within child protection systems. The score ranges from 0 (lower vulnerability) to 1 (higher vulnerability). 
-
- Note :The vulnerability score is unavailable for Hambantota for all years 
- from 2020 to 2024 due to missing underlying indicator data.
-"""
-},
-    "Child Homicide": {
-        "column": "Child Homicide Cases",
-        "chart_title": "Trend of Child Homicide Cases",
-        "chart_desc": """Tracks reported cases of homicide involving children. Such incidents represent severe breakdowns in protection and safety.
-        
-Note : Data is missing for the year 2023 in Badulla, Galle, Kandy, Kegalle, Kurunegala, Mannar,
-Matale, Moneragala, Mullaitivu, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya
-"""
-        
-    },
-    "Attempted Child Murder": {
-        "column": "Attempted Child Murder Cases",
-        "chart_title": "Trend of Attempted Child Murder Cases",
-        "chart_desc": """Captures reported attempts of fatal violence against children. Trends may indicate serious threats to child safety and protection systems.
-
-Note : Data is missing for the year 2023 in Ampara, Batticaloa, Colombo, Galle, Gampaha, Jaffna,
-Kalutara, Kandy, Kegalle, Kilinochchi, Mannar, Matale, Matara, Moneragala, Mullaitivu,
-Polonnaruwa, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data available for 2020 to 2024.
-"""
-
-    },
-    "Child Serious Injury": {
-        "column": "Child Serious Injury Cases",
-        "chart_title": "Trend of Child Serious Injury Cases",
-        "chart_desc": """Represents cases involving significant physical harm to children. Higher values may indicate increased exposure to unsafe environments or violence.
-
-Note :  Data is missing for 2023 in Badulla, Gampaha, Kalutara, and Vavuniya.
-Hambantota has no data for 2020–2024.
-"""
-
-    },
-    "Child Assault": {
-        "column": "Child Assault Cases",
-        "chart_title": "Trend of Child Assault Cases",
-        "chart_desc": """Tracks reported incidents of physical assault against children. Changes may reflect shifts in safety conditions or reporting.
-        
-Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha,
-Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, 
-Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, and Trincomalee.
-Hambantota has no data for 2020–2024.
-"""
-
-    },
-    "Child Sexual Exploitation": {
-        "column": "Child Sexual Exploitation Cases",
-        "chart_title": "Trend of Child Sexual Exploitation Cases",
-        "chart_desc": """Captures cases involving exploitation of children for sexual purposes. Rising trends may indicate increased vulnerability or improved detection and reporting.
-
-Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Galle, Kalutara, Kegalle,
-Kilinochchi, Kurunegala, Mannar, Matale, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Trincomalee, and Vavuniya.
-Hambantota has no data for 2020–2024.
-"""
-
-    },
-    "Child Abduction": {
-        "column": "Child Abduction Cases",
-        "chart_title": "Trend of Child Abduction Cases",
-        "chart_desc": """Represents reported cases of child abduction. Higher levels may signal increased risks related to safety and security.
-        
-Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Jaffna, Kilinochchi, Kurunegala, Mannar, Moneragala, Mullaitivu, Puttalam, and Vavuniya.
-Hambantota has no data for 2020–2024.
-"""
-
-
-    },
-    "Child Kidnapping": {
-        "column": "Child Kidnapping Cases",
-        "chart_title": "Trend of Child kidnapping Cases",
-        "chart_desc": """Tracks reported kidnapping cases involving children. Increases may indicate heightened risks of coercion or exploitation.
-        
-Note : Data is missing for 2023 in Vavuniya.
-Hambantota has no data for 2020–2024.
-"""
-
-        
-    },
-    "Child Rape": {
-        "column": "Child Rape Cases",
-        "chart_title": "Trend of Child Rape Cases",
-        "chart_desc": """Captures reported rape cases involving children. Trends may indicate severe protection risks and vulnerabilities.
-        
-Note : No data is available for Hambantota for the period 2020 to 2024.
-"""
-
-        
-    },
-    "Child Sexual Offence": {
-        "column": "Child Sexual Offence Cases",
-        "chart_title": "Trend of Child Sexual Offence Cases",
-        "chart_desc": """Represents a broader category of sexual offences against children. Higher values may reflect increased vulnerability or improved reporting mechanisms.
-        
-Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, 
-Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa,
-Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
-"""
-        
-    },
-    "Child Trafficking": {
-        "column": "Child Trafficking Cases",
-        "chart_title": "Trend of Child Trafficking Cases",
-        "chart_desc": """Tracks reported cases of trafficking involving children. Rising trends may indicate increased organised exploitation risks.
-        
-Note :  Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, 
-Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu,
-Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
-"""
-
-
-        
-    },
-    "Child Aggravated Sexual Abuse": {
-        "column": "Child Aggravated Sexual Abuse Cases",
-        "chart_title": "Trend of Child Aggravated Sexual Abuse Cases",
-        "chart_desc": """Captures severe forms of sexual abuse involving children. Higher levels indicate significant protection concerns.
-
-Note:  No data is available for Hambantota for the period 2020 to 2024.
-"""
-
-        
-    },
-    "Adultery Cases": {
-        "column": "Adultery Cases",
-        "chart_title": "Trend of Adultery Cases",
-        "chart_desc": """Represents reported adultery-related cases. While not directly a child-specific offence, trends may reflect broader social conditions influencing household stability.
-        
-Note : Data is missing for 2023 in Batticaloa, Colombo, Gampaha, Jaffna, Kalutara, Kegalle, Kilinochchi, Mullaitivu, Trincomalee, and Vavuniya.
-Hambantota has no data for 2020–2024.
-"""
-
-        
-    },
-    "Child Cruelty": {
-        "column": "Child Cruelty Cases",
-        "chart_title": "Trend of Child Cruelty Cases",
-        "chart_desc": """Tracks cases involving cruelty or neglect towards children. Higher values may indicate stress within caregiving environments.
-        
-Note :  Data is missing for 2023 in Badulla, Gampaha, Mannar, and Moneragala.
-"""
-        
-    },
-    "Child Indecent Acts": {
-        "column": "Child Indecent Acts Cases",
-        "chart_title": "Trend of Child Indecent Acts Cases",
-        "chart_desc": """Represents cases involving inappropriate or indecent acts affecting children. Trends may indicate risks related to exploitation or misconduct.
-        
-Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara,
-Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Trincomalee, and Vavuniya.
-Hambantota has no data for 2020–2024.
-"""
-
-        
-    },
-    "Child Sexual Harassment": {
-        "column": "Child Sexual Harassment Cases",
-        "chart_title": "Trend of Child Sexual Harassment Cases",
-        "chart_desc": """Tracks reported cases of sexual harassment involving children. Higher values may indicate increased exposure to unsafe environments.
-
-Note :  Data is missing for 2023 in Mannar.Hambantota has no data for 2020–2024.
-"""
-
-    },
-    "Child Assault & Injury": {
-        "column": "Child Assault & Injury Cases",
-        "chart_title": "Trend of Child Assault and Injury Cases",
-        "chart_desc": """Captures combined incidents of assault and injury involving children. Trends may reflect broader patterns of violence affecting children.
-
-Note : No data is available for Hambantota for the period 2020 to 2024.
-"""
-
-
-        
-    },
-    "Child Obscene Content Exposure": {
-        "column": "Child Exposure to Obscene Content Cases",
-        "chart_title": "Trend of Child Exposure to Obscene Content Cases",
-        "chart_desc": """Represents cases where children are exposed to inappropriate or explicit content. Increases may reflect growing digital or environmental risks.
-        
- Note : Data is missing for 2023 in Ampara, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kegalle, Kilinochchi, Mannar, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Puttalam, Ratnapura, Trincomalee, and Vavuniya.
- Hambantota has no data for 2020–2024.
- """
-
-
-        
-    },
-    "Child Exploitation & Assault": {
-        "column": "Child Exploitation & Assault Cases",
-        "chart_title": "Trend of Child Exploitation and Assault Cases",
-        "chart_desc": """Captures combined cases of exploitation and physical harm. Higher values indicate overlapping vulnerabilities.
-Note : Data is missing for 2023 in Ampara, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kegalle,
-Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Polonnaruwa, Puttalam, Ratnapura, Trincomalee,
-and Vavuniya.Hambantota has no data for 2020–2024.
-"""
-
-    },
-    "Child Domestic Violence Exposure": {
-        "column": "Child Domestic Violence Exposure Cases",
-        "chart_title": "Trend of Child Exposure to Domestic Violence",
-        "chart_desc": """Tracks cases where children are exposed to domestic violence. Such exposure may have long-term impacts on safety and well-being.
-
-Note : : Data is missing for 2023 in Ampara, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, 
-Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu,
-Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
-"""
-
-    },
-    "Child Protection & Guardianship": {
-        "column": "Child Protection & Guardianship Cases",
-        "chart_title": "Trend of Child Protection and Guardianship Cases",
-        "chart_desc": """Represents cases related to custody, protection, and guardianship. Trends may reflect pressures on formal protection systems.
-
-Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, 
-Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu,
-Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
-"""
-
-    },
-    "Child Media-Related Offence": {
-        "column": "Child Media-Related Offence Cases",
-        "chart_title": "Trend of Child Media-Related Offence Cases",
-        "chart_desc": """Captures offences involving media or digital platforms affecting children. Increases may indicate emerging risks in digital environments.
-        
-Note :  Data is missing for 2023 in Anuradhapura, Batticaloa, Gampaha, Kalutara, Kegalle,
-Kilinochchi, Kurunegala, and Mullaitivu.Hambantota has no data for 2020–2024.
-"""
-
-    },
-    "Child Education Neglect": {
-        "column": "Child Education Neglect Cases",
-        "chart_title": "Trend of Child Education Neglect Cases",
-        "chart_desc": """Tracks cases where children are deprived of educational access or support. Higher values may signal broader socio-economic stress.
-        
-Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Colombo, Galle, Gampaha, Jaffna, Kalutara,
-Kandy, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.
-Hambantota has no data for 2020–2024.
-"""
-
-
-
-        
-    },
-    "Child Verbal Abuse": {
-        "column": "Child Verbal Abuse Cases",
-        "chart_title": "Trend of Child Verbal Abuse Cases",
-        "chart_desc": """Represents reported cases of verbal abuse involving children. Trends may reflect underlying social and household stress factors.
-
-Note : Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, 
-Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, 
-Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya.Hambantota has no data for 2020–2024.
-"""
-        
+        "vulnerability_score": "Vulnerability Score",
+        "child_homicide": "Child Homicide Cases",
+        "attempted_child_murder": "Attempted Child Murder Cases",
+        "child_serious_injury": "Child Serious Injury Cases",
+        "child_assault": "Child Assault Cases",
+        "child_sexual_exploitation": "Child Sexual Exploitation Cases",
+        "child_abduction": "Child Abduction Cases",
+        "child_kidnapping": "Child Kidnapping Cases",
+        "child_rape": "Child Rape Cases",
+        "child_sexual_offence": "Child Sexual Offence Cases",
+        "child_trafficking": "Child Trafficking Cases",
+        "child_aggravated_sexual_abuse": "Child Aggravated Sexual Abuse Cases",
+        "adultery_cases": "Adultery Cases",
+        "child_cruelty": "Child Cruelty Cases",
+        "child_indecent_acts": "Child Indecent Acts Cases",
+        "child_sexual_harassment": "Child Sexual Harassment Cases",
+        "child_assault_injury": "Child Assault & Injury Cases",
+        "child_obscene_content": "Child Exposure to Obscene Content Cases",
+        "child_exploitation_assault": "Child Exploitation & Assault Cases",
+        "child_domestic_violence": "Child Domestic Violence Exposure Cases",
+        "child_protection_guardianship": "Child Protection & Guardianship Cases",
+        "child_media_offence": "Child Media-Related Offence Cases",
+        "child_education_neglect": "Child Education Neglect Cases",
+        "child_verbal_abuse": "Child Verbal Abuse Cases",
     },
 }
+
+indicator_ids = list(INDICATOR_COLUMNS[country].keys())
+
+def indicator_label(ind_id):
+    return t(f"tier3.indicators.{country}.{ind_id}.label")
 
 # -----------------------
 # Filters
-# -----------------------
-# -----------------------
-# Reset Filters (FIXED)
 # -----------------------
 if "prev_country" not in st.session_state:
     st.session_state.prev_country = country
@@ -388,14 +113,11 @@ if st.session_state.prev_country != country:
     st.session_state.districts = []
     st.session_state.prev_country = country   # ❌ DO NOT reset metric
 
-# -----------------------
-# Filters
-# -----------------------
-st.sidebar.title("Filters")
+st.sidebar.title(t("common.filters"))
 
 filtered_df = df.copy()
 
-state_label = "Select State" if country == "India" else "Select Province"
+state_label = t("common.select_state") if country == "India" else t("common.select_province")
 
 # State filter (safe)
 if "State" in df.columns:
@@ -412,7 +134,7 @@ if "State" in df.columns:
 district_col = "District" if "District" in df.columns else "District"
 
 districts = st.sidebar.multiselect(
-    "Select District(s)",
+    t("common.select_districts"),
     sorted(filtered_df[district_col].dropna().unique()),
     key="districts"
 )
@@ -423,32 +145,36 @@ if districts:
 # -----------------------
 # Indicator Selection (SAFE)
 # -----------------------
-indicator_options = list(indicators.keys())
+if "metric" not in st.session_state or st.session_state.metric not in indicator_ids:
+    st.session_state.metric = indicator_ids[0]
 
-# If session state is invalid → reset to first option
-if "metric" not in st.session_state or st.session_state.metric not in indicator_options:
-    st.session_state.metric = indicator_options[0]
-
-metric_name = st.sidebar.selectbox(
-    "Select Indicator",
-    options=indicator_options,
+metric_id = st.sidebar.selectbox(
+    t("common.select_indicator"),
+    options=indicator_ids,
+    format_func=indicator_label,
     key="metric"
 )
 
-metric = indicators[metric_name]
+metric_column = INDICATOR_COLUMNS[country][metric_id]
+chart_title = t(f"tier3.indicators.{country}.{metric_id}.chart_title")
+chart_desc = t(f"tier3.indicators.{country}.{metric_id}.chart_desc")
+# Sri Lanka indicators carry an extra "note" field (missing-data footnote).
+# Place names are kept in English by design - see translation notes.
+chart_note = t(f"tier3.indicators.{country}.{metric_id}.note") if country == "Sri Lanka" else ""
+
 # -----------------------
 # Charting
 # -----------------------
 st.divider()
-st.subheader(metric["chart_title"])
+st.subheader(chart_title)
 
 year_col = "year" if "year" in filtered_df.columns else "Year"
 
-if metric["column"] not in filtered_df.columns:
-    st.error(f"Column '{metric['column']}' not found in data!")
+if metric_column not in filtered_df.columns:
+    st.error(t("common.column_not_found", column=metric_column))
 else:
     trend_df = (
-        filtered_df.groupby([year_col, district_col])[metric["column"]]
+        filtered_df.groupby([year_col, district_col])[metric_column]
         .mean()
         .reset_index()
     )
@@ -456,101 +182,110 @@ else:
     fig = px.line(
         trend_df,
         x=year_col,
-        y=metric["column"],
+        y=metric_column,
         color=district_col,
         markers=True
     )
 
     st.plotly_chart(fig, use_container_width=True)
-    st.write(metric["chart_desc"])
+    st.write(chart_desc)
+    if chart_note:
+        st.caption(f"ℹ️ {chart_note}")
+
+# -----------------------
+# Large data-availability appendix notes.
+# District / police-station names are proper nouns and are kept in
+# English throughout, even in the Hindi UI - only the surrounding
+# sentences are translated. See translation notes for rationale.
+# -----------------------
+TIER3_INDIA_MISSING_2020 = (
+    "Andhra Pradesh (Alluri Sitharama Raju, Anakapalli, Anantapuramu, Annamayya, "
+    "Bapatla, Dr BR Ambedkar Konaseema, Eluru, Kakinada, NTR, Nandyal, Palnadu, Parvathipuram Manyam, Prakasam, Sri Potti Sriramulu Nellore, "
+    "Sri Sathya Sai, Tirupati, Vijayawada Railway, YSR), Assam (Bajali, Tamulpur), Bihar (Kaimur (Bhabhua)), Chhattisgarh (Khairagarh–Chhuikhadan–Gandai, "
+    "Manendragarh–Chirmiri–Bharatpur, Mohla–Manpur–Ambagarh Chouki, Sakti, Sarangarh–Bilaigarh), Gujarat (W Rly Ahmedabad, W Rly Vadodara), "
+    "Himachal Pradesh (Nurpur), Jammu & Kashmir (Anti Narcotic Task Force Jammu, Anti Narcotic Task Force Kashmir, CICE Jammu, CICE Kashmir, "
+    "Cyber Crime Jammu, Cyber Crime Kashmir, EOW Jammu, EOW Kashmir, Special Crime Wing Jammu, Special Crime Wing Kashmir), Karnataka "
+    "(KGF, KRailways, Vijayanagara), Kerala (All Districts, Ernakulam Commr, Kannur City, Kannur Rural, Kollam Commr, Kozhikode Commr, Thrissur Commr, "
+    "Trivandrum Commr), Madhya Pradesh (Bhopal Commissionarate, Bhopal Rural, Indore Commissionarate, Indore Rural, Narmadapuram), Maharashtra "
+    "(Amravati Commr, Chhatrapati Sambhajinagar Commr, Chhatrapati Sambhajinagar Railway, Chhatrapati Sambhajinagar Rural, Dharashiv, Mira Bhayandar Vasai Virar Commr, "
+    "Mumbai Commr, Nagpur Commr, Nasik Commr, Pune Commr, Solapur Commr, Thane Commr), Meghalaya (Khasi Hills Eastern West), Mizoram (Crime and EOU), Nagaland "
+    "(Crime, Cyber Security, Narcotics, Noklak, Shamator, Tseminyu, Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, Phek, Tuensang, Wokha, Zunheboto), "
+    "Puducherry (Puducherry), Punjab (Cyber Crime Wing, Malerkotla), Rajasthan (ATS & SOG, Anupgarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, "
+    "Jodhpur Crime, Kekri, Khairtal-Tijara, Kotputli-Behror, Neem Ka Thana, Phalodi, Salumbar, Sanchore, Shahpura), Sikkim (CID, Gangtok (East), Gyalshing (West), "
+    "Mangan (North), Namchi (South), Pakyong (East), Soreng (West)), Tamil Nadu (Avadi, Mayiladuthurai, Tambaram), Uttar Pradesh (Kanpur Commissionarate, Kanpur Outer, "
+    "Varanasi Commissionarate, Varanasi Dehat), Uttarakhand (Cyber Cell)"
+)
+
+TIER3_INDIA_MISSING_2021 = (
+    "Andhra Pradesh (Alluri Sitharama Raju, Anakapalli, Anantapuramu, Annamayya, "
+    "Bapatla, Dr BR Ambedkar Konaseema, Eluru, Kakinada, NTR, Nandyal, Palnadu, Parvathipuram Manyam, Prakasam, Sri Potti Sriramulu Nellore, "
+    "Sri Sathya Sai, Tirupati, Vijayawada Railway, YSR), Assam (Bajali, Tamulpur), Bihar (Bhabhua), Chhattisgarh (Khairagarh–Chhuikhadan–Gandai, "
+    "Manendragarh–Chirmiri–Bharatpur, Mohla–Manpur–Ambagarh Chouki, Sakti, Sarangarh–Bilaigarh), Gujarat (W Rly Ahmedabad, W Rly Vadodara), "
+    "Himachal Pradesh (Nurpur), Jammu & Kashmir (Anti Narcotic Task Force Kashmir, CICE Jammu, CICE Kashmir, EOW Jammu, EOW Kashmir, Special Crime Wing Jammu, "
+    "Special Crime Wing Kashmir), Karnataka (KGF, KRailways, Vijayanagara), Kerala (All Districts, Ernakulam Commr, Kannur, Kollam Commr, Kozhikode Commr, Thrissur Commr, "
+    "Trivandrum Commr), Madhya Pradesh (Bhopal Commissionarate, Bhopal Rural, Indore Commissionarate, Indore Rural, Narmadapuram), Maharashtra (Amravati Commr, Chhatrapati "
+    "Sambhajinagar Commr, Chhatrapati Sambhajinagar Railway, Chhatrapati Sambhajinagar Rural, Dharashiv, Mira Bhayandar Vasai Virar Commr, Mumbai Commr, Nagpur Commr, "
+    "Nasik Commr, Pune Commr, Solapur Commr, Thane Commr), Meghalaya (Khasi Hills Eastern West), Mizoram (Crime and EOU), Nagaland (Crime, Cyber Security, Narcotics, "
+    "Noklak, Shamator, Tseminyu, Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, Phek, Tuensang, Wokha, Zunheboto), Puducherry (All Districts), "
+    "Punjab (Cyber Crime Wing), Rajasthan (ATS & SOG, Anupgarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, Jodhpur Crime, Kekri, Khairtal-Tijara, "
+    "Kotputli-Behror, Neem Ka Thana, Phalodi, Salumbar, Sanchore, Shahpura), Sikkim (Gangtok (East), Gyalshing (West), Mangan (North), Namchi (South), Pakyong (East), "
+    "Soreng (West)), Tamil Nadu (Avadi, Mayiladuthurai, Tambaram), Uttar Pradesh (Kanpur Nagar, Varanasi)"
+)
+
+TIER3_INDIA_MISSING_2022 = (
+    "Andhra Pradesh (Anantapur, Cuddapah, Guntur Urban, Nellore, Prakasham, Rajahmundry, "
+    "Tirupathi Urban, Vijayawada City, Vijayawada Railway, Visakha Rural), Bihar (Bhabhua), Gujarat (W Rly Ahmedabad, W Rly Vadodara), Himachal Pradesh (Nurpur), "
+    "Jammu & Kashmir (Crime Jammu, Crime Srinagar), Karnataka (KGF, KRailways), Kerala (Ernakulam Commr, Kannur, Kollam Commr, Kozhikode Commr, Thrissur Commr, Trivandrum Commr), "
+    "Madhya Pradesh (Bhopal, Hoshangabad, Indore), Maharashtra (Amravati Commr, Chhatrapati Sambhajinagar Commr, Chhatrapati Sambhajinagar Railway, Chhatrapati Sambhajinagar Rural, "
+    "Dharashiv, Mira Bhayandar Vasai Virar Commr, Mumbai Commr, Nagpur Commr, Nasik Commr, Pune Commr, Solapur Commr, Thane Commr), Mizoram (Crime and EOU), "
+    "Nagaland (Crime, Cyber Security, Narcotics, Noklak, Shamator, Tseminyu, Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, Phek, Tuensang, Wokha, Zunheboto), "
+    "Puducherry (All Districts), Punjab (Cyber Crime Wing), Rajasthan (ATS & SOG, Anupgarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, Jodhpur Crime, Kekri, "
+    "Khairtal-Tijara, Kotputli-Behror, Neem Ka Thana, Phalodi, Salumbar, Sanchore, Shahpura), Sikkim (CID, East, North, South, West), Tamil Nadu (Mayiladuthurai), "
+    "Uttar Pradesh (Amroha, Kanpur Nagar, Varanasi)"
+)
+
+TIER3_INDIA_MISSING_2023 = (
+    "Andhra Pradesh (Anantapur, Cuddapah, Guntur Urban, Nellore, Prakasham, Rajahmundry, Tirupathi Urban, "
+    "Vijayawada City, Vijayawada Railway, Visakha Rural), Bihar (Bhabhua), Gujarat (W.Rly Ahmedabad, W.Rly Vadodara), Jammu & Kashmir (Crime Jammu, Crime Srinagar), "
+    "Karnataka (K.G.F., K.Railways), Kerala (All Districts, Ernakulam Commr, Kannur, Kollam Commr, Kozhikode Commr, Thrissur Commr, Trivandrum Commr), "
+    "Madhya Pradesh (Bhopal, Hoshangabad, Indore), Maharashtra (Amravati Commr, Aurangabad Commr, Aurangabad Railway, Aurangabad Rural, Mira Bhayandar Vasai Virar Commr, "
+    "Mumbai Commr, Nagpur Commr, Nasik Commr, Osmanabad, Pune Commr, Solapur Commr, Thane Commr), Nagaland (Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, "
+    "Phek, Tuensang, Wokha, Zunheboto), Puducherry (All Districts), Rajasthan (SOG), Sikkim (East, North, South, West), Uttar Pradesh (Kanpur Nagar, Kanpur Outer, "
+    "Lucknow Grameen, Varanasi, Varanasi Dehat)"
+)
 
 if country == "India":
     st.markdown(
-        """
+        f"""
         <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000;">
-        <strong></strong>Values represent reported cases. A value of 0 indicates no reported cases, not absence of risk. 
-        Trends may be influenced by changes in reporting practices, enforcement capacity, or public awareness. Indicators should be interpreted alongside contextual factors.
-        No missing values have been artificially filled, scores are computed using available data only.
-        
-        </div>
-   
-
-        <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
-        <strong></strong>2020 Data is unavailable for following: Andhra Pradesh (Alluri Sitharama Raju, Anakapalli, Anantapuramu, Annamayya, 
-        Bapatla, Dr BR Ambedkar Konaseema, Eluru, Kakinada, NTR, Nandyal, Palnadu, Parvathipuram Manyam, Prakasam, Sri Potti Sriramulu Nellore, 
-        Sri Sathya Sai, Tirupati, Vijayawada Railway, YSR), Assam (Bajali, Tamulpur), Bihar (Kaimur (Bhabhua)), Chhattisgarh (Khairagarh–Chhuikhadan–Gandai,
-        Manendragarh–Chirmiri–Bharatpur, Mohla–Manpur–Ambagarh Chouki, Sakti, Sarangarh–Bilaigarh), Gujarat (W Rly Ahmedabad, W Rly Vadodara), 
-        Himachal Pradesh (Nurpur), Jammu & Kashmir (Anti Narcotic Task Force Jammu, Anti Narcotic Task Force Kashmir, CICE Jammu, CICE Kashmir, 
-        Cyber Crime Jammu, Cyber Crime Kashmir, EOW Jammu, EOW Kashmir, Special Crime Wing Jammu, Special Crime Wing Kashmir), Karnataka 
-        (KGF, KRailways, Vijayanagara), Kerala (All Districts, Ernakulam Commr, Kannur City, Kannur Rural, Kollam Commr, Kozhikode Commr, Thrissur Commr,
-        Trivandrum Commr), Madhya Pradesh (Bhopal Commissionarate, Bhopal Rural, Indore Commissionarate, Indore Rural, Narmadapuram), Maharashtra 
-        (Amravati Commr, Chhatrapati Sambhajinagar Commr, Chhatrapati Sambhajinagar Railway, Chhatrapati Sambhajinagar Rural, Dharashiv, Mira Bhayandar Vasai Virar Commr,
-        Mumbai Commr, Nagpur Commr, Nasik Commr, Pune Commr, Solapur Commr, Thane Commr), Meghalaya (Khasi Hills Eastern West), Mizoram (Crime and EOU), Nagaland 
-        (Crime, Cyber Security, Narcotics, Noklak, Shamator, Tseminyu, Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, Phek, Tuensang, Wokha, Zunheboto),
-        Puducherry (Puducherry), Punjab (Cyber Crime Wing, Malerkotla), Rajasthan (ATS & SOG, Anupgarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, 
-        Jodhpur Crime, Kekri, Khairtal-Tijara, Kotputli-Behror, Neem Ka Thana, Phalodi, Salumbar, Sanchore, Shahpura), Sikkim (CID, Gangtok (East), Gyalshing (West), 
-        Mangan (North), Namchi (South), Pakyong (East), Soreng (West)), Tamil Nadu (Avadi, Mayiladuthurai, Tambaram), Uttar Pradesh (Kanpur Commissionarate, Kanpur Outer, 
-        Varanasi Commissionarate, Varanasi Dehat), Uttarakhand (Cyber Cell)
-        
-        </div>
-        
-        <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
-        <strong></strong>2021 Data is unavailable for following: Andhra Pradesh (Alluri Sitharama Raju, Anakapalli, Anantapuramu, Annamayya, 
-        Bapatla, Dr BR Ambedkar Konaseema, Eluru, Kakinada, NTR, Nandyal, Palnadu, Parvathipuram Manyam, Prakasam, Sri Potti Sriramulu Nellore, 
-        Sri Sathya Sai, Tirupati, Vijayawada Railway, YSR), Assam (Bajali, Tamulpur), Bihar (Bhabhua), Chhattisgarh (Khairagarh–Chhuikhadan–Gandai,
-        Manendragarh–Chirmiri–Bharatpur, Mohla–Manpur–Ambagarh Chouki, Sakti, Sarangarh–Bilaigarh), Gujarat (W Rly Ahmedabad, W Rly Vadodara), 
-        Himachal Pradesh (Nurpur), Jammu & Kashmir (Anti Narcotic Task Force Kashmir, CICE Jammu, CICE Kashmir, EOW Jammu, EOW Kashmir, Special Crime Wing Jammu, 
-        Special Crime Wing Kashmir), Karnataka (KGF, KRailways, Vijayanagara), Kerala (All Districts, Ernakulam Commr, Kannur, Kollam Commr, Kozhikode Commr, Thrissur Commr, 
-        Trivandrum Commr), Madhya Pradesh (Bhopal Commissionarate, Bhopal Rural, Indore Commissionarate, Indore Rural, Narmadapuram), Maharashtra (Amravati Commr, Chhatrapati 
-        Sambhajinagar Commr, Chhatrapati Sambhajinagar Railway, Chhatrapati Sambhajinagar Rural, Dharashiv, Mira Bhayandar Vasai Virar Commr, Mumbai Commr, Nagpur Commr,
-        Nasik Commr, Pune Commr, Solapur Commr, Thane Commr), Meghalaya (Khasi Hills Eastern West), Mizoram (Crime and EOU), Nagaland (Crime, Cyber Security, Narcotics, 
-        Noklak, Shamator, Tseminyu, Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, Phek, Tuensang, Wokha, Zunheboto), Puducherry (All Districts), 
-        Punjab (Cyber Crime Wing), Rajasthan (ATS & SOG, Anupgarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, Jodhpur Crime, Kekri, Khairtal-Tijara, 
-        Kotputli-Behror, Neem Ka Thana, Phalodi, Salumbar, Sanchore, Shahpura), Sikkim (Gangtok (East), Gyalshing (West), Mangan (North), Namchi (South), Pakyong (East), 
-        Soreng (West)), Tamil Nadu (Avadi, Mayiladuthurai, Tambaram), Uttar Pradesh (Kanpur Nagar, Varanasi)
-        
+        {t("tier3.notes.india_intro")}
         </div>
 
         <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
-        <strong></strong>2022 Data is unavailable for following: Andhra Pradesh (Anantapur, Cuddapah, Guntur Urban, Nellore, Prakasham, Rajahmundry, 
-        Tirupathi Urban, Vijayawada City, Vijayawada Railway, Visakha Rural), Bihar (Bhabhua), Gujarat (W Rly Ahmedabad, W Rly Vadodara), Himachal Pradesh (Nurpur), 
-        Jammu & Kashmir (Crime Jammu, Crime Srinagar), Karnataka (KGF, KRailways), Kerala (Ernakulam Commr, Kannur, Kollam Commr, Kozhikode Commr, Thrissur Commr, Trivandrum Commr), 
-        Madhya Pradesh (Bhopal, Hoshangabad, Indore), Maharashtra (Amravati Commr, Chhatrapati Sambhajinagar Commr, Chhatrapati Sambhajinagar Railway, Chhatrapati Sambhajinagar Rural, 
-        Dharashiv, Mira Bhayandar Vasai Virar Commr, Mumbai Commr, Nagpur Commr, Nasik Commr, Pune Commr, Solapur Commr, Thane Commr), Mizoram (Crime and EOU), 
-        Nagaland (Crime, Cyber Security, Narcotics, Noklak, Shamator, Tseminyu, Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, Phek, Tuensang, Wokha, Zunheboto), 
-        Puducherry (All Districts), Punjab (Cyber Crime Wing), Rajasthan (ATS & SOG, Anupgarh, Balotra, Beawar, Deeg, Didwana-Kuchaman, Dudu, Gangapur City, Jodhpur Crime, Kekri, 
-        Khairtal-Tijara, Kotputli-Behror, Neem Ka Thana, Phalodi, Salumbar, Sanchore, Shahpura), Sikkim (CID, East, North, South, West), Tamil Nadu (Mayiladuthurai), 
-        Uttar Pradesh (Amroha, Kanpur Nagar, Varanasi)
-        
+        <strong>{t("tier3.notes.india_2020_label")}</strong> {TIER3_INDIA_MISSING_2020}
         </div>
 
         <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
-        <strong></strong>2023 Data is unavailable for following: Andhra Pradesh (Anantapur, Cuddapah, Guntur Urban, Nellore, Prakasham, Rajahmundry, Tirupathi Urban, 
-        Vijayawada City, Vijayawada Railway, Visakha Rural), Bihar (Bhabhua), Gujarat (W.Rly Ahmedabad, W.Rly Vadodara), Jammu & Kashmir (Crime Jammu, Crime Srinagar), 
-        Karnataka (K.G.F., K.Railways), Kerala (All Districts, Ernakulam Commr, Kannur, Kollam Commr, Kozhikode Commr, Thrissur Commr, Trivandrum Commr), 
-        Madhya Pradesh (Bhopal, Hoshangabad, Indore), Maharashtra (Amravati Commr, Aurangabad Commr, Aurangabad Railway, Aurangabad Rural, Mira Bhayandar Vasai Virar Commr, 
-        Mumbai Commr, Nagpur Commr, Nasik Commr, Osmanabad, Pune Commr, Solapur Commr, Thane Commr), Nagaland (Dimapur, Kiphire, Kohima, Longleng, Mokokchung, Mon, Peren, 
-        Phek, Tuensang, Wokha, Zunheboto), Puducherry (All Districts), Rajasthan (SOG), Sikkim (East, North, South, West), Uttar Pradesh (Kanpur Nagar, Kanpur Outer,
-        Lucknow Grameen, Varanasi, Varanasi Dehat)
+        <strong>{t("tier3.notes.india_2021_label")}</strong> {TIER3_INDIA_MISSING_2021}
+        </div>
 
+        <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
+        <strong>{t("tier3.notes.india_2022_label")}</strong> {TIER3_INDIA_MISSING_2022}
+        </div>
+
+        <div style="background-color: #FFDE21;; padding: 15px; border-radius: 5px; border: 1px solid #FFDE21;">
+        <strong>{t("tier3.notes.india_2023_label")}</strong> {TIER3_INDIA_MISSING_2023}
         </div>
         """,
         unsafe_allow_html=True
     )
 
-else: 
+else:
     st.markdown(
-        """
+        f"""
         <div style="background-color: #ffcccc; padding: 15px; border-radius: 5px; border: 1px solid #ff0000;">
-        <strong></strong>Note: Values represent reported cases. A value of 0 indicates no reported cases, not absence of risk.
-        Trends may be influenced by changes in reporting practices, enforcement capacity, or public awareness. Indicators should be interpreted alongside contextual factors.
-        No missing values have been artificially filled, scores are computed using available data only.
-
+        {t("tier3.notes.sri_lanka")}
         </div>
         """,
         unsafe_allow_html=True
     )
-
-
-
-

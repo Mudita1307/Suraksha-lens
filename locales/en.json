@@ -1,0 +1,222 @@
+{
+  "common": {
+    "login_title": "Login",
+    "username_label": "Username",
+    "password_label": "Password",
+    "login_button": "Login",
+    "login_success": "Login successful ✅",
+    "login_error": "Invalid credentials ❌",
+    "logged_in_badge": "Logged in ✅",
+    "welcome": "Welcome, {user}",
+    "logout": "Logout",
+    "select_country": "Select Country",
+    "india": "India",
+    "sri_lanka": "Sri Lanka",
+    "select_state": "Select State",
+    "select_province": "Select Province",
+    "select_district": "Select District",
+    "select_districts": "Select District(s)",
+    "select_indicator": "Select Indicator",
+    "select_year": "Select Year",
+    "filters": "Filters",
+    "column_not_found": "Column '{column}' not found in data!"
+  },
+  "nav": {
+    "main_page": "Main Page",
+    "discover": "Discover Suraksha Lens with us",
+    "tier1": "Tier 1: Hazard",
+    "tier2": "Tier 2: Exposure",
+    "tier3": "Tier 3: Vulnerability",
+    "tier4": "Tier 4: Climate Exploitation Risk Index",
+    "scam": "Qilafy – AI Verification & Scam Detection"
+  },
+  "discover": {
+    "title": "Suraksha Lens",
+    "subheader": "People. Protection. Platform.",
+    "intro1": "Suraksha Lens is an early warning platform that helps spot and prevent climate linked exploitation.\n\nWhen floods, droughts, heatwaves, or glacial floods hit, the danger doesn't end when the waters go down. Families lose homes, jobs, and savings. People are forced to migrate. In this period of uncertainty, risks of human trafficking, labour exploitation, and gender-based violence often rise.",
+    "intro2": "Suraksha Lens is developed by the South Asian Institute of Crime and Justice Studies to address this gap. Climate response systems often focus on rebuilding roads and homes. Protection risks — especially for women, children, and marginalised communities — are harder to see and are often missed.\n\nWe connect these dots.",
+    "powers_header": "What Powers Suraksha Lens",
+    "ceri_subheader": "The Climate Exploitation Risk Index (CERI)",
+    "ceri_intro": "CERI combines three simple but powerful elements:",
+    "pillars_markdown": "**1. Climate hazards**\n- Floods, droughts, heatwaves, glacial lake outburst floods, and other shocks.\n\n**2. Impact pathways**\n- Displacement, job loss, distress migration, informal work.\n\n**3. Social vulnerabilities**\n- Gender, caste, lack of documentation, informal labour, unsafe digital recruitment.",
+    "assembly_write": "By bringing these factors together, Suraksha Lens creates:\n- Location-based risk profiles  \n- Early warning signals  \n- Clear, visual dashboards for decision-makers  \n\nThe goal is simple: make complex risks visible and usable.",
+    "action_header": "From Data to Action",
+    "action_write": "Suraksha Lens combines climate data, migration patterns, trafficking alerts, and local knowledge.\n\nThis helps governments, CSOs, and communities:\n- Plan safer recovery efforts  \n- Monitor emerging risks  \n- Take preventive action before exploitation happens  \n\nThe platform is built with:\n- Local language access  \n- Strong privacy protections  \n- Ethical data use  \n- Community validation of risk alerts  \n\nMost importantly, Suraksha Lens is designed so insights do not stay in reports — they support real decisions on the ground, where protection matters most."
+  },
+  "tier1": {
+    "page_title": "Climate Hazard Index",
+    "content": {
+      "India": {
+        "header": "Tier-1 : India : Rainfall-Driven Climate Hazard Index (2010-25)",
+        "subheader": "Measuring Rainfall Instability and Extreme Climate Signals Across States and Districts",
+        "write": "Tier-1 evaluates rainfall-related climate hazard using district-level observations. It captures deviations from long-term rainfall patterns, extreme rainfall events, dry spells, wet spells, and peak daily intensity to assess overall hazard levels."
+      },
+      "Sri Lanka": {
+        "header": "Tier-1 : Sri Lanka : Rainfall-Driven Climate Hazard Index (2010-26)",
+        "subheader": "Measuring Rainfall Instability and Extreme Climate Signals Across States and Districts",
+        "write": "Tier-1 evaluates rainfall-related climate hazard using district-level observations. It captures deviations from long-term rainfall patterns, extreme rainfall events, dry spells, wet spells, and peak daily intensity to assess overall hazard levels."
+      }
+    },
+    "indicators": {
+      "India": {
+        "hazard_score": { "label": "Hazard Score", "chart_title": "Trend of Rainfall Hazard Score", "chart_desc": "The hazard score is a composite index that reflects the degree of rainfall variability and extremity within a district. Higher values indicate greater climate hazard associated with irregular rainfall patterns, extreme events and prolonged dry or wet conditions." },
+        "annual_total_rainfall": { "label": "Annual Total Rainfall (mm)", "chart_title": "Trend of Annual Total Rainfall (mm)", "chart_desc": "Total rainfall reflects overall precipitation levels. However, total rainfall alone does not capture climate instability or extreme patterns." },
+        "rainfall_anomaly": { "label": "Annual Rainfall Anomaly (mm)", "chart_title": "Trend of Annual Rainfall Anomaly", "chart_desc": "Rainfall anomaly measures deviation from historical average rainfall. Larger deviations indicate increasing climate variability." },
+        "extreme_rainfall_days": { "label": "Extreme Rainfall Days (90th Percentile)", "chart_title": "Trend of Extreme Rainfall Days", "chart_desc": "Represents the number of days on which rainfall exceeds the 90th percentile threshold. An increase in such days indicates a higher frequency of extreme rainfall events." },
+        "very_heavy_rainfall_days": { "label": "Very Heavy Rainfall Days (>50mm)", "chart_title": "Trend of Very Heavy Rainfall Days", "chart_desc": "Counts the number of days with rainfall exceeding 50 mm. Higher values reflect an increased occurrence of intense rainfall events." },
+        "longest_dry_spell": { "label": "Longest Consecutive Dry Spell (days)", "chart_title": "Trend of Longest Consecutive Dry Spell", "chart_desc": "Indicates the longest continuous period with minimal or no rainfall. Extended dry spells may signal increasing drought-like conditions." },
+        "longest_wet_spell": { "label": "Longest Consecutive Wet Spell (days)", "chart_title": "Trend of Longest Consecutive Wet Spell", "chart_desc": "Indicates the longest continuous period with minimal or no rainfall. Extended dry spells may signal increasing drought-like conditions." },
+        "max_daily_rainfall": { "label": "Maximum Daily Rainfall (mm)", "chart_title": "Trend of Maximum Daily Rainfall", "chart_desc": "Represents the highest recorded daily rainfall within a year. Higher values indicate more intense single-day rainfall events." }
+      },
+      "Sri Lanka": {
+        "hazard_score": { "label": "Hazard Score", "chart_title": "Trend of Rainfall Hazard Score", "chart_desc": "The hazard score is a composite index that reflects the degree of rainfall variability and extremity within a district. Higher values indicate greater climate hazard associated with irregular rainfall patterns, extreme events and prolonged dry or wet conditions." },
+        "annual_total_rainfall": { "label": "Annual Total Rainfall (mm)", "chart_title": "Trend of Annual Total Rainfall (mm)", "chart_desc": "Total rainfall reflects overall precipitation levels. However, total rainfall alone does not capture climate instability or extreme patterns." },
+        "rainfall_anomaly": { "label": "Annual Rainfall Anomaly (mm)", "chart_title": "Trend of Annual Rainfall Anomaly", "chart_desc": "Rainfall anomaly measures deviation from historical average rainfall. Larger deviations indicate increasing climate variability." },
+        "extreme_rainfall_days": { "label": "Extreme Rainfall Days (90th Percentile)", "chart_title": "Trend of Extreme Rainfall Days", "chart_desc": "Represents the number of days on which rainfall exceeds the 90th percentile threshold. An increase in such days indicates a higher frequency of extreme rainfall events." },
+        "very_heavy_rainfall_days": { "label": "Very Heavy Rainfall Days (>50mm)", "chart_title": "Trend of Very Heavy Rainfall Days", "chart_desc": "Counts the number of days with rainfall exceeding 50 mm. Higher values reflect an increased occurrence of intense rainfall events." },
+        "longest_dry_spell": { "label": "Longest Consecutive Dry Spell (days)", "chart_title": "Trend of Longest Consecutive Dry Spell", "chart_desc": "Indicates the longest continuous period with minimal or no rainfall. Extended dry spells may signal increasing drought-like conditions." },
+        "longest_wet_spell": { "label": "Longest Consecutive Wet Spell (days)", "chart_title": "Trend of Longest Consecutive Wet Spell", "chart_desc": "Measures the longest sequence of consecutive rainfall days. Prolonged wet periods may contribute to flooding and soil saturation." },
+        "max_daily_rainfall": { "label": "Maximum Daily Rainfall (mm)", "chart_title": "Trend of Maximum Daily Rainfall", "chart_desc": "Represents the highest recorded daily rainfall within a year. Higher values indicate more intense single-day rainfall events." }
+      }
+    },
+    "notes": {
+      "india": "A value of 0 indicates no recorded rainfall, while missing values indicate absence of reliable data due to spatial mismatch between district boundaries and the rainfall grid. No artificial imputation has been applied. Data is unavailable for all years (2010–25) in the following districts.<br><br>1. Andaman & Nicobar Islands (Nicobar Islands, North & Middle Andaman, South Andaman)<br>2. Lakshadweep<br>3. Chennai (Tamil Nadu)"
+    }
+  },
+  "tier2": {
+    "page_title": "Climate Hazard Index",
+    "content": {
+      "India": {
+        "header": "Tier-2 : India : Socio-Demographic Exposure Index (2015-21)",
+        "subheader": "Understanding Population Vulnerability and Development Conditions Across Districts",
+        "write": "Tier-2 evaluates socio-demographic exposure across districts using indicators from NFHS surveys. It captures population structure, health, nutrition, education, and access to basic services to assess where populations may be more exposed to climate and socio-economic risks. These indicators reflect underlying vulnerabilities that influence the ability of communities to withstand and recover from shocks."
+      },
+      "Sri Lanka": {
+        "header": "Tier-2 : Sri Lanka : Socio-Economic Exposure Index (2006-21)",
+        "subheader": "Understanding Who Is Most Exposed to Rainfall-Related Climate Hazards",
+        "write": "Tier-2 evaluates socio-economic exposure to climate-related hazards using district-level indicators. It captures population concentration, labour force participation, economic activity, and education levels to assess where climate shocks may have the greatest human impact."
+      }
+    },
+    "indicators": {
+      "India": {
+        "exposure_score": { "label": "Exposure Score", "chart_title": "Trend of Composite Socio-Demographic Exposure Score", "chart_desc": "The composite exposure score ranges from 0 (lower exposure) to 1 (higher exposure). Higher values indicate districts where populations face greater socio-demographic vulnerabilities due to weaker health, education, and living conditions." },
+        "anc_visits": { "label": "ANC 4+ visits %", "chart_title": "Trend of Antenatal Care Coverage", "chart_desc": "Represents the percentage of mothers receiving at least four antenatal care visits. Higher values indicate better maternal healthcare access." },
+        "child_diet": { "label": "Adequate child diet %", "chart_title": "Trend of Adequate Child Nutrition", "chart_desc": "Shows the proportion of children receiving an adequate diet. Lower values indicate higher nutritional vulnerability." },
+        "child_anaemia": { "label": "Child anaemia %", "chart_title": "Trend of Child Anaemia", "chart_desc": "Represents the percentage of children with anaemia. Higher values indicate poorer health conditions and increased vulnerability." },
+        "child_stunting": { "label": "Child stunting %", "chart_title": "Trend of Child Underweight", "chart_desc": "Indicates the proportion of underweight children, reflecting both acute and chronic malnutrition." },
+        "clean_fuel": { "label": "Clean fuel %", "chart_title": "Trend of Clean Cooking Fuel Usage", "chart_desc": "Shows household access to clean cooking fuel. Lower values indicate higher exposure to indoor pollution and health risks." },
+        "drinking_water": { "label": "Drinking water access %", "chart_title": "Drinking water access %", "chart_desc": "Represents access to improved drinking water sources. Higher values indicate better basic infrastructure." },
+        "early_marriage": { "label": "Early marriage %", "chart_title": "Trend of Early Marriage", "chart_desc": "Indicates the proportion of women married before age 18. Higher values reflect social vulnerability and gender inequality." },
+        "electricity_access": { "label": "Electricity access %", "chart_title": "Trend of Electricity Access", "chart_desc": "Measures household access to electricity. Higher values indicate better living conditions and development." },
+        "institutional_births": { "label": "Institutional births %", "chart_title": "Trend of Institutional Births", "chart_desc": "Represents births occurring in healthcare facilities. Higher values indicate improved maternal healthcare systems." },
+        "population_below_15": { "label": "Population below 15 %", "chart_title": "Trend of Young Population Share", "chart_desc": "Shows the proportion of population below age 15. Higher values indicate higher dependency ratios." },
+        "sanitation": { "label": "Sanitation %", "chart_title": "Trend of Sanitation Access", "chart_desc": "Represents access to improved sanitation facilities. Higher values indicate better hygiene conditions." },
+        "sex_ratio": { "label": "Sex ratio", "chart_title": "Trend of Sex Ratio", "chart_desc": "Shows the number of females per 1,000 males. Variations may reflect demographic imbalances." },
+        "teen_pregnancy": { "label": "Teen pregnancy %", "chart_title": "Trend of Teen Pregnancy", "chart_desc": "Indicates early motherhood among adolescents. Higher values suggest increased social and health risks." },
+        "women_schooling": { "label": "Women 10+ schooling %", "chart_title": "Trend of Female Education (10+ Years)", "chart_desc": "Represents women with at least 10 years of schooling. Higher values indicate better educational attainment." },
+        "women_anaemia": { "label": "Women anaemia %", "chart_title": "Trend of Women Anaemia", "chart_desc": "Indicates prevalence of anaemia among women. Higher values reflect poor nutritional and health status." },
+        "women_literacy": { "label": "Women literacy %", "chart_title": "Trend of Women Literacy", "chart_desc": "Represents literacy levels among women. Higher literacy supports awareness and resilience." }
+      },
+      "Sri Lanka": {
+        "exposure_score": { "label": "Exposure Score", "chart_title": "Trend of Composite Socio-Economic Exposure Score", "chart_desc": "The composite exposure score ranges from 0 (lowest exposure) to 1 (highest exposure). Higher values indicate districts where rainfall shocks would affect larger and more socio-economically vulnerable populations." },
+        "population_density": { "label": "Population Density", "chart_title": "Trend of Population Density", "chart_desc": "Population density reflects the concentration of people within a given area. Higher density may increase the number of people exposed to climate hazards and amplify potential impacts." },
+        "lfpr_male": { "label": "Labour Force Participation Rate – Male", "chart_title": "Trend of Male Labour Force Participation Rate", "chart_desc": "This indicator shows the proportion of the male population actively participating in the labour force. Variations may influence household income stability and resilience to climate-related disruptions." },
+        "lfpr_female": { "label": "Labour Force Participation Rate – Female", "chart_title": "Trend of Female Labour Force Participation Rate", "chart_desc": "This indicator reflects the level of female participation in the labour force. Higher participation may indicate broader income sources, while lower participation may signal increased dependency." },
+        "econ_active_male": { "label": "Economically Active Population – Male (%)", "chart_title": "Trend of Economically Active Male Population", "chart_desc": "Represents the share of the male population engaged in economic activities. Higher values indicate greater economic engagement, which may influence adaptive capacity." },
+        "econ_active_female": { "label": "Economically Active Population – Female (%)", "chart_title": "Trend of Economically Active Female Population", "chart_desc": "Represents the share of the female population engaged in economic activities. Higher values indicate greater female participation in the workforce, reflecting improved economic inclusion and potential enhancement in household resilience and adaptive capacity." },
+        "literacy_female": { "label": "Literacy Rate – Female", "chart_title": "Trend of Female Literacy Rate", "chart_desc": "Indicates the proportion of literate females within the population. Higher literacy supports informed decision-making and enhances resilience to climate risks." },
+        "literacy_male": { "label": "Literacy Rate – Male", "chart_title": "Trend of Male Literacy Rate", "chart_desc": "Indicates the proportion of literate males within the population. Higher literacy levels are associated with improved access to information and adaptive capacity." }
+      }
+    },
+    "notes": {
+      "india": "Values are derived from National Family Health Survey (NFHS) rounds NFHS-4 (2015–16) and NFHS-5 (2019–21). NFHS-4 data was collected during 2015–2016 (report released in 2017), while NFHS-5 data was collected in two phases: June 2019–January 2020 and January 2020–April 2021, with the second phase delayed due to COVID-19. To enable consistent temporal comparison, NFHS-4 values are represented for the years 2015 and 2016, while NFHS-5 values are extended across 2019, 2020, and 2021. At present, data integration is complete for the majority of states. Data for the following states is currently being processed and will be incorporated in subsequent updates: Jharkhand, Uttar Pradesh, Punjab, Delhi, Odisha, Maharashtra, Madhya Pradesh. Exposure scores are calculated using available data only.",
+      "sri_lanka": "Note: Data for certain districts is unavailable for specific years due to gaps in official sources. No imputation has been applied. Exposure scores are calculated using available data only.<br><br>2006–2007: Data is unavailable for Ampara, Batticaloa, Moneragala, and Trincomalee.<br><br>2006–2010: Data is unavailable for Jaffna, Kilinochchi, Mannar, Mullaitivu, and Vavuniya."
+    }
+  },
+  "tier3": {
+    "page_title": "Climate Hazard Index",
+    "content": {
+      "India": {
+        "header": "Tier-3 : India : Social Vulnerability Index (2020-23)",
+        "subheader": "Understanding Patterns of Social Risk and Institutional Strain Across Districts",
+        "write": "Tier-3 assesses social vulnerability using district-level crime data across India. It analyses trends in reported offences against children, women, and marginalized communities, along with cybercrime, to identify areas where social protection systems may be under strain. Changes in reported cases are interpreted as signals of vulnerability, reflecting shifts in incidence, reporting practices, enforcement capacity, or public awareness."
+      },
+      "Sri Lanka": {
+        "header": "Tier-3 : Sri Lanka : Institutional & Exploitation Vulnerability Index (2020-24)",
+        "subheader": "Understanding Where Protection Systems Show Signs of Strain During Climate and Economic Shocks",
+        "write": "Tier-3 assesses vulnerability within child protection environments using district-level data. It analyses trends in reported child-related offences, including violence, exploitation, neglect, and abuse, to identify where protection systems may be under strain. Changes in reported cases are interpreted as signals of vulnerability, reflecting shifts in incidence, reporting practices, enforcement capacity, or public awareness."
+      }
+    },
+    "indicators": {
+      "India": {
+        "vulnerability_score": { "label": "Vulnerability Score", "chart_title": "Trend of Vulnerability Score", "chart_desc": "This composite score reflects overall social vulnerability across districts. It ranges from 0 (lower vulnerability) to 1 (higher vulnerability). Higher values indicate greater levels of reported crimes and potential strain on social protection systems." },
+        "crimes_against_children": { "label": "Crimes Against Children (Cases)", "chart_title": "Trend of Crimes Against Children", "chart_desc": "Tracks reported cases involving crimes against children. Higher values may indicate increased risks to child safety or improved detection and reporting mechanisms." },
+        "crimes_against_women": { "label": "Crimes Against Women (Cases)", "chart_title": "Trend of Crimes Against Women", "chart_desc": "Represents reported offences against women. Trends may reflect changes in gender-based violence, social conditions, or reporting practices." },
+        "crimes_against_sc": { "label": "Crimes Against SC Communities (Cases)", "chart_title": "Crimes Against SC Communities (Cases)", "chart_desc": "Tracks reported crimes against Scheduled Caste communities. Higher values may indicate social inequality, discrimination, or increased reporting." },
+        "crimes_against_st": { "label": "Crimes Against ST Communities (Cases)", "chart_title": "Trend of Crimes Against ST Communities", "chart_desc": "Represents reported offences against Scheduled Tribe communities. Trends may highlight vulnerabilities linked to marginalization or geographic isolation." },
+        "cybercrime_cases": { "label": "Cybercrime Cases", "chart_title": "Trend of Cybercrime Cases", "chart_desc": "Tracks reported cybercrime incidents. Rising trends may indicate increasing digital risks, greater internet penetration, or improved reporting systems." }
+      },
+      "Sri Lanka": {
+        "vulnerability_score": { "label": "Vulnerability Score", "chart_title": "Trend of Child Protection Vulnerability Score", "chart_desc": "This composite score reflects the overall level of vulnerability within child protection systems. The score ranges from 0 (lower vulnerability) to 1 (higher vulnerability).", "note": "The vulnerability score is unavailable for Hambantota for all years from 2020 to 2024 due to missing underlying indicator data." },
+        "child_homicide": { "label": "Child Homicide", "chart_title": "Trend of Child Homicide Cases", "chart_desc": "Tracks reported cases of homicide involving children. Such incidents represent severe breakdowns in protection and safety.", "note": "Data is missing for the year 2023 in Badulla, Galle, Kandy, Kegalle, Kurunegala, Mannar, Matale, Moneragala, Mullaitivu, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya." },
+        "attempted_child_murder": { "label": "Attempted Child Murder", "chart_title": "Trend of Attempted Child Murder Cases", "chart_desc": "Captures reported attempts of fatal violence against children. Trends may indicate serious threats to child safety and protection systems.", "note": "Data is missing for the year 2023 in Ampara, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Mannar, Matale, Matara, Moneragala, Mullaitivu, Polonnaruwa, Ratnapura, Trincomalee, and Vavuniya. Hambantota has no data available for 2020 to 2024." },
+        "child_serious_injury": { "label": "Child Serious Injury", "chart_title": "Trend of Child Serious Injury Cases", "chart_desc": "Represents cases involving significant physical harm to children. Higher values may indicate increased exposure to unsafe environments or violence.", "note": "Data is missing for 2023 in Badulla, Gampaha, Kalutara, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_assault": { "label": "Child Assault", "chart_title": "Trend of Child Assault Cases", "chart_desc": "Tracks reported incidents of physical assault against children. Changes may reflect shifts in safety conditions or reporting.", "note": "Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, and Trincomalee. Hambantota has no data for 2020–2024." },
+        "child_sexual_exploitation": { "label": "Child Sexual Exploitation", "chart_title": "Trend of Child Sexual Exploitation Cases", "chart_desc": "Captures cases involving exploitation of children for sexual purposes. Rising trends may indicate increased vulnerability or improved detection and reporting.", "note": "Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Galle, Kalutara, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_abduction": { "label": "Child Abduction", "chart_title": "Trend of Child Abduction Cases", "chart_desc": "Represents reported cases of child abduction. Higher levels may signal increased risks related to safety and security.", "note": "Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Jaffna, Kilinochchi, Kurunegala, Mannar, Moneragala, Mullaitivu, Puttalam, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_kidnapping": { "label": "Child Kidnapping", "chart_title": "Trend of Child kidnapping Cases", "chart_desc": "Tracks reported kidnapping cases involving children. Increases may indicate heightened risks of coercion or exploitation.", "note": "Data is missing for 2023 in Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_rape": { "label": "Child Rape", "chart_title": "Trend of Child Rape Cases", "chart_desc": "Captures reported rape cases involving children. Trends may indicate severe protection risks and vulnerabilities.", "note": "No data is available for Hambantota for the period 2020 to 2024." },
+        "child_sexual_offence": { "label": "Child Sexual Offence", "chart_title": "Trend of Child Sexual Offence Cases", "chart_desc": "Represents a broader category of sexual offences against children. Higher values may reflect increased vulnerability or improved reporting mechanisms.", "note": "Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_trafficking": { "label": "Child Trafficking", "chart_title": "Trend of Child Trafficking Cases", "chart_desc": "Tracks reported cases of trafficking involving children. Rising trends may indicate increased organised exploitation risks.", "note": "Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_aggravated_sexual_abuse": { "label": "Child Aggravated Sexual Abuse", "chart_title": "Trend of Child Aggravated Sexual Abuse Cases", "chart_desc": "Captures severe forms of sexual abuse involving children. Higher levels indicate significant protection concerns.", "note": "No data is available for Hambantota for the period 2020 to 2024." },
+        "adultery_cases": { "label": "Adultery Cases", "chart_title": "Trend of Adultery Cases", "chart_desc": "Represents reported adultery-related cases. While not directly a child-specific offence, trends may reflect broader social conditions influencing household stability.", "note": "Data is missing for 2023 in Batticaloa, Colombo, Gampaha, Jaffna, Kalutara, Kegalle, Kilinochchi, Mullaitivu, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_cruelty": { "label": "Child Cruelty", "chart_title": "Trend of Child Cruelty Cases", "chart_desc": "Tracks cases involving cruelty or neglect towards children. Higher values may indicate stress within caregiving environments.", "note": "Data is missing for 2023 in Badulla, Gampaha, Mannar, and Moneragala." },
+        "child_indecent_acts": { "label": "Child Indecent Acts", "chart_title": "Trend of Child Indecent Acts Cases", "chart_desc": "Represents cases involving inappropriate or indecent acts affecting children. Trends may indicate risks related to exploitation or misconduct.", "note": "Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_sexual_harassment": { "label": "Child Sexual Harassment", "chart_title": "Trend of Child Sexual Harassment Cases", "chart_desc": "Tracks reported cases of sexual harassment involving children. Higher values may indicate increased exposure to unsafe environments.", "note": "Data is missing for 2023 in Mannar. Hambantota has no data for 2020–2024." },
+        "child_assault_injury": { "label": "Child Assault & Injury", "chart_title": "Trend of Child Assault and Injury Cases", "chart_desc": "Captures combined incidents of assault and injury involving children. Trends may reflect broader patterns of violence affecting children.", "note": "No data is available for Hambantota for the period 2020 to 2024." },
+        "child_obscene_content": { "label": "Child Obscene Content Exposure", "chart_title": "Trend of Child Exposure to Obscene Content Cases", "chart_desc": "Represents cases where children are exposed to inappropriate or explicit content. Increases may reflect growing digital or environmental risks.", "note": "Data is missing for 2023 in Ampara, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kegalle, Kilinochchi, Mannar, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Puttalam, Ratnapura, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_exploitation_assault": { "label": "Child Exploitation & Assault", "chart_title": "Trend of Child Exploitation and Assault Cases", "chart_desc": "Captures combined cases of exploitation and physical harm. Higher values indicate overlapping vulnerabilities.", "note": "Data is missing for 2023 in Ampara, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_domestic_violence": { "label": "Child Domestic Violence Exposure", "chart_title": "Trend of Child Exposure to Domestic Violence", "chart_desc": "Tracks cases where children are exposed to domestic violence. Such exposure may have long-term impacts on safety and well-being.", "note": "Data is missing for 2023 in Ampara, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_protection_guardianship": { "label": "Child Protection & Guardianship", "chart_title": "Trend of Child Protection and Guardianship Cases", "chart_desc": "Represents cases related to custody, protection, and guardianship. Trends may reflect pressures on formal protection systems.", "note": "Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_media_offence": { "label": "Child Media-Related Offence", "chart_title": "Trend of Child Media-Related Offence Cases", "chart_desc": "Captures offences involving media or digital platforms affecting children. Increases may indicate emerging risks in digital environments.", "note": "Data is missing for 2023 in Anuradhapura, Batticaloa, Gampaha, Kalutara, Kegalle, Kilinochchi, Kurunegala, and Mullaitivu. Hambantota has no data for 2020–2024." },
+        "child_education_neglect": { "label": "Child Education Neglect", "chart_title": "Trend of Child Education Neglect Cases", "chart_desc": "Tracks cases where children are deprived of educational access or support. Higher values may signal broader socio-economic stress.", "note": "Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." },
+        "child_verbal_abuse": { "label": "Child Verbal Abuse", "chart_title": "Trend of Child Verbal Abuse Cases", "chart_desc": "Represents reported cases of verbal abuse involving children. Trends may reflect underlying social and household stress factors.", "note": "Data is missing for 2023 in Ampara, Anuradhapura, Badulla, Batticaloa, Colombo, Galle, Gampaha, Jaffna, Kalutara, Kandy, Kegalle, Kilinochchi, Kurunegala, Mannar, Matale, Matara, Moneragala, Mullaitivu, Nuwara Eliya, Polonnaruwa, Puttalam, Ratnapura, Trincomalee, and Vavuniya. Hambantota has no data for 2020–2024." }
+      }
+    },
+    "notes": {
+      "india_intro": "Values represent reported cases. A value of 0 indicates no reported cases, not absence of risk. Trends may be influenced by changes in reporting practices, enforcement capacity, or public awareness. Indicators should be interpreted alongside contextual factors. No missing values have been artificially filled, scores are computed using available data only.",
+      "india_2020_label": "2020 Data is unavailable for following:",
+      "india_2021_label": "2021 Data is unavailable for following:",
+      "india_2022_label": "2022 Data is unavailable for following:",
+      "india_2023_label": "2023 Data is unavailable for following:",
+      "sri_lanka": "Note: Values represent reported cases. A value of 0 indicates no reported cases, not absence of risk. Trends may be influenced by changes in reporting practices, enforcement capacity, or public awareness. Indicators should be interpreted alongside contextual factors. No missing values have been artificially filled, scores are computed using available data only."
+    }
+  },
+  "tier4": {
+    "page_title": "Climate Hazard Index",
+    "content": {
+      "India": {
+        "header": "Tier-4 : India : Climate Exploitation Risk Index (CERI) (2020-21)",
+        "subheader": "Identifying Priority Areas Facing Combined Climate and Social Risk",
+        "write": "Tier-4 integrates climate hazard, socio-economic exposure, and vulnerability into a single composite index. It highlights areas where climate stress, population exposure, and protection risks overlap. Higher scores indicate a greater likelihood that climate-related stress may translate into increased risks affecting vulnerable populations."
+      },
+      "Sri Lanka": {
+        "header": "Tier-4 : Sri Lanka : Climate Exploitation Risk Index (CERI) (2020-21)",
+        "subheader": "Identifying Priority Areas Facing Combined Climate and Social Risk",
+        "write": "Tier-4 integrates climate hazard, socio-economic exposure, and child protection vulnerability into a single composite index. It highlights areas where climate stress, population exposure, and protection risks overlap. Higher scores indicate a greater likelihood that climate-related stress may translate into increased risks affecting vulnerable populations."
+      }
+    },
+    "indicators": {
+      "risk_score": { "label": "Risk Score", "chart_title": "Trend of Composite Socio-Economic Exposure Score", "chart_desc": "The risk score integrates hazard, exposure, and vulnerability into a single composite index (0–1). Higher values indicate greater overall climate-linked multi-risk." },
+      "risk_category": { "label": "Risk Category", "chart_title": "Risk Category Classification", "chart_desc": "Districts are classified into Low, Medium, or High Risk categories based on the composite index.\n\nHigh Risk: Districts with a risk score greater than or equal to 0.67\n\nMedium Risk: Districts with a risk score between 0.34 and 0.66\n\nLow Risk: Districts with a risk score below 0.34\n\nHigh-risk districts represent priority areas for targeted intervention." }
+    },
+    "risk_distribution": "Risk Category Distribution",
+    "risk_map": "Risk Category Map",
+    "risk_axis": "Number of Districts",
+    "year_axis": "Year",
+    "legend_title": "Risk Category",
+    "legend_high": "High Risk",
+    "legend_medium": "Medium Risk",
+    "legend_low": "Low Risk"
+  }
+}

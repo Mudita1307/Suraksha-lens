@@ -1,31 +1,38 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import streamlit as st
 import geopandas as gpd
-import pandas as pd
 import folium
 from streamlit_folium import st_folium
+
+from i18n import t, inject_font_css
+
+# -----------------------
 # Config
 # -----------------------
 st.set_page_config(
     page_title="Climate Hazard Index",
     layout="wide"
 )
+inject_font_css()
 
 # -----------------------
 # Country Selection
 # -----------------------
+COUNTRY_CODES = ["India", "Sri Lanka"]
+
 country = st.sidebar.selectbox(
-    "Select Country",
-    ["India", "Sri Lanka"]
+    t("common.select_country"),
+    COUNTRY_CODES,
+    format_func=lambda c: t("common.india") if c == "India" else t("common.sri_lanka"),
+    key="country",
 )
 
 # -----------------------
 # File Paths
 # -----------------------
 data_files = {
-    "India":"IND_T4.csv",
+    "India": "IND_T4.csv",
     "Sri Lanka": "SL_T4.csv"
 }
 
@@ -52,90 +59,38 @@ if st.session_state.prev_country != country:
     st.session_state.prev_country = country
 
 # -----------------------
-# Dynamic Content
-# -----------------------
-content = {
-    "India": {
-        "header": "Tier-4 : India : Climate Exploitation Risk Index (CERI) (2020-21)",
-        "subheader": "Identifying Priority Areas Facing Combined Climate and Social Risk",
-        "write": """
-Tier-4 integrates climate hazard, socio-economic exposure, and vulnerability into a single composite index. 
-It highlights areas where climate stress, population exposure, and protection risks overlap. 
-Higher scores indicate a greater likelihood that climate-related stress may translate into increased risks affecting vulnerable populations.
-"""
-    },
-
-    "Sri Lanka": {
-        "header": "Tier-4 : Sri Lanka : Climate Exploitation Risk Index (CERI) (2020-21)",
-        "subheader": "Identifying Priority Areas Facing Combined Climate and Social Risk",
-        "write": """
-Tier-4 integrates climate hazard, socio-economic exposure, and child protection vulnerability into a single composite index. 
-It highlights areas where climate stress, population exposure, and protection risks overlap. 
-Higher scores indicate a greater likelihood that climate-related stress may translate into increased risks affecting vulnerable populations.
-"""
-    }
-}
-
-# -----------------------
 # Page Content
 # -----------------------
-st.header(content[country]["header"])
-st.subheader(content[country]["subheader"])
-st.write(content[country]["write"])
+st.header(t(f"tier4.content.{country}.header"))
+st.subheader(t(f"tier4.content.{country}.subheader"))
+st.write(t(f"tier4.content.{country}.write"))
 
 # -----------------------
-# Indicator Mapping
+# Indicator Mapping (single set, shared across both countries)
 # -----------------------
-indicators = {
-
-    "Risk Score": {
-        "column": "Risk Score",
-
-        "chart_title": "Trend of Composite Socio-Economic Exposure Score",
-
-        "chart_desc": """
-The risk score integrates hazard, exposure, and vulnerability into a single composite index (0–1). 
-Higher values indicate greater overall climate-linked multi-risk.
-"""
-    },
-
-    "Risk Category": {
-        "column": "Risk Category",
-
-        "chart_title": "Risk Category Classification",
-
-        "chart_desc": """
-Districts are classified into Low, Medium, or High Risk categories based on the composite index.
-
-High Risk: Districts with a risk score greater than or equal to 0.67
-
-Medium Risk: Districts with a risk score between 0.34 and 0.66
-
-Low Risk: Districts with a risk score below 0.34
-
-High-risk districts represent priority areas for targeted intervention.
-"""
-    }
+INDICATOR_COLUMNS = {
+    "risk_score": "Risk Score",
+    "risk_category": "Risk Category",
 }
+
+indicator_ids = list(INDICATOR_COLUMNS.keys())
+
+def indicator_label(ind_id):
+    return t(f"tier4.indicators.{ind_id}.label")
 
 # -----------------------
 # Sidebar Filters
 # -----------------------
-st.sidebar.title("Filters")
+st.sidebar.title(t("common.filters"))
 
 filtered_df = df.copy()
 
 # -----------------------
 # State Filter
 # -----------------------
-state_label = (
-    "Select State"
-    if country == "India"
-    else "Select Province"
-)
+state_label = t("common.select_state") if country == "India" else t("common.select_province")
 
 if "State" in df.columns:
-
     states = st.sidebar.multiselect(
         state_label,
         sorted(df["State"].dropna().unique()),
@@ -146,7 +101,6 @@ if "State" in df.columns:
         filtered_df = filtered_df[
             filtered_df["State"].isin(states)
         ]
-
 else:
     states = []
 
@@ -154,7 +108,7 @@ else:
 # District Filter
 # -----------------------
 districts = st.sidebar.multiselect(
-    "Select District(s)",
+    t("common.select_districts"),
     sorted(filtered_df["District"].dropna().unique()),
     key="districts"
 )
@@ -167,48 +121,38 @@ if districts:
 # -----------------------
 # Indicator Selection
 # -----------------------
-metric_name = st.sidebar.selectbox(
-    "Select Indicator",
-    options=list(indicators.keys())
+metric_id = st.sidebar.selectbox(
+    t("common.select_indicator"),
+    options=indicator_ids,
+    format_func=indicator_label,
 )
 
-metric = indicators[metric_name]
-
-# =========================================================
-# RISK CATEGORY → BAR CHART
-# =========================================================
-# =========================================================
-# RISK CATEGORY
-# INDIA  -> BAR CHART
-# SRI LANKA -> MAP
-# =========================================================
-# =========================================================
-# VISUALIZATION
-# =========================================================
+metric_column = INDICATOR_COLUMNS[metric_id]
+chart_title = t(f"tier4.indicators.{metric_id}.chart_title")
+chart_desc = t(f"tier4.indicators.{metric_id}.chart_desc")
 
 # =========================================================
 # RISK CATEGORY
 # INDIA  -> BAR CHART
 # SRI LANKA -> MAP
 # =========================================================
-# =========================================================
-if metric_name == "Risk Category":
+if metric_id == "risk_category":
 
     # =====================================================
     # INDIA → BAR CHART
     # =====================================================
     if country == "India":
 
-        st.subheader("Risk Category Distribution")
+        st.subheader(t("tier4.risk_distribution"))
 
         filtered_df = filtered_df.dropna(
-            subset=["Year", metric["column"]]
+            subset=["Year", metric_column]
         )
 
         fig = px.histogram(
             filtered_df,
             x="Year",
-            color=metric["column"],
+            color=metric_column,
             barmode="stack",
 
             color_discrete_map={
@@ -218,7 +162,7 @@ if metric_name == "Risk Category":
             },
 
             category_orders={
-                metric["column"]: [
+                metric_column: [
                     "Low Risk",
                     "Medium Risk",
                     "High Risk"
@@ -229,8 +173,8 @@ if metric_name == "Risk Category":
         )
 
         fig.update_layout(
-            yaxis_title="Number of Districts",
-            xaxis_title="Year"
+            yaxis_title=t("tier4.risk_axis"),
+            xaxis_title=t("tier4.year_axis")
         )
 
         st.plotly_chart(
@@ -238,14 +182,14 @@ if metric_name == "Risk Category":
             use_container_width=True
         )
 
-        st.write(metric["chart_desc"])
+        st.write(chart_desc)
 
     # =====================================================
     # SRI LANKA → MAP
     # =====================================================
     else:
 
-        st.subheader("Risk Category Map")
+        st.subheader(t("tier4.risk_map"))
 
         # -----------------------------------
         # Load shapefile + CSV
@@ -284,7 +228,7 @@ if metric_name == "Risk Category":
         # Year Filter
         # -----------------------------------
         year = st.sidebar.selectbox(
-            "Select Year",
+            t("common.select_year"),
             sorted(map_df["Year"].unique())
         )
 
@@ -351,7 +295,7 @@ if metric_name == "Risk Category":
         # -----------------------------------
         # Legend
         # -----------------------------------
-        legend_html = """
+        legend_html = f"""
         <div style="
             position: fixed;
             bottom: 50px;
@@ -365,7 +309,7 @@ if metric_name == "Risk Category":
             padding: 10px;
             font-size:14px;">
 
-        <b>Risk Category</b><br><br>
+        <b>{t("tier4.legend_title")}</b><br><br>
 
         <div>
             <span style="
@@ -375,7 +319,7 @@ if metric_name == "Risk Category":
                 display:inline-block;
                 margin-right:8px;">
             </span>
-            High Risk
+            {t("tier4.legend_high")}
         </div>
 
         <div>
@@ -386,7 +330,7 @@ if metric_name == "Risk Category":
                 display:inline-block;
                 margin-right:8px;">
             </span>
-            Medium Risk
+            {t("tier4.legend_medium")}
         </div>
 
         <div>
@@ -397,7 +341,7 @@ if metric_name == "Risk Category":
                 display:inline-block;
                 margin-right:8px;">
             </span>
-            Low Risk
+            {t("tier4.legend_low")}
         </div>
 
         </div>
@@ -441,12 +385,12 @@ if metric_name == "Risk Category":
 # =========================================================
 else:
 
-    st.subheader(metric["chart_title"])
+    st.subheader(chart_title)
 
     trend_df = (
         filtered_df.groupby(
             ["Year", "District"]
-        )[metric["column"]]
+        )[metric_column]
         .mean()
         .reset_index()
     )
@@ -456,8 +400,8 @@ else:
         errors="coerce"
     )
 
-    trend_df[metric["column"]] = pd.to_numeric(
-        trend_df[metric["column"]],
+    trend_df[metric_column] = pd.to_numeric(
+        trend_df[metric_column],
         errors="coerce"
     )
 
@@ -469,7 +413,7 @@ else:
     fig = px.line(
         trend_df,
         x="Year",
-        y=metric["column"],
+        y=metric_column,
         color="District",
         markers=True
     )
@@ -479,4 +423,4 @@ else:
         use_container_width=True
     )
 
-    st.write(metric["chart_desc"])
+    st.write(chart_desc)
