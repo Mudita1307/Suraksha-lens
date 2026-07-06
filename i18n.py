@@ -19,28 +19,82 @@ import json
 import os
 import streamlit as st
 
-LOCALES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "locales")
+_THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Where the locales/ folder might live, tried in this order. Streamlit's
+# working directory can vary depending on how the app is launched, so we
+# don't rely on a single guess - we search a handful of sane candidates
+# relative to this file (i18n.py) instead of relative to cwd.
+_CANDIDATE_LOCALE_DIRS = [
+    os.path.join(_THIS_DIR, "locales"),
+    os.path.join(_THIS_DIR, "locale"),        # tolerate the singular spelling too
+    os.path.join(os.getcwd(), "locales"),
+    os.path.join(os.getcwd(), "locale"),
+    os.path.join(_THIS_DIR, "..", "locales"),
+    os.path.join(_THIS_DIR, "..", "locale"),
+    _THIS_DIR,  # fallback: json files placed directly next to i18n.py, no subfolder
+]
 
 # code -> native display name shown in the picker
 SUPPORTED_LANGUAGES = {
     "en": "English",
     "hi": "हिंदी",
-    "sl": "සිංහල",
-    "ta": "தமிழ்",    # add when Tamil translations are ready
+    "si": "සිංහල",
+    "ta": "தமிழ்",
     # "ne": "नेपाली",   # add when Nepali translations are ready
 }
 
 DEFAULT_LANG = "en"
 FALLBACK_LANG = "en"
 
+_missing_locale_paths = []  # populated the first time a lookup fails, for diagnostics
+
+
+def _resolve_locale_path(lang_code: str):
+    """Return the first existing locales/<lang_code>.json path, or None."""
+    tried = []
+    for d in _CANDIDATE_LOCALE_DIRS:
+        path = os.path.normpath(os.path.join(d, f"{lang_code}.json"))
+        tried.append(path)
+        if os.path.exists(path):
+            return path
+    _missing_locale_paths.extend(p for p in tried if p not in _missing_locale_paths)
+    return None
+
 
 @st.cache_data(show_spinner=False)
-def _load_locale_file(lang_code: str) -> dict:
-    path = os.path.join(LOCALES_DIR, f"{lang_code}.json")
-    if not os.path.exists(path):
-        return {}
+def _read_locale_json(path: str, mtime: float) -> dict:
+    # `mtime` is part of the cache key on purpose: if the JSON file on disk
+    # changes (a redeploy, a hot-reload, an edit) the cache busts itself
+    # automatically instead of silently serving whatever was loaded the
+    # first time this Streamlit process started. Without this, a server
+    # that doesn't do a full process restart on deploy can keep serving a
+    # stale in-memory copy of a locale file indefinitely.
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def _load_locale_file(lang_code: str) -> dict:
+    path = _resolve_locale_path(lang_code)
+    if path is None:
+        return {}
+    try:
+        mtime = os.path.getmtime(path)
+    except OSError:
+        mtime = 0
+    return _read_locale_json(path, mtime)
+
+
+def locale_debug_info() -> dict:
+    """
+    Call this anywhere (e.g. temporarily in main.py) to see exactly which
+    paths i18n.py checked and whether each locale file was actually found.
+    Handy for diagnosing a "keys showing instead of text" problem.
+    """
+    info = {}
+    for code in SUPPORTED_LANGUAGES:
+        info[code] = _resolve_locale_path(code) or f"NOT FOUND (checked: {_missing_locale_paths})"
+    return info
 
 
 def init_language():
@@ -75,11 +129,24 @@ def t(key: str, **kwargs) -> str:
     init_language()
     lang = st.session_state.lang
 
-    value = _lookup(_load_locale_file(lang), key)
+    active_data = _load_locale_file(lang)
+    value = _lookup(active_data, key)
     if value is None and lang != FALLBACK_LANG:
         value = _lookup(_load_locale_file(FALLBACK_LANG), key)
     if value is None:
         value = key
+        # If even the base English locale is empty, the locales/ folder
+        # almost certainly isn't where i18n.py expects it. Surface this
+        # loudly, once, instead of silently printing dotted keys everywhere.
+        if not _load_locale_file(FALLBACK_LANG) and not st.session_state.get("_locale_warning_shown"):
+            st.session_state["_locale_warning_shown"] = True
+            st.sidebar.error(
+                "⚠️ Translation files not found.\n\n"
+                "i18n.py could not locate locales/en.json. Checked:\n"
+                + "\n".join(f"- {p}" for p in _missing_locale_paths)
+                + "\n\nMake sure the `locales` folder sits in the same "
+                "directory as i18n.py, main.py, and the tier*_dashboard.py files."
+            )
 
     if isinstance(value, str) and kwargs:
         try:
