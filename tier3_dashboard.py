@@ -187,7 +187,7 @@ else:
         markers=True
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     st.write(chart_desc)
     if chart_note:
         st.caption(f"ℹ️ {chart_note}")
