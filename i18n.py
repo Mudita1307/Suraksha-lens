@@ -41,6 +41,9 @@ SUPPORTED_LANGUAGES = {
     "hi": "हिंदी",
     "si": "සිංහල",
     "ta": "தமிழ்",
+    "be": "বাংলা",
+    "ka": "ಕನ್ನಡ",
+    "ma": "മലയാളം",
     # "ne": "नेपाली",   # add when Nepali translations are ready
 }
 
@@ -167,13 +170,17 @@ def language_selector(container=None):
     labels = [SUPPORTED_LANGUAGES[c] for c in codes]
     current_index = codes.index(st.session_state.lang) if st.session_state.lang in codes else 0
 
-    choice = target.selectbox(
+    def _on_lang_change():
+        choice = st.session_state["_lang_selector_widget"]
+        st.session_state.lang = codes[labels.index(choice)]
+
+    target.selectbox(
         "🌐 Language / भाषा",
         labels,
         index=current_index,
         key="_lang_selector_widget",
+        on_change=_on_lang_change,
     )
-    st.session_state.lang = codes[labels.index(choice)]
 
 
 def inject_font_css():
@@ -184,10 +191,36 @@ def inject_font_css():
     """
     st.markdown(
         """
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap">
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap');
         html, body, [class*="css"] {
             font-family: 'Noto Sans', 'Noto Sans Devanagari', 'Noto Sans Sinhala', 'Noto Sans Tamil', sans-serif;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def inject_sidebar_layout_fix():
+    """
+    Makes the sidebar a full-height flex column so a bottom-anchored
+    element (e.g. logout button) can be pushed to the very bottom,
+    using the space that would otherwise need a manual spacer div
+    to give the last dropdown's popover room to render.
+    """
+    st.markdown(
+        """
+        <style>
+        section[data-testid="stSidebar"] > div:first-child {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .sidebar-bottom-anchor {
+            margin-top: auto;
         }
         </style>
         """,

@@ -5,15 +5,19 @@ import geopandas as gpd
 import folium
 from streamlit_folium import st_folium
 
-from i18n import t, inject_font_css
+from i18n import inject_sidebar_layout_fix, t, inject_font_css
 
 # -----------------------
 # Config
 # -----------------------
 st.set_page_config(page_title="Climate Hazard Index", layout="wide")
 inject_font_css()
+inject_sidebar_layout_fix()
 
 COUNTRY_CODES = ["India", "Sri Lanka"]
+
+if "country" not in st.session_state or st.session_state.country not in COUNTRY_CODES:
+    st.session_state.country = COUNTRY_CODES[0]
 
 country = st.sidebar.selectbox(
     t("common.select_country"),
@@ -141,8 +145,10 @@ metric_id = st.sidebar.selectbox(
     t("common.select_indicator"),
     options=indicator_ids,
     format_func=indicator_label,
-    key="metric"
+    key="metric",
 )
+
+st.sidebar.markdown("<div style='height: 400px;'></div>", unsafe_allow_html=True)
 
 metric_column = INDICATOR_COLUMNS[country][metric_id]
 chart_title = t(f"tier1.indicators.{country}.{metric_id}.chart_title")

@@ -1,9 +1,10 @@
 import streamlit as st
-from i18n import t, language_selector, inject_font_css
+from i18n import inject_sidebar_layout_fix, t, language_selector, inject_font_css
 
 # MUST be first Streamlit command
 st.set_page_config(page_title="Suraksha Lens Dashboard", layout="wide")
 inject_font_css()
+inject_sidebar_layout_fix()
 
 # ---- Initialize session ----
 if "logged_in" not in st.session_state:
@@ -80,6 +81,7 @@ else:
     pg.run()
 
     # ---- Logout ----
+    st.sidebar.markdown('<div class="sidebar-bottom-anchor"></div>', unsafe_allow_html=True)
     if st.sidebar.button(t("common.logout")):
         st.session_state.logged_in = False
         st.session_state.user = ""

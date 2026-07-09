@@ -2,15 +2,19 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-from i18n import t, inject_font_css
+from i18n import inject_sidebar_layout_fix, t, inject_font_css
 
 # -----------------------
 # Config
 # -----------------------
 st.set_page_config(page_title="Climate Hazard Index", layout="wide")
 inject_font_css()
+inject_sidebar_layout_fix()
 
 COUNTRY_CODES = ["India", "Sri Lanka"]
+
+if "country" not in st.session_state or st.session_state.country not in COUNTRY_CODES:
+    st.session_state.country = COUNTRY_CODES[0]
 
 country = st.sidebar.selectbox(
     t("common.select_country"),
@@ -154,6 +158,8 @@ metric_id = st.sidebar.selectbox(
     format_func=indicator_label,
     key="metric"
 )
+
+st.sidebar.markdown("<div style='height: 400px;'></div>", unsafe_allow_html=True)
 
 metric_column = INDICATOR_COLUMNS[country][metric_id]
 chart_title = t(f"tier3.indicators.{country}.{metric_id}.chart_title")
