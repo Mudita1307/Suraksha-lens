@@ -79,7 +79,7 @@ INDICATOR_COLUMNS = {
         "max_daily_rainfall": "Maximum Daily Rainfall (mm)",
     },
     "Sri Lanka": {
-        "hazard_score": "Rainfall Hazard Index (Tier-1)",
+        "hazard_score": "Hazard Score",
         "annual_total_rainfall": "Annual Total Rainfall (mm)",
         "rainfall_anomaly": "Annual Rainfall Anomaly (mm)",
         "extreme_rainfall_days": "Extreme Rainfall Days (90th Percentile)",
