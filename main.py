@@ -43,7 +43,8 @@ def login():
         "ipenprogram@gmail.com" : "nhrf@sl2026",
         "munnadeblr@gmail.com":"mn@sl2026",
         "mail2heo@gmail.com":"heo@sl2026",
-        "standupmovementlka@gmail.com":"suml@sl2026"
+        "standupmovementlka@gmail.com":"suml@sl2026",
+        "tndwwtsolidarity@gmail.com":"tndwwt@sl2026"
     }
 
     if submit:
