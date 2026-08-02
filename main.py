@@ -44,7 +44,9 @@ def login():
         "munnadeblr@gmail.com":"mn@sl2026",
         "mail2heo@gmail.com":"heo@sl2026",
         "standupmovementlka@gmail.com":"suml@sl2026",
-        "tndwwtsolidarity@gmail.com":"tndwwt@sl2026"
+        "tndwwtsolidarity@gmail.com":"tndwwt@sl2026",
+        "preeti@sevamandir.org":"sm@sl2026",
+        "rajesh.sen@sevamandir.org":"sm@sl2026"
     }
 
     if submit:
