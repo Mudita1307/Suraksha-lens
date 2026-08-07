@@ -80,7 +80,7 @@
       }
     },
     "notes": {
-      "india": "A value of 0 indicates no recorded rainfall, while missing values indicate absence of reliable data due to spatial mismatch between district boundaries and the rainfall grid. No artificial imputation has been applied. Data is unavailable for all years (2010–25) in the following districts.<br><br>1. Andaman & Nicobar Islands (Nicobar Islands, North & Middle Andaman, South Andaman)<br>2. Lakshadweep<br>3. Chennai (Tamil Nadu)"
+      "india": "A value of 0 indicates no recorded rainfall, while missing values indicate absence of reliable data due to spatial mismatch between district boundaries and the rainfall grid. No artificial imputation has been applied. Data is unavailable for all years (2010–25) in the following districts.<br><br>1. Andaman & Nicobar Islands (Nicobar Islands, North & Middle Andaman, South Andaman)<br>2. Lakshadweep<br>"
     }
   },
   "tier2": {
