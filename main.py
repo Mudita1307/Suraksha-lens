@@ -1,4 +1,5 @@
 import streamlit as st
+import chat_bot
 from i18n import inject_sidebar_layout_fix, t, language_selector, inject_font_css
 
 # MUST be first Streamlit command
@@ -74,7 +75,7 @@ else:
     st.sidebar.write(t("common.welcome", user=st.session_state.user))
 
     # ---- Define pages ----
-    main_page = st.Page("main.py", title=t("nav.main_page"), icon="🎈")
+    # main_page = st.Page("main.py", title=t("nav.main_page"), icon="🎈")
     page_1 = st.Page("Suraksha_Lens.py", title=t("nav.discover"), icon="❄️")
     page_2 = st.Page("tier1_dashboard.py", title=t("nav.tier1"), icon="❄️")
     page_3 = st.Page("tier2_dashboard.py", title=t("nav.tier2"), icon="❄️")
@@ -82,11 +83,28 @@ else:
     page_5 = st.Page("tier4_dashboard.py", title=t("nav.tier4"), icon="❄️")
     page_6 = st.Page("scam.py", title=t("nav.scam"), icon="❄️")
 
-    # ---- Navigation ----
-    pg = st.navigation([ page_1, page_2, page_3, page_4, page_5,page_6])
-    pg.run()
+    pg = st.navigation([ page_1, page_2, page_3, page_4, page_5, page_6])
+
+    # ---- Chatbot integration (build order steps 3 & 5/6) ----
+    # init_chat_state() is idempotent — safe to call on every rerun. It's called
+    # here (inside the logged-in branch) rather than above the login gate, since
+    # chat state has no meaning before someone's logged in and no page has run
+    # yet anyway.
+    chat_bot.init_chat_state()
+    chat_bot.render_chat_toggle_button()  # one global toggle, same on every page
+
+    if st.session_state.chat_panel_open:
+        col_chat, col_main = st.columns([1, 3])
+        with col_chat:
+            chat_bot.render_chat_panel()
+        with col_main:
+            pg.run()  # dashboard content renders inside col_main
+    else:
+        pg.run()
 
     # ---- Logout ----
+    # Placed after both branches above (not nested inside either), so it always
+    # renders regardless of whether the chat panel is currently open or closed.
     st.sidebar.markdown('<div class="sidebar-bottom-anchor"></div>', unsafe_allow_html=True)
     if st.sidebar.button(t("common.logout")):
         st.session_state.logged_in = False
