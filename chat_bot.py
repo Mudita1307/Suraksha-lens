@@ -118,6 +118,11 @@ def build_system_prompt(snapshot: DashboardSnapshot, diff: dict) -> str:
         "to the full underlying datasets or historical records. If a "
         "question requires deeper analysis than the current snapshot "
         "supports, say so plainly rather than speculating.\n"
+        "When responding in the dashboard chat, prioritize readable prose and bullet points."
+        "Avoid Markdown tables unless the user explicitly asks for a table or a table is clearly the best way to compare multiple items."
+        "Keep responses concise enough to fit comfortably within a narrow chat panel."
+        f"Break long explanations into short paragraphs and bullet points."
+        "Never produce extremely wide tables."
         f"Respond only in {lang_name}, regardless of what language the "
         "user's question is written in.",
         "",
@@ -172,11 +177,12 @@ def call_llm(system_prompt: str, history: list[dict]) -> str:
         client = _get_client()
     except LLMCallError:
         raise
-    except Exception as e:  # import failure, client construction
+    except Exception as e:
         raise LLMCallError(f"client initialization failed: {e}") from e
 
     messages = [{"role": "system", "content": system_prompt}] + [
-        {"role": m["role"], "content": m["content"]} for m in history
+        {"role": m["role"], "content": m["content"]}
+        for m in history
     ]
 
     try:
@@ -184,9 +190,23 @@ def call_llm(system_prompt: str, history: list[dict]) -> str:
             model=GROQ_MODEL,
             messages=messages,
             temperature=0.3,
-            max_tokens=500,
+            max_completion_tokens=2048,
         )
-    except Exception as e:  # rate limit, timeout, API error — all normalized
+
+        finish_reason = response.choices[0].finish_reason
+
+        logger.info(
+            "LLM finish_reason=%s, usage=%s",
+            finish_reason,
+            response.usage,
+        )
+
+        if finish_reason == "length":
+            logger.warning(
+                "LLM response was truncated at the token limit"
+            )
+
+    except Exception as e:
         raise LLMCallError(f"model request failed: {e}") from e
 
     try:
@@ -247,9 +267,18 @@ def render_chat_toggle_button() -> None:
 
 
 def render_chat_panel() -> None:
+    st.markdown(
+        """
+        <div class="chat-panel">
+        """,
+        unsafe_allow_html=True,
+    )
+
     header_col, close_col = st.columns([5, 1])
+
     with header_col:
         st.subheader(t("chat_bot.title"))
+
     with close_col:
         if st.button("✕", key="chat_close_btn"):
             st.session_state.chat_panel_open = False
@@ -260,7 +289,10 @@ def render_chat_panel() -> None:
             st.markdown(msg["content"])
 
     user_text = st.chat_input(t("chat_bot.placeholder"))
+
     if user_text:
         with st.spinner(t("chat_bot.thinking")):
             handle_user_message(user_text)
         st.rerun()
+
+    st.markdown("</div>", unsafe_allow_html=True)

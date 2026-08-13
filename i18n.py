@@ -12,7 +12,6 @@ _CANDIDATE_LOCALE_DIRS = [
     os.path.join(os.getcwd(), "locale"),
     os.path.join(_THIS_DIR, "..", "locales"),
     os.path.join(_THIS_DIR, "..", "locale"),
-    _THIS_DIR,  # fallback: json files placed directly next to i18n.py, no subfolder
 ]
 
 

@@ -94,11 +94,13 @@ else:
     chat_bot.render_chat_toggle_button()  # one global toggle, same on every page
 
     if st.session_state.chat_panel_open:
-        col_chat, col_main = st.columns([1, 3])
+        col_main, col_chat = st.columns([3, 2])
+
+        with col_main:
+            pg.run()
+
         with col_chat:
             chat_bot.render_chat_panel()
-        with col_main:
-            pg.run()  # dashboard content renders inside col_main
     else:
         pg.run()
 
