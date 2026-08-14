@@ -72,7 +72,8 @@ def _collect_visible_summary_stats() -> dict:
 def build_snapshot() -> DashboardSnapshot:
     return {
         "page": st.session_state.get("_current_page", "unknown"),
-        "tier": st.session_state.get("tier", "T1"),
+        "tier": st.session_state.get("tier"),
+        "tier_name": st.session_state.get("tier_name"),
         "country": st.session_state.get("country"),
         "states": list(st.session_state.get("states") or []),
         "districts": list(st.session_state.get("districts") or []),
@@ -81,7 +82,6 @@ def build_snapshot() -> DashboardSnapshot:
         "active_filters": _collect_active_filters(),
         "summary_stats": _collect_visible_summary_stats(),
     }
-
 
 
 
