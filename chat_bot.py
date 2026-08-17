@@ -72,8 +72,7 @@ def _collect_visible_summary_stats() -> dict:
 def build_snapshot() -> DashboardSnapshot:
     return {
         "page": st.session_state.get("_current_page", "unknown"),
-        "tier": st.session_state.get("tier"),
-        "tier_name": st.session_state.get("tier_name"),
+        "tier": st.session_state.get("tier", "T1"),
         "country": st.session_state.get("country"),
         "states": list(st.session_state.get("states") or []),
         "districts": list(st.session_state.get("districts") or []),
@@ -81,6 +80,7 @@ def build_snapshot() -> DashboardSnapshot:
         "language": st.session_state.get("lang", "en"),
         "active_filters": _collect_active_filters(),
         "summary_stats": _collect_visible_summary_stats(),
+        "chart_data": st.session_state.get("chat_chart_data"),
     }
 
 
@@ -113,21 +113,56 @@ def build_system_prompt(snapshot: DashboardSnapshot, diff: dict) -> str:
 
     parts = [
         "You are the in-app assistant for Suraksha Lens, a climate-related "
-        "exploitation early warning dashboard. You can only see the summary "
-        "of what is currently displayed on screen — you do not have access "
-        "to the full underlying datasets or historical records. If a "
-        "question requires deeper analysis than the current snapshot "
-        "supports, say so plainly rather than speculating.\n"
-        "When responding in the dashboard chat, prioritize readable prose and bullet points."
-        "Avoid Markdown tables unless the user explicitly asks for a table or a table is clearly the best way to compare multiple items."
-        "Keep responses concise enough to fit comfortably within a narrow chat panel."
-        f"Break long explanations into short paragraphs and bullet points."
-        "Never produce extremely wide tables."
+        "exploitation early warning dashboard. You can see the current "
+        "dashboard snapshot provided below. The snapshot contains the "
+        "currently displayed dashboard state and, when available, the "
+        "numerical data behind the currently displayed graph.\n\n"
+
+        "If a question requires information that is not present in the "
+        "current snapshot, say so plainly rather than speculating.\n\n"
+
+        "When responding in the dashboard chat, prioritize readable prose "
+        "and bullet points. Avoid Markdown tables unless the user explicitly "
+        "asks for a table or a table is clearly the best way to compare "
+        "multiple items. Keep responses concise enough to fit comfortably "
+        "within a narrow chat panel. Break long explanations into short "
+        "paragraphs and bullet points. Never produce extremely wide tables.\n\n"
+
         f"Respond only in {lang_name}, regardless of what language the "
         "user's question is written in.",
+
         "",
+
         "=== Current Dashboard Snapshot ===",
+
+        """
+The snapshot contains the current dashboard state.
+
+The `tier` field is authoritative:
+T1 = Hazard
+T2 = Exposure
+T3 = Vulnerability
+T4 = Climate Exploitation Risk Index
+
+Always answer according to the current tier, country, metric, filters, "
+and chart data.
+
+If `chart_data` is present, it contains the numerical data used to "
+"generate the graph currently displayed on the dashboard.
+
+You CAN analyze `chart_data`.
+
+Do NOT say that you cannot see graphs when `chart_data` is available.
+
+When the user asks about a trend, pattern, increase, decrease, peak, "
+"minimum, comparison, or change over time, analyze the values in "
+"`chart_data` directly.
+
+Do not invent values that are not present in the snapshot.
+""",
+
         json.dumps(snapshot, ensure_ascii=False, indent=2),
+
         "===================================",
     ]
 
@@ -234,7 +269,7 @@ def handle_user_message(user_text: str) -> None:
     try:
         reply = call_llm(
             system_prompt=system_prompt,
-            history=st.session_state.chat_history,
+            history=st.session_state.chat_history[-5],
         )
         st.session_state.chat_history.append(
             {"role": "assistant", "content": reply}

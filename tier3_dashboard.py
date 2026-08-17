@@ -11,6 +11,10 @@ st.set_page_config(page_title="Climate Hazard Index", layout="wide")
 inject_font_css()
 inject_sidebar_layout_fix()
 
+st.session_state["tier"] = "T3"
+st.session_state["_current_page"] = "tier3"
+st.session_state["dashboard_chart_data"] = None
+
 COUNTRY_CODES = ["India", "Sri Lanka"]
 
 if "country" not in st.session_state or st.session_state.country not in COUNTRY_CODES:
@@ -180,10 +184,22 @@ if metric_column not in filtered_df.columns:
     st.error(t("common.column_not_found", column=metric_column))
 else:
     trend_df = (
-        filtered_df.groupby([year_col, district_col])[metric_column]
-        .mean()
-        .reset_index()
+    filtered_df.groupby([year_col, district_col])[metric_column]
+    .mean()
+    .reset_index()
     )
+
+# Give the chatbot the exact data being plotted
+    st.session_state["chat_chart_data"] = trend_df.to_dict(orient="records")
+    st.session_state["chat_chart_context"] = {
+    "country": country,
+    "tier": "T3",
+    "metric": metric_id,
+    "metric_column": metric_column,
+    "year_column": year_col,
+    "district_column": district_col,
+    "chart_title": chart_title,
+    }
 
     fig = px.line(
         trend_df,

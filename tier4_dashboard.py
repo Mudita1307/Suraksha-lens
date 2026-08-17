@@ -17,6 +17,9 @@ st.set_page_config(
 inject_font_css()
 inject_sidebar_layout_fix()
 
+st.session_state["_current_page"] = "tier4_dashboard"
+st.session_state["tier"] = "T4"
+
 # -----------------------
 # Country Selection
 # -----------------------

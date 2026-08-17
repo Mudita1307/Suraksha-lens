@@ -14,6 +14,10 @@ st.set_page_config(page_title="Climate Hazard Index", layout="wide")
 inject_font_css()
 inject_sidebar_layout_fix()
 
+st.session_state["_current_page"] = "tier1_dashboard"
+st.session_state["tier"] = "T1"
+st.session_state["dashboard_chart_data"] = None
+
 COUNTRY_CODES = ["India", "Sri Lanka"]
 
 if "country" not in st.session_state or st.session_state.country not in COUNTRY_CODES:
@@ -170,6 +174,14 @@ else:
         .mean()
         .reset_index()
     )
+    st.session_state["dashboard_chart_data"] = {
+    "chart_type": "line",
+    "year_column": year_col,
+    "category_column": district_col,
+    "value_column": metric_column,
+    "metric": metric_id,
+    "data": trend_df.to_dict(orient="records"),
+}
 
     fig = px.line(
         trend_df,
