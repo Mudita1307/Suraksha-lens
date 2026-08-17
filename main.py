@@ -59,6 +59,7 @@ def login():
         "rajesh.sen@sevamandir.org": "sm@sl2026",
         "archanajjpt@gmail.com": "awc@sl2026",
         "samankh2h@gmail.com": "hthl@sl2026",
+        "bhargavithakur0698@gmail.com": "bhargavi@sl2026"
     }
 
     if submit:
