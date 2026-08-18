@@ -5,6 +5,7 @@ import geopandas as gpd
 import folium
 from streamlit_folium import st_folium
 
+import chat_bot
 from i18n import inject_sidebar_layout_fix, t, inject_font_css
 
 # -----------------------
@@ -19,6 +20,7 @@ inject_sidebar_layout_fix()
 
 st.session_state["_current_page"] = "tier4_dashboard"
 st.session_state["tier"] = "T4"
+chat_bot.clear_chart_context()
 
 # -----------------------
 # Country Selection
@@ -158,6 +160,25 @@ if metric_id == "risk_category":
             subset=["Year", metric_column]
         )
 
+        # Give the chatbot the counts behind the stacked bars (not the raw
+        # per-district rows, since the chart itself shows aggregated counts).
+        cat_counts = (
+            filtered_df.groupby(["Year", metric_column])
+            .size()
+            .reset_index(name="count")
+        )
+        chat_bot.set_chart_context(
+            tier="T4",
+            country=country,
+            metric=metric_id,
+            metric_column=metric_column,
+            year_column="Year",
+            category_column=metric_column,
+            chart_title=t("tier4.risk_distribution"),
+            chart_kind="stacked_bar",
+            data_records=cat_counts.to_dict(orient="records"),
+        )
+
         fig = px.histogram(
             filtered_df,
             x="Year",
@@ -244,6 +265,23 @@ if metric_id == "risk_category":
         df_year = map_df[
             map_df["Year"] == year
         ]
+
+        # Give the chatbot the district-level values shown on the map for
+        # the selected year.
+        chat_bot.set_chart_context(
+            tier="T4",
+            country=country,
+            metric=metric_id,
+            metric_column="Risk Category",
+            year_column="Year",
+            category_column="District",
+            chart_title=t("tier4.risk_map"),
+            chart_kind="map",
+            note=f"Map is filtered to Year = {year}.",
+            data_records=df_year[["District", "Risk Category"]].to_dict(
+                orient="records"
+            ),
+        )
 
         # -----------------------------------
         # Merge
@@ -415,6 +453,18 @@ else:
     )
 
     trend_df = trend_df.dropna()
+
+    chat_bot.set_chart_context(
+        tier="T4",
+        country=country,
+        metric=metric_id,
+        metric_column=metric_column,
+        year_column="Year",
+        category_column="District",
+        chart_title=chart_title,
+        chart_kind="line",
+        data_records=trend_df.to_dict(orient="records"),
+    )
 
     # -----------------------------------
     # Line Chart

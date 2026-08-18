@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+import chat_bot
 from i18n import inject_sidebar_layout_fix, t, inject_font_css
 
 # -----------------------
@@ -13,7 +14,7 @@ inject_sidebar_layout_fix()
 
 st.session_state["_current_page"] = "tier2_dashboard"
 st.session_state["tier"] = "T2"
-st.session_state["dashboard_chart_data"] = None
+chat_bot.clear_chart_context()
 
 COUNTRY_CODES = ["India", "Sri Lanka"]
 
@@ -180,14 +181,17 @@ else:
         .mean()
         .reset_index()
     )
-    st.session_state["dashboard_chart_data"] = {
-    "chart_type": "line",
-    "year_column": year_col,
-    "category_column": district_col,
-    "value_column": metric_column,
-    "metric": metric_id,
-    "data": trend_df.to_dict(orient="records"),
-}
+    chat_bot.set_chart_context(
+        tier="T2",
+        country=country,
+        metric=metric_id,
+        metric_column=metric_column,
+        year_column=year_col,
+        category_column=district_col,
+        chart_title=chart_title,
+        chart_kind="line",
+        data_records=trend_df.to_dict(orient="records"),
+    )
 
     fig = px.line(
         trend_df,

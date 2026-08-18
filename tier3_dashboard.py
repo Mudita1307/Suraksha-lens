@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+import chat_bot
 from i18n import inject_sidebar_layout_fix, t, inject_font_css
 
 # -----------------------
@@ -13,7 +14,7 @@ inject_sidebar_layout_fix()
 
 st.session_state["tier"] = "T3"
 st.session_state["_current_page"] = "tier3"
-st.session_state["dashboard_chart_data"] = None
+chat_bot.clear_chart_context()
 
 COUNTRY_CODES = ["India", "Sri Lanka"]
 
@@ -184,22 +185,24 @@ if metric_column not in filtered_df.columns:
     st.error(t("common.column_not_found", column=metric_column))
 else:
     trend_df = (
-    filtered_df.groupby([year_col, district_col])[metric_column]
-    .mean()
-    .reset_index()
+        filtered_df.groupby([year_col, district_col])[metric_column]
+        .mean()
+        .reset_index()
     )
 
-# Give the chatbot the exact data being plotted
-    st.session_state["chat_chart_data"] = trend_df.to_dict(orient="records")
-    st.session_state["chat_chart_context"] = {
-    "country": country,
-    "tier": "T3",
-    "metric": metric_id,
-    "metric_column": metric_column,
-    "year_column": year_col,
-    "district_column": district_col,
-    "chart_title": chart_title,
-    }
+    # Give the chatbot the exact data being plotted
+    chat_bot.set_chart_context(
+        tier="T3",
+        country=country,
+        metric=metric_id,
+        metric_column=metric_column,
+        year_column=year_col,
+        category_column=district_col,
+        chart_title=chart_title,
+        chart_kind="line",
+        note=chart_note,
+        data_records=trend_df.to_dict(orient="records"),
+    )
 
     fig = px.line(
         trend_df,

@@ -45,19 +45,25 @@ def init_chat_state() -> None:
     if "_snapshot_version" not in st.session_state:
         # server-side / log only, never sent to the LLM
         st.session_state._snapshot_version = 0
+    if "chat_chart_data" not in st.session_state:
+        st.session_state.chat_chart_data = None
+    if "chat_chart_context" not in st.session_state:
+        st.session_state.chat_chart_context = None
 
 
 
 class DashboardSnapshot(TypedDict):
-    page: str                       
-    tier: str                       
-    country: Optional[str]          
-    states: list                    
-    districts: list                 
-    metric: str                     
-    language: str                   
-    active_filters: dict            
-    summary_stats: dict             
+    page: str
+    tier: str
+    country: Optional[str]
+    states: list
+    districts: list
+    metric: str
+    language: str
+    active_filters: dict
+    summary_stats: dict
+    chart_context: Optional[dict]
+    chart_data: Optional[list]
 
 
 
@@ -67,6 +73,57 @@ def _collect_active_filters() -> dict:
 
 def _collect_visible_summary_stats() -> dict:
     return dict(st.session_state.get("_visible_summary_stats", {}) or {})
+
+
+# -----------------------------------------------------------------------
+# Chart-context registry
+# -----------------------------------------------------------------------
+# Every dashboard page that renders a chart should call clear_chart_context()
+# near the top of the script (before any chart is built) and set_chart_context()
+# right after it computes the data behind the chart it displays. This keeps
+# the naming and shape identical across tier1-4, so build_snapshot() always
+# knows where to find "what the user is currently looking at."
+
+def clear_chart_context() -> None:
+    """Call at the top of a dashboard page, before any chart is built, so a
+    page that errors out (e.g. a missing column) or takes a branch with no
+    chart doesn't leave a stale chart from a previous render in the snapshot.
+    """
+    st.session_state["chat_chart_data"] = None
+    st.session_state["chat_chart_context"] = None
+
+
+def set_chart_context(
+    *,
+    tier: str,
+    country: Optional[str],
+    metric: str,
+    metric_column: str,
+    year_column: str,
+    category_column: str,
+    chart_title: str,
+    data_records: list,
+    chart_kind: str = "line",
+    note: str = "",
+) -> None:
+    """Register the data + metadata behind the chart currently on screen.
+
+    data_records should be the same rows feeding the chart (e.g.
+    trend_df.to_dict(orient="records")), so the chatbot can analyze the exact
+    numbers the user is looking at rather than re-deriving them.
+    """
+    st.session_state["chat_chart_data"] = data_records
+    st.session_state["chat_chart_context"] = {
+        "tier": tier,
+        "country": country,
+        "metric": metric,
+        "metric_column": metric_column,
+        "year_column": year_column,
+        "category_column": category_column,
+        "chart_title": chart_title,
+        "chart_kind": chart_kind,
+        "note": note,
+    }
 
 
 def build_snapshot() -> DashboardSnapshot:
@@ -80,6 +137,7 @@ def build_snapshot() -> DashboardSnapshot:
         "language": st.session_state.get("lang", "en"),
         "active_filters": _collect_active_filters(),
         "summary_stats": _collect_visible_summary_stats(),
+        "chart_context": st.session_state.get("chat_chart_context"),
         "chart_data": st.session_state.get("chat_chart_data"),
     }
 
@@ -144,19 +202,26 @@ T2 = Exposure
 T3 = Vulnerability
 T4 = Climate Exploitation Risk Index
 
-Always answer according to the current tier, country, metric, filters, "
+Always answer according to the current tier, country, metric, filters,
 and chart data.
 
-If `chart_data` is present, it contains the numerical data used to "
-"generate the graph currently displayed on the dashboard.
+If `chart_data` is present, it contains the numerical data used to
+generate the graph currently displayed on the dashboard. `chart_context`
+describes what that data means: the metric, the underlying column names,
+the chart title, what kind of chart it is (line / stacked_bar / map), and
+an optional data-availability note.
 
 You CAN analyze `chart_data`.
 
 Do NOT say that you cannot see graphs when `chart_data` is available.
 
-When the user asks about a trend, pattern, increase, decrease, peak, "
-"minimum, comparison, or change over time, analyze the values in "
-"`chart_data` directly.
+When the user asks about a trend, pattern, increase, decrease, peak,
+minimum, comparison, or change over time, analyze the values in
+`chart_data` directly.
+
+If `chart_data` is null, no chart is currently displayed (e.g. the user is
+on a page or view with no chart, or the selected metric/column could not
+be found) — say so rather than guessing at values.
 
 Do not invent values that are not present in the snapshot.
 """,
@@ -269,7 +334,7 @@ def handle_user_message(user_text: str) -> None:
     try:
         reply = call_llm(
             system_prompt=system_prompt,
-            history=st.session_state.chat_history[-5],
+            history=st.session_state.chat_history[-5:],
         )
         st.session_state.chat_history.append(
             {"role": "assistant", "content": reply}
