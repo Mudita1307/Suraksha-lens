@@ -103,6 +103,11 @@ def clear_chart_context() -> None:
 MAX_RAW_CHART_ROWS = 60
 TOP_BOTTOM_N = 5
 
+# Fields whose full before/after values are too large to duplicate in the
+# "changed since last turn" diff (see diff_snapshots) — the current value is
+# already present in full in the main snapshot above it.
+_HEAVY_DIFF_FIELDS = {"chart_data"}
+
 
 def _round_value(value):
     if isinstance(value, float):
@@ -241,8 +246,23 @@ def diff_snapshots(
 
     changed: dict = {}
     for key in current:
-        if previous.get(key) != current.get(key):
-            changed[key] = {"from": previous.get(key), "to": current.get(key)}
+        prev_val = previous.get(key)
+        curr_val = current.get(key)
+        if prev_val == curr_val:
+            continue
+        if key in _HEAVY_DIFF_FIELDS:
+            # The current value already sits in full above (under
+            # "Current Dashboard Snapshot"). Repeating both the old and new
+            # copies of a potentially large chart table here would burn
+            # tokens for no real benefit — a note that it changed is enough.
+            changed[key] = {
+                "changed": True,
+                "note": "chart_data changed since the previous turn; "
+                        "see the current chart_data in the snapshot above "
+                        "for the up-to-date values",
+            }
+        else:
+            changed[key] = {"from": prev_val, "to": curr_val}
     return changed
 
 
@@ -274,6 +294,12 @@ def build_system_prompt(snapshot: DashboardSnapshot, diff: dict) -> str:
         "multiple items. Keep responses concise enough to fit comfortably "
         "within a narrow chat panel. Break long explanations into short "
         "paragraphs and bullet points. Never produce extremely wide tables.\n\n"
+
+        "Do not restate chart_data row by row or transcribe it back in "
+        "full — synthesize it (trend, highest/lowest, notable changes) "
+        "instead. Default to a short answer (a few sentences or a handful "
+        "of bullet points); only go longer if the user explicitly asks for "
+        "a full breakdown or every value.\n\n"
 
         f"Respond only in {lang_name}, regardless of what language the "
         "user's question is written in.",
