@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import statistics
 from typing import Optional, TypedDict
 
 import streamlit as st
@@ -93,6 +94,89 @@ def clear_chart_context() -> None:
     st.session_state["chat_chart_context"] = None
 
 
+# Groq's on_demand tier for this model is capped at a small tokens-per-minute
+# budget, so the full snapshot (instructions + json) must stay well under it.
+# Raw per-district-per-year tables get large fast (Tier 3 alone can have 20+
+# indicators across dozens of districts), so anything above this row count
+# gets collapsed into yearly aggregates + top/bottom categories instead of
+# being sent row-by-row.
+MAX_RAW_CHART_ROWS = 60
+TOP_BOTTOM_N = 5
+
+
+def _round_value(value):
+    if isinstance(value, float):
+        return round(value, 3)
+    return value
+
+
+def _round_records(records: list) -> list:
+    return [
+        {k: _round_value(v) for k, v in row.items()}
+        for row in records
+    ]
+
+
+def _summarize_chart_data(
+    data_records: list,
+    year_column: str,
+    category_column: str,
+    metric_column: str,
+) -> tuple[object, bool]:
+    """Collapse a large chart table into something that fits the token
+    budget: per-year mean/min/max, plus the highest and lowest categories by
+    mean value. Returns (payload, was_summarized).
+    """
+    if len(data_records) <= MAX_RAW_CHART_ROWS:
+        return _round_records(data_records), False
+
+    by_year: dict = {}
+    by_category: dict = {}
+
+    for row in data_records:
+        year = row.get(year_column)
+        category = row.get(category_column)
+        value = row.get(metric_column)
+        if value is None:
+            continue
+        try:
+            value = float(value)
+        except (TypeError, ValueError):
+            continue
+        by_year.setdefault(year, []).append(value)
+        by_category.setdefault(category, []).append(value)
+
+    yearly_summary = [
+        {
+            year_column: year,
+            "mean": round(statistics.mean(values), 3),
+            "min": round(min(values), 3),
+            "max": round(max(values), 3),
+            "n": len(values),
+        }
+        for year, values in sorted(by_year.items(), key=lambda kv: str(kv[0]))
+    ]
+
+    category_means = {
+        category: round(statistics.mean(values), 3)
+        for category, values in by_category.items()
+    }
+    ranked = sorted(category_means.items(), key=lambda kv: kv[1], reverse=True)
+
+    payload = {
+        "yearly_summary": yearly_summary,
+        "top_categories_by_mean": [
+            {category_column: c, "mean_value": v} for c, v in ranked[:TOP_BOTTOM_N]
+        ],
+        "bottom_categories_by_mean": [
+            {category_column: c, "mean_value": v} for c, v in ranked[-TOP_BOTTOM_N:]
+        ],
+        "total_categories": len(by_category),
+        "total_rows_omitted": len(data_records),
+    }
+    return payload, True
+
+
 def set_chart_context(
     *,
     tier: str,
@@ -109,10 +193,14 @@ def set_chart_context(
     """Register the data + metadata behind the chart currently on screen.
 
     data_records should be the same rows feeding the chart (e.g.
-    trend_df.to_dict(orient="records")), so the chatbot can analyze the exact
-    numbers the user is looking at rather than re-deriving them.
+    trend_df.to_dict(orient="records")). Large tables are automatically
+    summarized (see _summarize_chart_data) to stay within the LLM's token
+    budget; small ones are passed through as-is (with floats rounded).
     """
-    st.session_state["chat_chart_data"] = data_records
+    payload, was_summarized = _summarize_chart_data(
+        data_records, year_column, category_column, metric_column
+    )
+    st.session_state["chat_chart_data"] = payload
     st.session_state["chat_chart_context"] = {
         "tier": tier,
         "country": country,
@@ -123,6 +211,7 @@ def set_chart_context(
         "chart_title": chart_title,
         "chart_kind": chart_kind,
         "note": note,
+        "data_summarized": was_summarized,
     }
 
 
@@ -211,6 +300,19 @@ describes what that data means: the metric, the underlying column names,
 the chart title, what kind of chart it is (line / stacked_bar / map), and
 an optional data-availability note.
 
+`chart_context.data_summarized` tells you the shape of `chart_data`:
+- false: `chart_data` is the raw list of rows behind the chart (one row per
+  category/year combination), exactly as plotted.
+- true: the raw table was too large to send in full, so `chart_data` is
+  instead an object with `yearly_summary` (mean/min/max/n per year),
+  `top_categories_by_mean` and `bottom_categories_by_mean` (the highest and
+  lowest categories by mean value), `total_categories`, and
+  `total_rows_omitted`. In this case you can describe overall trends and
+  the highest/lowest categories, but you do NOT have every individual data
+  point — if asked for an exact value for a specific category/year that
+  isn't in the summary, say the dashboard would need to be filtered
+  (fewer states/districts selected) to see that exact figure.
+
 You CAN analyze `chart_data`.
 
 Do NOT say that you cannot see graphs when `chart_data` is available.
@@ -226,7 +328,7 @@ be found) — say so rather than guessing at values.
 Do not invent values that are not present in the snapshot.
 """,
 
-        json.dumps(snapshot, ensure_ascii=False, indent=2),
+        json.dumps(snapshot, ensure_ascii=False, separators=(",", ":")),
 
         "===================================",
     ]
@@ -290,7 +392,7 @@ def call_llm(system_prompt: str, history: list[dict]) -> str:
             model=GROQ_MODEL,
             messages=messages,
             temperature=0.3,
-            max_completion_tokens=2048,
+            max_completion_tokens=1024,
         )
 
         finish_reason = response.choices[0].finish_reason
@@ -334,7 +436,12 @@ def handle_user_message(user_text: str) -> None:
     try:
         reply = call_llm(
             system_prompt=system_prompt,
-            history=st.session_state.chat_history[-5:],
+            # NOTE: this was `chat_history[-5]` (a single element, and an
+            # IndexError on the very first message when len < 5). It must be
+            # a slice. Kept short (last 3 turns) since this Groq tier's
+            # tokens-per-minute budget is small (8000) and the system prompt
+            # already carries the full dashboard snapshot every turn.
+            history=st.session_state.chat_history[-3:],
         )
         st.session_state.chat_history.append(
             {"role": "assistant", "content": reply}
