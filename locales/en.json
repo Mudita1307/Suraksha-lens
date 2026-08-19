@@ -547,9 +547,9 @@
     "note": "Note: Qilafy provides AI-assisted verification support intended to help users assess potential digital risks and misinformation exposure. Outputs should be used as supportive guidance and not as sole evidence for legal or enforcement purposes. Users should independently verify relevant information and conduct their own research before taking any action."
   },
   "chat_bot": {
-    "title": "Ask Suraksha Lens",
-    "open_button": "💬 Ask a question",
-    "close_button": "Close chat",
+    "title": "Suraksha Assistant",
+    "open_button": "💬 Ask the Assistant",
+    "close_button": "Close the Assistant",
     "placeholder": "Ask about what's shown on screen...",
     "thinking": "Thinking...",
     "error_message": "Sorry, I couldn't process that just now. Please try again."
