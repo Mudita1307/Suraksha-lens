@@ -187,8 +187,9 @@ else:
     st.session_state["tier"] = page_context["tier"]
 
     # ---- Chat ----
+    # The open panel keeps its own column beside the dashboard, as before;
+    # only the opener moved out of the sidebar into a floating button.
     chat_bot.init_chat_state()
-    chat_bot.render_chat_toggle_button()
 
     if st.session_state.chat_panel_open:
         col_main, col_chat = st.columns([3, 2])
@@ -200,6 +201,7 @@ else:
             chat_bot.render_chat_panel()
 
     else:
+        chat_bot.render_chat_toggle_button()
         pg.run()
 
     # ---- Logout ----

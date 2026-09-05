@@ -552,6 +552,11 @@
     "close_button": "Close the Assistant",
     "placeholder": "Ask about what's shown on screen...",
     "thinking": "Thinking...",
-    "error_message": "Sorry, I couldn't process that just now. Please try again."
+    "error_message": "Sorry, I couldn't process that just now. Please try again.",
+    "greeting_title": "How can I help?",
+    "greeting_body": "I can read the charts and filters currently on your screen. Ask me about what you are seeing.",
+    "suggestion_1": "Summarise what is on screen right now",
+    "suggestion_2": "What trend does this chart show?",
+    "suggestion_3": "Which areas stand out, and why?"
   }
 }
