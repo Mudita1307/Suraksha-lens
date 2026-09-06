@@ -136,6 +136,13 @@ else:
         url_path="scam",
     )
 
+    page_7 = st.Page(
+        "csel.py",
+        title=t("nav.csel"),
+        icon="❄️",
+        url_path="csel",
+    )
+    
     pg = st.navigation(
         [
             page_1,
@@ -144,6 +151,7 @@ else:
             page_4,
             page_5,
             page_6,
+            page_7,
         ]
     )
 
@@ -171,6 +179,10 @@ else:
         },
         "scam": {
             "page": "scam",
+            "tier": None,
+        },
+        "csel": {
+            "page": "csel",
             "tier": None,
         },
     }
