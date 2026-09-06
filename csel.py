@@ -63,6 +63,7 @@ st.markdown(
 )
 
 st.divider()
+
 # Section 1: Theme frequency (lollipop chart)
 st.subheader("1. What are communities talking about?")
 
@@ -83,6 +84,7 @@ for _, row in theme_freq_filtered.iterrows():
     )
 fig1.update_layout(
     paper_bgcolor="#0e0e0e", plot_bgcolor="#0e0e0e", font_color="#f0f0f0",
+    legend=dict(font=dict(color="#f0f0f0"), title=dict(font=dict(color="#f0f0f0"))),
     margin=dict(t=20, l=10, r=10, b=40),
 )
 fig1.update_xaxes(gridcolor="rgba(255,255,255,0.08)")
@@ -96,17 +98,28 @@ st.caption(
 
 
 # Section 2: District x Pillar severity (sunburst)
+
 st.subheader("2. Where does it hurt most, and in what way?")
 
-fig2 = px.sunburst(
-    pillar_severity, path=["District", "CSEL_Pillar"], values="Severity (0–3)",
-    color="Severity (0–3)", color_continuous_scale="Blues",
+pillar_severity_filtered = (
+    filtered.groupby(["District", "CSEL_Pillar"])["Severity (0–3)"]
+    .mean().round(2).reset_index()
 )
-fig2.update_layout(
-    paper_bgcolor="black", plot_bgcolor="black", font_color="white",
-    margin=dict(t=20, l=10, r=10, b=10),
-)
-st.plotly_chart(fig2, width="stretch")
+
+if pillar_severity_filtered.empty:
+    st.info("No data matches the current filters.")
+else:
+    fig2 = px.sunburst(
+        pillar_severity_filtered, path=["District", "CSEL_Pillar"], values="Severity (0–3)",
+        color="Severity (0–3)", color_continuous_scale="Blues",
+    )
+    fig2.update_layout(
+        paper_bgcolor="black", plot_bgcolor="black", font_color="white",
+        legend=dict(font=dict(color="#f0f0f0")),
+        margin=dict(t=20, l=10, r=10, b=10),
+    )
+    st.plotly_chart(fig2, width="stretch")
+
 st.caption(
     "Each slice shows the average severity (0 = barely present, 3 = severe/urgent) of "
     "everything said about that broader life-area (\"pillar\"), in that district. Darker "
@@ -115,59 +128,86 @@ st.caption(
     "and income-related themes into one figure."
 )
 
-
-# Section 3: CSEL-derived risk scores, by district
+# Section 3: CSEL-derived risk scores, by district 
 st.subheader("3. CSEL-derived risk scores, by district")
 
-rows = []
-for _, r in stage3_ceri.iterrows():
-    rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
-                 "Dimension": "CSEL_Hazard", "Score": r["CSEL_Hazard"], "Segments (n)": r["Hazard_segments (n)"]})
-    rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
-                 "Dimension": "CSEL_Exposure", "Score": r["CSEL_Exposure"], "Segments (n)": r["Exposure_segments (n)"]})
-    rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
-                 "Dimension": "CSEL_Vulnerability", "Score": r["CSEL_Vulnerability"], "Segments (n)": r["Vulnerability_segments (n)"]})
-    rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
-                 "Dimension": "CSEL_Risk", "Score": r["CSEL_Risk"], "Segments (n)": None})
-full_df = pd.DataFrame(rows)
+expanded_rows = []
+for _, row in filtered.iterrows():
+    codes = [c.strip() for c in str(row["Code"]).split(",")]
+    tiers = [t.strip() for t in str(row["CERI_Tier"]).split(";")] if isinstance(row["CERI_Tier"], str) else [row["CERI_Tier"]]
+    for code, tier in zip(codes, tiers):
+        expanded_rows.append({
+            "Interview_ID": row["Interview_ID"], "District": row["District"],
+            "CERI_Tier": tier, "severity_0to1": row["Severity (0–3)"] / 3,
+        })
+expanded_filtered = pd.DataFrame(expanded_rows)
 
-full_df["facet_label"] = full_df["District"] + " (Interviews: " + full_df["Interviews (n)"].astype(str) + ")"
-full_df["bar_text"] = full_df.apply(
-    lambda r: f"{r['Score']}  (n={int(r['Segments (n)'])})" if pd.notna(r["Segments (n)"]) else f"{r['Score']} (derived, no direct n)",
-    axis=1
+def build_district_row(district_name, group):
+    n_interviews = group["Interview_ID"].nunique()
+    hazard = group[group["CERI_Tier"] == "Hazard"]["severity_0to1"]
+    exposure = group[group["CERI_Tier"] == "Exposure"]["severity_0to1"]
+    vulnerability = group[group["CERI_Tier"] == "Vulnerability"]["severity_0to1"]
+    h = round(hazard.mean(), 2) if len(hazard) else None
+    e = round(exposure.mean(), 2) if len(exposure) else None
+    v = round(vulnerability.mean(), 2) if len(vulnerability) else None
+    risk = round(h * e * v, 3) if (h is not None and e is not None and v is not None) else None
+    return {"District": district_name, "Interviews (n)": n_interviews,
+            "CSEL_Hazard": h, "Hazard_segments (n)": len(hazard),
+            "CSEL_Exposure": e, "Exposure_segments (n)": len(exposure),
+            "CSEL_Vulnerability": v, "Vulnerability_segments (n)": len(vulnerability),
+            "CSEL_Risk": risk}
+
+stage3_ceri_filtered = pd.DataFrame(
+    [build_district_row(d, g) for d, g in expanded_filtered.groupby("District")]
 )
 
-DIMENSION_COLORS = {
-    "CSEL_Hazard": "#4FD1C5",
-    "CSEL_Exposure": "#F6AD55",
-    "CSEL_Vulnerability": "#FC8181",
-    "CSEL_Risk": "#B794F4",
-}
+if stage3_ceri_filtered.empty:
+    st.info("No data matches the current filters.")
+else:
+    rows = []
+    for _, r in stage3_ceri_filtered.iterrows():
+        rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
+                     "Dimension": "CSEL_Hazard", "Score": r["CSEL_Hazard"], "Segments (n)": r["Hazard_segments (n)"]})
+        rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
+                     "Dimension": "CSEL_Exposure", "Score": r["CSEL_Exposure"], "Segments (n)": r["Exposure_segments (n)"]})
+        rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
+                     "Dimension": "CSEL_Vulnerability", "Score": r["CSEL_Vulnerability"], "Segments (n)": r["Vulnerability_segments (n)"]})
+        rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
+                     "Dimension": "CSEL_Risk", "Score": r["CSEL_Risk"], "Segments (n)": None})
+    full_df = pd.DataFrame(rows)
 
-fig3 = px.bar(
-    full_df, x="Dimension", y="Score", color="Dimension",
-    facet_col="facet_label", text="bar_text",
-    color_discrete_map=DIMENSION_COLORS,
-)
-fig3.update_traces(
-    textposition="outside",
-    marker_line_color="rgba(255,255,255,0.25)",
-    marker_line_width=1,
-    textfont_size=13,
-)
-fig3.update_layout(
-    paper_bgcolor="#0e0e0e", plot_bgcolor="#0e0e0e",
-    font_color="#f0f0f0", font_family="Arial",
-    showlegend=False, bargap=0.25,
-    margin=dict(t=40, l=60, r=30, b=60),
-)
-fig3.update_yaxes(range=[0, 0.9], gridcolor="rgba(255,255,255,0.08)", zerolinecolor="rgba(255,255,255,0.2)")
-fig3.update_xaxes(showgrid=False)
-fig3.for_each_annotation(lambda a: a.update(text=a.text.split("=", 1)[-1], font=dict(size=15, color="#f0f0f0")))
-st.plotly_chart(fig3, width="stretch")
+    full_df["facet_label"] = full_df["District"] + " (Interviews: " + full_df["Interviews (n)"].astype(str) + ")"
+    full_df["bar_text"] = full_df.apply(
+        lambda r: f"{r['Score']}  (n={int(r['Segments (n)'])})" if pd.notna(r["Segments (n)"]) else f"{r['Score']} (derived, no direct n)",
+        axis=1
+    )
 
-with st.expander("See exact numbers"):
-    st.dataframe(stage3_ceri, width="stretch")
+    DIMENSION_COLORS = {
+        "CSEL_Hazard": "#4FD1C5", "CSEL_Exposure": "#F6AD55",
+        "CSEL_Vulnerability": "#FC8181", "CSEL_Risk": "#B794F4",
+    }
+
+    fig3 = px.bar(
+        full_df, x="Dimension", y="Score", color="Dimension",
+        facet_col="facet_label", text="bar_text",
+        color_discrete_map=DIMENSION_COLORS,
+    )
+    fig3.update_traces(textposition="outside", marker_line_color="rgba(255,255,255,0.25)",
+                        marker_line_width=1, textfont_size=13)
+    fig3.update_layout(
+        paper_bgcolor="#0e0e0e", plot_bgcolor="#0e0e0e",
+        font_color="#f0f0f0", font_family="Arial",
+        legend=dict(font=dict(color="#f0f0f0")),
+        showlegend=False, bargap=0.25,
+        margin=dict(t=40, l=60, r=30, b=60),
+    )
+    fig3.update_yaxes(range=[0, 0.9], gridcolor="rgba(255,255,255,0.08)", zerolinecolor="rgba(255,255,255,0.2)")
+    fig3.update_xaxes(showgrid=False)
+    fig3.for_each_annotation(lambda a: a.update(text=a.text.split("=", 1)[-1], font=dict(size=15, color="#f0f0f0")))
+    st.plotly_chart(fig3, width="stretch")
+
+    with st.expander("See exact numbers"):
+        st.dataframe(stage3_ceri_filtered, width="stretch")
 
 st.caption(
     "Hazard, Exposure, and Vulnerability are each the average severity (0-1 scale) of "
@@ -175,6 +215,5 @@ st.caption(
     "× Vulnerability multiplied together, not averaged — because real risk needs all three "
     "conditions present at once; a severe hazard nobody is exposed to isn't a big real risk. "
     "The \"(n)\" shown on each bar is how many individual quotes back that number — a score "
-    "built from just a few quotes is far less certain than one built from many. This will sit "
-    "side-by-side with CERI's own official scores once that comparison is finalized."
+    "built from just a few quotes is far less certain than one built from many."
 )
