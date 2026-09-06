@@ -101,14 +101,28 @@ st.caption(
 
 # Section 3: CERI-comparable scores
 st.subheader("3. CSEL-derived risk scores, by district")
-st.dataframe(stage3_ceri, width="stretch")
+
+radar_df = stage3_ceri.melt(
+    id_vars="District",
+    value_vars=["CSEL_Hazard", "CSEL_Exposure", "CSEL_Vulnerability", "CSEL_Risk"],
+    var_name="Dimension", value_name="Score"
+)
+radar_df["Dimension"] = radar_df["Dimension"].str.replace("CSEL_", "")
+
+fig3 = px.line_polar(
+    radar_df, r="Score", theta="Dimension", color="District",
+    line_close=True, range_r=[0, 1],
+)
+fig3.update_traces(fill="toself", opacity=0.5)
+st.plotly_chart(fig3, width="stretch")
+
+with st.expander("See exact numbers"):
+    st.dataframe(stage3_ceri, width="stretch")
+
 st.caption(
     "Hazard, Exposure, and Vulnerability are each the average severity (0-1 scale) of "
     "everything said on that specific dimension, per district. Risk is Hazard × Exposure "
     "× Vulnerability multiplied together, not averaged — because real risk needs all three "
-    "conditions present at once; a severe hazard nobody is exposed to isn't a big real risk. "
-    "The \"(n)\" columns show how many individual quotes back each number — a score built "
-    "from 1-2 quotes is far less certain than one built from 20. This table exists to sit "
-    "side-by-side with CERI's own official scores for the same districts."
+    "conditions present at once. A bigger shape means higher scores across the board; a "
+    "lopsided shape shows which dimension is driving that district's risk."
 )
-
