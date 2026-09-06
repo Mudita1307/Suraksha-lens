@@ -112,14 +112,3 @@ st.caption(
     "side-by-side with CERI's own official scores for the same districts."
 )
 
-# Section 4: quote drill-down
-st.subheader("4. See the real quotes behind the numbers")
-st.caption(
-    "Every number above comes from real interview quotes. Expand any row below to read "
-    "the actual testimony behind it, in both the original language and English."
-)
-st.write(f"{len(filtered)} matching segment(s)")
-for _, row in filtered.iterrows():
-    with st.expander(f"{row['District']} — {row['Code']} (Severity: {row['Severity (0–3)']})"):
-        st.write("**Original:**", row["Quote (original)"])
-        st.write("**Translated:**", row["Quote (translated)"])
