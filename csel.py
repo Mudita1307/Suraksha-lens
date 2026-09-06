@@ -63,57 +63,107 @@ st.markdown(
 )
 
 st.divider()
-
-# Section 1: Theme frequency
+# Section 1: Theme frequency (lollipop chart)
 st.subheader("1. What are communities talking about?")
+
 theme_freq_filtered = filtered["Code"].value_counts().reset_index()
 theme_freq_filtered.columns = ["Code", "Mentions"]
-fig1 = px.bar(
-    theme_freq_filtered.sort_values("Mentions", ascending=True),
-    x="Mentions", y="Code", orientation="h",
+theme_freq_filtered = theme_freq_filtered.merge(
+    stage2[["Code", "CSEL_Pillar"]].drop_duplicates(), on="Code", how="left"
+).sort_values("Mentions")
+
+fig1 = px.scatter(
+    theme_freq_filtered, x="Mentions", y="Code", size="Mentions", color="CSEL_Pillar",
+    size_max=22,
 )
+for _, row in theme_freq_filtered.iterrows():
+    fig1.add_shape(
+        type="line", x0=0, x1=row["Mentions"], y0=row["Code"], y1=row["Code"],
+        line=dict(color="rgba(255,255,255,0.25)", width=2),
+    )
+fig1.update_layout(
+    paper_bgcolor="#0e0e0e", plot_bgcolor="#0e0e0e", font_color="#f0f0f0",
+    margin=dict(t=20, l=10, r=10, b=40),
+)
+fig1.update_xaxes(gridcolor="rgba(255,255,255,0.08)")
+fig1.update_yaxes(showgrid=False)
 st.plotly_chart(fig1, width="stretch")
 st.caption(
-    "Each bar is one theme from the CSEL codebook. The length shows how many separate "
-    "interview segments mentioned it — a simple count of how often something came up "
-    "in conversation, not a severity score."
+    "Each dot is one theme from the CSEL codebook. Its position and size show how many "
+    "separate interview segments mentioned it — a count of how often something came up "
+    "in conversation, not a severity score. Color shows which broader pillar it belongs to."
 )
 
-# Section 2: District x Pillar severity heatmap
+
+# Section 2: District x Pillar severity (sunburst)
 st.subheader("2. Where does it hurt most, and in what way?")
-heatmap_data = filtered.groupby(["District", "CSEL_Pillar"])["Severity (0–3)"].mean().round(2).reset_index()
-heatmap_pivot = heatmap_data.pivot(index="District", columns="CSEL_Pillar", values="Severity (0–3)")
-fig2 = px.imshow(
-    heatmap_pivot,
-    color_continuous_scale="Reds",
-    labels=dict(color="Avg severity (0-3)"),
-    aspect="auto",
-    text_auto=True,
+
+fig2 = px.sunburst(
+    pillar_severity, path=["District", "CSEL_Pillar"], values="Severity (0–3)",
+    color="Severity (0–3)", color_continuous_scale="Blues",
+)
+fig2.update_layout(
+    paper_bgcolor="black", plot_bgcolor="black", font_color="white",
+    margin=dict(t=20, l=10, r=10, b=10),
 )
 st.plotly_chart(fig2, width="stretch")
 st.caption(
-    "Each cell shows the average severity (0 = barely present, 3 = severe/urgent) of "
+    "Each slice shows the average severity (0 = barely present, 3 = severe/urgent) of "
     "everything said about that broader life-area (\"pillar\"), in that district. Darker "
-    "red means the hardship described there tends to sound more serious. A pillar groups "
+    "blue means the hardship described there tends to sound more serious. A pillar groups "
     "several related themes together — for example, \"Livelihood Changes\" combines labour "
     "and income-related themes into one figure."
 )
 
-# Section 3: CERI-comparable scores
+
+# Section 3: CSEL-derived risk scores, by district
 st.subheader("3. CSEL-derived risk scores, by district")
 
-radar_df = stage3_ceri.melt(
-    id_vars="District",
-    value_vars=["CSEL_Hazard", "CSEL_Exposure", "CSEL_Vulnerability", "CSEL_Risk"],
-    var_name="Dimension", value_name="Score"
-)
-radar_df["Dimension"] = radar_df["Dimension"].str.replace("CSEL_", "")
+rows = []
+for _, r in stage3_ceri.iterrows():
+    rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
+                 "Dimension": "CSEL_Hazard", "Score": r["CSEL_Hazard"], "Segments (n)": r["Hazard_segments (n)"]})
+    rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
+                 "Dimension": "CSEL_Exposure", "Score": r["CSEL_Exposure"], "Segments (n)": r["Exposure_segments (n)"]})
+    rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
+                 "Dimension": "CSEL_Vulnerability", "Score": r["CSEL_Vulnerability"], "Segments (n)": r["Vulnerability_segments (n)"]})
+    rows.append({"District": r["District"], "Interviews (n)": r["Interviews (n)"],
+                 "Dimension": "CSEL_Risk", "Score": r["CSEL_Risk"], "Segments (n)": None})
+full_df = pd.DataFrame(rows)
 
-fig3 = px.line_polar(
-    radar_df, r="Score", theta="Dimension", color="District",
-    line_close=True, range_r=[0, 1],
+full_df["facet_label"] = full_df["District"] + " (Interviews: " + full_df["Interviews (n)"].astype(str) + ")"
+full_df["bar_text"] = full_df.apply(
+    lambda r: f"{r['Score']}  (n={int(r['Segments (n)'])})" if pd.notna(r["Segments (n)"]) else f"{r['Score']} (derived, no direct n)",
+    axis=1
 )
-fig3.update_traces(fill="toself", opacity=0.5)
+
+DIMENSION_COLORS = {
+    "CSEL_Hazard": "#4FD1C5",
+    "CSEL_Exposure": "#F6AD55",
+    "CSEL_Vulnerability": "#FC8181",
+    "CSEL_Risk": "#B794F4",
+}
+
+fig3 = px.bar(
+    full_df, x="Dimension", y="Score", color="Dimension",
+    facet_col="facet_label", text="bar_text",
+    color_discrete_map=DIMENSION_COLORS,
+)
+fig3.update_traces(
+    textposition="outside",
+    marker_line_color="rgba(255,255,255,0.25)",
+    marker_line_width=1,
+    textfont_size=13,
+)
+fig3.update_layout(
+    paper_bgcolor="#0e0e0e", plot_bgcolor="#0e0e0e",
+    font_color="#f0f0f0", font_family="Arial",
+    showlegend=False, bargap=0.25,
+    margin=dict(t=40, l=60, r=30, b=60),
+)
+fig3.update_yaxes(range=[0, 0.9], gridcolor="rgba(255,255,255,0.08)", zerolinecolor="rgba(255,255,255,0.2)")
+fig3.update_xaxes(showgrid=False)
+fig3.for_each_annotation(lambda a: a.update(text=a.text.split("=", 1)[-1], font=dict(size=15, color="#f0f0f0")))
 st.plotly_chart(fig3, width="stretch")
 
 with st.expander("See exact numbers"):
@@ -123,6 +173,8 @@ st.caption(
     "Hazard, Exposure, and Vulnerability are each the average severity (0-1 scale) of "
     "everything said on that specific dimension, per district. Risk is Hazard × Exposure "
     "× Vulnerability multiplied together, not averaged — because real risk needs all three "
-    "conditions present at once. A bigger shape means higher scores across the board; a "
-    "lopsided shape shows which dimension is driving that district's risk."
+    "conditions present at once; a severe hazard nobody is exposed to isn't a big real risk. "
+    "The \"(n)\" shown on each bar is how many individual quotes back that number — a score "
+    "built from just a few quotes is far less certain than one built from many. This will sit "
+    "side-by-side with CERI's own official scores once that comparison is finalized."
 )
