@@ -172,7 +172,7 @@ quotes_to_show = quotes_to_show.sort_values("Severity (0–3)", ascending=False)
 st.write(f"**{len(quotes_to_show)}** matching quote(s)")
 
 SEVERITY_COLOR = {0: "#4A5568", 1: "#48BB78", 2: "#ED8936", 3: "#F56565"}
-SEVERITY_LABEL = {0: "Barely present", 1: "Neutral mention", 2: "Concern", 3: "Severe/urgent"}
+SEVERITY_LABEL = {0: "Barely present", 1: "Neutral mention", 2: "Concern", 3: "Urgent"}
 
 for _, row in quotes_to_show.iterrows():
     color = SEVERITY_COLOR[row["Severity (0–3)"]]
