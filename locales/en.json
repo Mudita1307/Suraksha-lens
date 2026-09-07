@@ -28,7 +28,8 @@
     "tier2": "Tier 2: Exposure",
     "tier3": "Tier 3: Vulnerability",
     "tier4": "Tier 4: Climate Exploitation Risk Index",
-    "scam": "Qilafy – AI Verification & Scam Detection"
+    "scam": "Qilafy – AI Verification & Scam Detection",
+    "csel": "CSEL – Community Safety Evidence Layers"
   },
   "discover": {
     "title": "Suraksha Lens",
@@ -546,6 +547,31 @@
     "access_write": "Users can register and access Qilafy through the official platform below: https://app.qilafy.com/signup",
     "note": "Note: Qilafy provides AI-assisted verification support intended to help users assess potential digital risks and misinformation exposure. Outputs should be used as supportive guidance and not as sole evidence for legal or enforcement purposes. Users should independently verify relevant information and conduct their own research before taking any action."
   },
+  "csel": {
+    "header": "CSEL — Community Safety Evidence Layers",
+    "subheader": "Ground-level testimony from trained community evidence leaders, layered onto the Climate Exploitation Risk Index",
+    "intro": "CSEL turns hyperlocal evidence — collected and documented by trained Community Safety Evidence Leaders — into structured data: what people are experiencing, how severe it sounds, and how it compares to CERI's data-driven risk scores. This layer exists to surface local realities that official datasets alone can miss.",
+    "filters_title": "Filters",
+    "select_district": "Select District",
+    "select_theme": "Select Theme",
+    "sample_notice": "This is based on {interviews} interviews and {segments} human-verified segments so far. Treat single-district or single-interview figures as early signal, not a confirmed pattern — this will grow more reliable as more interviews are reviewed.",
+    "section1_title": "1. What are communities talking about?",
+    "section1_caption": "Each dot is one theme from the CSEL codebook. Its position and size show how many separate interview segments mentioned it — a count of how often something came up in conversation, not a severity score. Color shows which broader pillar it belongs to.",
+    "section2_title": "2. Where does it hurt most, and in what way?",
+    "section2_caption": "Each slice shows the average severity (0 = barely present, 3 = severe/urgent) of everything said about that broader life-area (\"pillar\"), in that district. Darker blue means the hardship described there tends to sound more serious. A pillar groups several related themes together — for example, \"Livelihood Changes\" combines labour and income-related themes into one figure.",
+    "section3_title": "3. CSEL-derived risk scores, by district",
+    "section3_caption": "Hazard, Exposure, and Vulnerability are each the average severity (0-1 scale) of everything said on that specific dimension, per district. Risk is Hazard × Exposure × Vulnerability multiplied together, not averaged — because real risk needs all three conditions present at once; a severe hazard nobody is exposed to isn't a big real risk. The \"(n)\" shown on each bar is how many individual quotes back that number — a score built from just a few quotes is far less certain than one built from many.",
+    "no_data": "No data matches the current filters.",
+    "exact_numbers": "See exact numbers",
+    "label_mentions": "Mentions",
+    "label_theme": "Theme",
+    "label_pillar": "Pillar",
+    "label_severity": "Severity (0–3)",
+    "label_dimension": "Dimension",
+    "label_score": "Score",
+    "label_interviews": "Interviews",
+    "label_district": "District"
+  },
   "chat_bot": {
     "title": "Suraksha Assistant",
     "open_button": "💬 Ask the Assistant",
@@ -553,8 +579,7 @@
     "placeholder": "Ask about what's shown on screen...",
     "thinking": "Thinking...",
     "error_message": "Sorry, I couldn't process that just now. Please try again.",
-    "greeting_title": "How can I help?",
-    "greeting_body": "I can read the charts and filters currently on your screen. Ask me about what you are seeing.",
+    "greeting_title": "Hi, I'm Suraksha Assistant. How can I help?",
     "suggestion_1": "Summarise what is on screen right now",
     "suggestion_2": "What trend does this chart show?",
     "suggestion_3": "Which areas stand out, and why?"

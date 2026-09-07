@@ -51,6 +51,8 @@ def init_chat_state() -> None:
         st.session_state.chat_chart_data = None
     if "chat_chart_context" not in st.session_state:
         st.session_state.chat_chart_context = None
+    if "chat_dataset_context" not in st.session_state:
+        st.session_state.chat_dataset_context = None
 
 
 
@@ -66,6 +68,7 @@ class DashboardSnapshot(TypedDict):
     summary_stats: dict
     chart_context: Optional[dict]
     chart_data: Optional[list]
+    dataset_context: Optional[dict]
 
 
 
@@ -90,9 +93,53 @@ def clear_chart_context() -> None:
     """Call at the top of a dashboard page, before any chart is built, so a
     page that errors out (e.g. a missing column) or takes a branch with no
     chart doesn't leave a stale chart from a previous render in the snapshot.
+
+    Clears the dataset context (see set_dataset_context) as well, so the tier
+    pages drop whatever a page like CSEL registered without needing to know
+    that mechanism exists — otherwise navigating CSEL -> Tier 3 would leave
+    CSEL's interview tables sitting in the snapshot alongside Tier 3's chart.
     """
     st.session_state["chat_chart_data"] = None
     st.session_state["chat_chart_context"] = None
+    st.session_state["chat_dataset_context"] = None
+
+
+def set_dataset_context(
+    *,
+    title: str,
+    summary: str,
+    charts: list,
+    tables: dict,
+    caveat: str = "",
+) -> None:
+    """Register a page whose evidence is not a single metric over time.
+
+    set_chart_context() assumes one line/bar chart keyed on year and category,
+    which is the shape tier1-4 share. A page like CSEL has several charts of
+    different shapes and no year axis at all, so it registers here instead:
+
+    summary  prose the assistant can quote from - what the page is, where the
+             data came from, how to read it.
+    charts   [{"title", "kind", "shows"}] describing each figure on screen, so
+             a question about "this chart" can be answered without the pixels.
+    tables   {name: list[dict]} - the aggregates plotted, which is what makes
+             numerical questions answerable.
+    caveat   sampling limits to state plainly rather than let the model gloss.
+
+    Keep the tables aggregated. This snapshot is sent to a third-party model on
+    every turn, and the underlying CSEL rows are verbatim interview testimony
+    about violence against women and children, with named speakers.
+    """
+    st.session_state["chat_dataset_context"] = {
+        "title": title,
+        "summary": summary,
+        "charts": charts,
+        "tables": {
+            name: _round_records(rows) if isinstance(rows, list) else rows
+            for name, rows in tables.items()
+        },
+        "caveat": caveat,
+    }
 
 
 # Groq's on_demand tier for this model is capped at a small tokens-per-minute
@@ -234,6 +281,7 @@ def build_snapshot() -> DashboardSnapshot:
         "summary_stats": _collect_visible_summary_stats(),
         "chart_context": st.session_state.get("chat_chart_context"),
         "chart_data": st.session_state.get("chat_chart_data"),
+        "dataset_context": st.session_state.get("chat_dataset_context"),
     }
 
 
@@ -347,6 +395,9 @@ T1 = Hazard
 T2 = Exposure
 T3 = Vulnerability
 T4 = Climate Exploitation Risk Index
+CSEL = Community Safety Evidence Layers, a qualitative layer built from
+  interviews with trained community evidence leaders rather than from the
+  statistical datasets behind T1-T4
 
 Always answer according to the current tier, country, metric, filters,
 and chart data.
@@ -381,6 +432,24 @@ minimum, comparison, or change over time, analyze the values in
 If `chart_data` is null, no chart is currently displayed (e.g. the user is
 on a page or view with no chart, or the selected metric/column could not
 be found) — say so rather than guessing at values.
+
+`dataset_context` is the other way a page can describe itself, used when its
+evidence is not one metric plotted over time. When it is present it replaces
+`chart_context`/`chart_data` as the thing on screen, and `chart_data` being
+null does NOT mean there is nothing to answer from. It holds:
+- `summary`: what the page is and how its numbers were produced. Draw factual
+  claims about the method from here rather than from general knowledge.
+- `charts`: one entry per figure on screen, each with a title, a kind and what
+  it shows. Use these to answer "what does this chart show".
+- `tables`: the aggregated numbers behind those figures, keyed by name. Treat
+  these exactly as you would `chart_data` — quote specific values from them.
+- `caveat`: sampling limits. If the user asks anything that leans on the data
+  being representative, state the caveat plainly instead of glossing over it.
+
+A `dataset_context` may deliberately omit the underlying source records. When
+someone asks for individual quotes, testimony or a named person's words, say
+that the assistant is given aggregates only and cannot reproduce the source
+records — do not reconstruct or guess at them.
 
 Do not invent values that are not present in the snapshot.
 """,
@@ -551,7 +620,13 @@ def _inject_chat_fab_css() -> None:
             font-size: 26px;
             line-height: 1;
             border: none;
+            /* matches the speech-bubble emoji's own blue, sampled directly
+            off the rendered glyph rather than guessed */
+            background-color: #4A90D9;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+        }
+        .st-key-chat_toggle_btn button:hover {
+            background-color: #4A90D9;
         }
         </style>
         """,
@@ -630,21 +705,20 @@ min-height: 0;
 overflow-y: auto;
 }
 .st-key-chat_body:has(.chat-greeting) {
-justify-content: center;
+/* plain "center" clips symmetrically when content is taller than the box,
+and the clipped-off top is unreachable since scrollTop cannot go negative --
+"safe center" falls back to flex-start once content overflows, so a longer
+greeting (some locales run to two lines before the questions even start)
+stays fully visible and scrollable instead of losing its first line. */
+justify-content: safe center;
 }
 .chat-greeting {
 text-align: center;
-padding: 0 4px 2px;
+padding: 0 4px 14px;
 }
 .chat-greeting-title {
 font-size: 1.3rem;
 font-weight: 600;
-margin-bottom: 6px;
-}
-.chat-greeting-body {
-font-size: 0.88rem;
-line-height: 1.5;
-opacity: 0.7;
 }
 </style>
         """
@@ -695,7 +769,6 @@ def _render_chat_empty_state() -> Optional[str]:
     st.markdown(
         "<div class='chat-greeting'>"
         f"<div class='chat-greeting-title'>{t('chat_bot.greeting_title')}</div>"
-        f"<div class='chat-greeting-body'>{t('chat_bot.greeting_body')}</div>"
         "</div>",
         unsafe_allow_html=True,
     )

@@ -138,7 +138,7 @@ else:
 
     page_7 = st.Page(
         "csel.py",
-        title=t("CSEL-Community Safety Evidence Layer"),
+        title=t("nav.csel"),
         icon="❄️",
         url_path="csel",
     )
