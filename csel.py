@@ -133,15 +133,46 @@ st.caption(t("csel.section2_caption"))
 # Section 3: What are people actually saying?
 st.subheader("3. What are people actually saying?")
 st.caption(
-    "Real testimony behind the numbers above, the colored bar shows how severe each quote sounds."
+    "Real testimony behind the numbers above. The colored bar shows how severe each quote sounds. "
+    "Use the dropdowns to narrow down what you want to read."
 )
 
-SEVERITY_COLOR = {0: "#4A5568", 1: "#48BB78", 2: "#ED8936", 3: "#F56565"}  # gray, green, orange, red
-SEVERITY_LABEL = {0: "Barely present", 1: "Neutral mention", 2: "Concern", 3: "Severe/urgent"}
+col1, col2, col3 = st.columns(3)
 
-quotes_to_show = filtered.sort_values("Severity (0–3)", ascending=False)
+with col1:
+    pillar_pick = st.selectbox(
+        "CSEL Pillar",
+        ["All"] + sorted(filtered["CSEL_Pillar"].dropna().unique().tolist()),
+        key="s3_pillar",
+    )
+
+# Code options depend on the pillar chosen above
+if pillar_pick == "All":
+    code_options = sorted(filtered["Code"].dropna().unique().tolist())
+else:
+    code_options = sorted(filtered[filtered["CSEL_Pillar"] == pillar_pick]["Code"].dropna().unique().tolist())
+
+with col2:
+    code_pick = st.selectbox("CSEL Code", ["All"] + code_options, key="s3_code")
+
+with col3:
+    severity_pick = st.selectbox("Severity", ["All", 0, 1, 2, 3], key="s3_severity")
+
+# Apply all three on top of the sidebar's District/Theme filters
+quotes_to_show = filtered.copy()
+if pillar_pick != "All":
+    quotes_to_show = quotes_to_show[quotes_to_show["CSEL_Pillar"] == pillar_pick]
+if code_pick != "All":
+    quotes_to_show = quotes_to_show[quotes_to_show["Code"] == code_pick]
+if severity_pick != "All":
+    quotes_to_show = quotes_to_show[quotes_to_show["Severity (0–3)"] == severity_pick]
+
+quotes_to_show = quotes_to_show.sort_values("Severity (0–3)", ascending=False)
 
 st.write(f"**{len(quotes_to_show)}** matching quote(s)")
+
+SEVERITY_COLOR = {0: "#4A5568", 1: "#48BB78", 2: "#ED8936", 3: "#F56565"}
+SEVERITY_LABEL = {0: "Barely present", 1: "Neutral mention", 2: "Concern", 3: "Severe/urgent"}
 
 for _, row in quotes_to_show.iterrows():
     color = SEVERITY_COLOR[row["Severity (0–3)"]]
