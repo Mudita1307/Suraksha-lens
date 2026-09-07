@@ -130,6 +130,42 @@ else:
 
 st.caption(t("csel.section2_caption"))
 
+# Section 3: What are people actually saying?
+st.subheader("3. What are people actually saying?")
+st.caption(
+    "Real testimony behind the numbers above, the colored bar shows how severe each quote sounds."
+)
+
+SEVERITY_COLOR = {0: "#4A5568", 1: "#48BB78", 2: "#ED8936", 3: "#F56565"}  # gray, green, orange, red
+SEVERITY_LABEL = {0: "Barely present", 1: "Neutral mention", 2: "Concern", 3: "Severe/urgent"}
+
+quotes_to_show = filtered.sort_values("Severity (0–3)", ascending=False)
+
+st.write(f"**{len(quotes_to_show)}** matching quote(s)")
+
+for _, row in quotes_to_show.iterrows():
+    color = SEVERITY_COLOR[row["Severity (0–3)"]]
+    label = SEVERITY_LABEL[row["Severity (0–3)"]]
+    st.markdown(
+        f"""
+        <div style="
+            border-left: 5px solid {color};
+            background-color: #1a1a1a;
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin-bottom: 14px;
+        ">
+            <div style="color: #a0a0a0; font-size: 13px; margin-bottom: 6px;">
+                {row['District']} &nbsp;·&nbsp; {row['Code']} &nbsp;·&nbsp;
+                <span style="color: {color}; font-weight: 600;">{label}</span>
+            </div>
+            <div style="color: #f0f0f0; font-size: 15px; font-style: italic;">
+                "{row['Quote (translated)']}"
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 
