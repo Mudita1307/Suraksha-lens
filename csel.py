@@ -24,11 +24,11 @@ stage2, stage3_ceri, theme_freq, pillar_severity = load_data()
 
 
 # Header
-st.header("CSEL — Community Safety Evidence Layers")
+st.header("CSEL — Community Safety Evidence Layer")
 st.subheader("Ground-level testimony from trained community evidence leaders, layered onto the Climate Exploitation Risk Index")
 st.write(
-    "CSEL turns hyperlocal evidence — collected and documented by trained Community "
-    "Safety Evidence Leaders — into structured data: what people are experiencing, how "
+    "CSEL turns hyperlocal evidence, collected and documented by trained Community "
+    "Safety Evidence Leaders into structured data: what people are experiencing, how "
     "severe it sounds, and how it compares to CERI's data-driven risk scores. This layer "
     "exists to surface local realities that official datasets alone can miss."
 )
