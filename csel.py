@@ -62,6 +62,7 @@ st.divider()
 
 # Section 1: Theme frequency (lollipop chart)
 st.subheader(t("csel.section1_title"))
+st.caption(t("csel.section1_caption"))
 
 theme_freq_filtered = filtered["Code"].value_counts().reset_index()
 theme_freq_filtered.columns = ["Code", "Mentions"]
@@ -91,12 +92,12 @@ fig1.update_layout(
 fig1.update_xaxes(gridcolor="rgba(255,255,255,0.08)")
 fig1.update_yaxes(showgrid=False)
 st.plotly_chart(fig1, width="stretch")
-st.caption(t("csel.section1_caption"))
 
 
 # Section 2: District x Pillar severity (sunburst)
 
 st.subheader(t("csel.section2_title"))
+st.caption(t("csel.section2_caption"))
 
 pillar_severity_filtered = (
     filtered.groupby(["District", "CSEL_Pillar"])["Severity (0–3)"]
@@ -124,55 +125,58 @@ else:
     pillar_code_table = (
         filtered[["CSEL_Pillar", "Code"]].drop_duplicates()
         .groupby("CSEL_Pillar")["Code"].apply(lambda c: ", ".join(sorted(c)))
-        .reset_index().rename(columns={"CSEL_Pillar": "CSEL Pillar", "Code": "CSEL Codes included"})
+        .reset_index().rename(columns={
+            "CSEL_Pillar": t("csel.filter_pillar"),
+            "Code": t("csel.pillar_table_codes_col"),
+        })
     )
     st.dataframe(pillar_code_table, width="stretch", hide_index=True)
 
-st.caption(t("csel.section2_caption"))
-
 # Section 3: What are people actually saying?
-st.subheader("3. What are people actually saying?")
-st.caption(
-    "Real testimony behind the numbers above. The colored bar shows how severe each quote sounds. "
-    "Use the dropdowns to narrow down what you want to read."
-)
+st.subheader(t("csel.section3_title"))
+st.caption(t("csel.section3_caption"))
+
+FILTER_ALL = t("csel.filter_all")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
     pillar_pick = st.selectbox(
-        "CSEL Pillar",
-        ["All"] + sorted(filtered["CSEL_Pillar"].dropna().unique().tolist()),
+        t("csel.filter_pillar"),
+        [FILTER_ALL] + sorted(filtered["CSEL_Pillar"].dropna().unique().tolist()),
         key="s3_pillar",
     )
 
 # Code options depend on the pillar chosen above
-if pillar_pick == "All":
+if pillar_pick == FILTER_ALL:
     code_options = sorted(filtered["Code"].dropna().unique().tolist())
 else:
     code_options = sorted(filtered[filtered["CSEL_Pillar"] == pillar_pick]["Code"].dropna().unique().tolist())
 
 with col2:
-    code_pick = st.selectbox("CSEL Code", ["All"] + code_options, key="s3_code")
+    code_pick = st.selectbox(t("csel.filter_code"), [FILTER_ALL] + code_options, key="s3_code")
 
 with col3:
-    severity_pick = st.selectbox("Severity", ["All", 0, 1, 2, 3], key="s3_severity")
+    severity_pick = st.selectbox(t("csel.filter_severity"), [FILTER_ALL, 0, 1, 2, 3], key="s3_severity")
 
 # Apply all three on top of the sidebar's District/Theme filters
 quotes_to_show = filtered.copy()
-if pillar_pick != "All":
+if pillar_pick != FILTER_ALL:
     quotes_to_show = quotes_to_show[quotes_to_show["CSEL_Pillar"] == pillar_pick]
-if code_pick != "All":
+if code_pick != FILTER_ALL:
     quotes_to_show = quotes_to_show[quotes_to_show["Code"] == code_pick]
-if severity_pick != "All":
+if severity_pick != FILTER_ALL:
     quotes_to_show = quotes_to_show[quotes_to_show["Severity (0–3)"] == severity_pick]
 
 quotes_to_show = quotes_to_show.sort_values("Severity (0–3)", ascending=False)
 
-st.write(f"**{len(quotes_to_show)}** matching quote(s)")
+st.write(t("csel.matching_quotes", count=len(quotes_to_show)))
 
 SEVERITY_COLOR = {0: "#4A5568", 1: "#48BB78", 2: "#ED8936", 3: "#F56565"}
-SEVERITY_LABEL = {0: "Barely present", 1: "Neutral mention", 2: "Concern", 3: "Urgent"}
+SEVERITY_LABEL = {
+    0: t("csel.severity_label_0"), 1: t("csel.severity_label_1"),
+    2: t("csel.severity_label_2"), 3: t("csel.severity_label_3"),
+}
 
 for _, row in quotes_to_show.iterrows():
     color = SEVERITY_COLOR[row["Severity (0–3)"]]
@@ -250,14 +254,17 @@ chat_bot.set_dataset_context(
             "kind": "sunburst",
             "shows": "mean severity (0-3) per district per pillar, darker "
                      "meaning more serious (see the pillar_severity_by_district "
-                     "table)",
+                     "table), plus a table beneath it listing which CSEL codes "
+                     "roll up into each pillar",
         },
         {
             "title": t("csel.section3_title"),
-            "kind": "faceted bar",
-            "shows": "CSEL_Hazard, CSEL_Exposure, CSEL_Vulnerability and the "
-                     "derived CSEL_Risk per district on a 0-1 scale, with the "
-                     "number of backing segments (see the district_scores table)",
+            "kind": "interactive testimony browser",
+            "shows": "individual interview quotes, filterable by pillar, code "
+                     "and severity and sorted most-severe first. The assistant "
+                     "is not given the quote text itself, only how many quotes "
+                     "fall into each pillar/severity combination (see the "
+                     "quote_counts_by_pillar_and_severity table)",
         },
     ],
     tables={
@@ -267,11 +274,10 @@ chat_bot.set_dataset_context(
         "pillar_severity_by_district": pillar_severity_filtered.to_dict(
             orient="records"
         ),
-        "district_scores": (
-            stage3_ceri_filtered.where(pd.notna(stage3_ceri_filtered), None)
+        "quote_counts_by_pillar_and_severity": (
+            filtered.groupby(["CSEL_Pillar", "Severity (0–3)"])
+            .size().reset_index(name="Count")
             .to_dict(orient="records")
-            if not stage3_ceri_filtered.empty
-            else []
         ),
     },
     caveat=(
@@ -280,10 +286,14 @@ chat_bot.set_dataset_context(
         f"{', '.join(sorted(stage2['District'].unique().tolist()))}. "
         f"{len(filtered)} segments match the current filters. Any single "
         "district or single interview figure is early signal, not a confirmed "
-        "pattern, and a score backed by only a handful of segments is far less "
+        "pattern, and a count backed by only a handful of segments is far less "
         "certain than one backed by many. Say this plainly whenever an answer "
-        "would otherwise imply the numbers are representative. The assistant "
-        "receives aggregates only and cannot quote the interview testimony "
-        "itself."
+        "would otherwise imply the numbers are representative. Section 3 on "
+        "this page does show people the real quote text directly (it is not "
+        "hidden from the dashboard), but the assistant itself is only given "
+        "aggregated counts, not the quote text, and cannot reproduce or "
+        "paraphrase a specific quote — if asked to, say the quotes are visible "
+        "in the testimony browser on this page but not available to the "
+        "assistant."
     ),
 )
